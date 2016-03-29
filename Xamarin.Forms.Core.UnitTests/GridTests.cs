@@ -5,12 +5,21 @@ using System.Linq;
 
 namespace Xamarin.Forms.Core.UnitTests
 {
-	[TestFixture]
+	[TestFixture (false)]
+	[TestFixture (true)]
 	public class GridTests : BaseTestFixture
 	{
+		readonly bool _legacymode;
+
+		public GridTests(bool legacymode)
+		{
+			_legacymode = legacymode;
+		}
+
 		[SetUp]
 		public override void Setup()
 		{
+			Grid.EnableLegacyLayoutBehavior = _legacymode;
 			base.Setup ();
 			Device.PlatformServices = new MockPlatformServices ();
 		}
@@ -18,6 +27,7 @@ namespace Xamarin.Forms.Core.UnitTests
 		[TearDown]
 		public override void TearDown()
 		{
+			Grid.EnableLegacyLayoutBehavior = false;
 			base.TearDown ();
 			Device.PlatformServices = null;
 		}
@@ -611,7 +621,10 @@ namespace Xamarin.Forms.Core.UnitTests
 			});
 
 			var result = layout.GetSizeRequest (10, 10).Request;
-			Assert.AreEqual (new Size (100, 72), result);
+			if (_legacymode)
+				Assert.AreEqual (new Size (100, 72), result);
+			else
+				Assert.AreEqual (new Size (10, 12), result);
 		}
 
 		[Test]
@@ -626,7 +639,10 @@ namespace Xamarin.Forms.Core.UnitTests
 			});
 
 			var result = layout.GetSizeRequest (10, double.PositiveInfinity).Request;
-			Assert.AreEqual (new Size (100, 72), result);
+			if (_legacymode)
+				Assert.AreEqual (new Size (100, 72), result);
+			else
+				Assert.AreEqual (new Size (10, 72), result);
 		}
 
 		[Test]
@@ -642,7 +658,10 @@ namespace Xamarin.Forms.Core.UnitTests
 			});
 
 			var result = layout.GetSizeRequest (double.PositiveInfinity, 10).Request;
-			Assert.AreEqual (new Size (100, 72), result);
+			if (_legacymode)
+				Assert.AreEqual (new Size (100, 72), result);
+			else
+				Assert.AreEqual (new Size (100, 12), result);
 		}
 
 		[Test]
@@ -1366,7 +1385,10 @@ namespace Xamarin.Forms.Core.UnitTests
 			var widthBoundRequest = grid.GetSizeRequest (50, double.PositiveInfinity);
 
 			Assert.AreEqual (new SizeRequest (new Size (20, 120), new Size (0, 120)), unboundRequest);
-			Assert.AreEqual (new SizeRequest (new Size (50, 60), new Size (0, 60)), widthBoundRequest);
+			if (_legacymode)
+				Assert.AreEqual (new SizeRequest (new Size (50, 60), new Size (0, 60)), widthBoundRequest);
+			else
+				Assert.AreEqual (new SizeRequest (new Size (20, 120), new Size (0, 120)), widthBoundRequest);
 		}
 
 		[Test]
@@ -1515,16 +1537,24 @@ namespace Xamarin.Forms.Core.UnitTests
 		}
 	}
 
-	[TestFixture]
+	[TestFixture(true)]
+	[TestFixture(false)]
 	public class GridMeasureTests : BaseTestFixture
 	{
+		readonly bool _enableLegacy;
 		static List<Action> delayActions = new List<Action> ();
+
+		public GridMeasureTests(bool enableLegacy)
+		{
+			_enableLegacy = enableLegacy;
+		}
 
 		[SetUp]
 		public override void Setup()
 		{
 			base.Setup ();
 			Device.PlatformServices = new MockPlatformServices (invokeOnMainThread: a => { delayActions.Add (a); });
+			Grid.EnableLegacyLayoutBehavior = _enableLegacy;
 		}
 
 		[TearDown]
@@ -1532,6 +1562,7 @@ namespace Xamarin.Forms.Core.UnitTests
 		{
 			base.TearDown ();
 			Device.PlatformServices = null;
+			Grid.EnableLegacyLayoutBehavior = false;
 		}
 		
 		[Test]
@@ -1598,7 +1629,10 @@ namespace Xamarin.Forms.Core.UnitTests
 
 			var sizeRequest = grid.Measure(100, double.PositiveInfinity);
 
-			Assert.AreEqual(20, sizeRequest.Request.Height);
+			if (_enableLegacy)
+				Assert.AreEqual(200, sizeRequest.Request.Height);
+			else
+				Assert.AreEqual(20, sizeRequest.Request.Height);
 		}
 	}
 }

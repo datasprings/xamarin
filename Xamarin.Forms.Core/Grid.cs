@@ -32,7 +32,7 @@ namespace Xamarin.Forms
 		public static readonly BindableProperty RowDefinitionsProperty = BindableProperty.Create("RowDefinitions", typeof(RowDefinitionCollection), typeof(Grid), null,
 			validateValue: NullCheckValidation, propertyChanged: OnRowDefinitionsChanged, defaultValueCreator: RowDefinitionsDefaultValueCreator);
 
-		public static bool EnableLegacyLayoutBehavior { get; set; }
+		public static bool EnableLegacyLayoutBehavior { get; set; } = true;
 
 		public static int GetColumn(BindableObject bindable)
 		{
