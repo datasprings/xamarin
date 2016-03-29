@@ -8,85 +8,31 @@ namespace Xamarin.Forms
 {
 	public partial class Grid : Layout<View>
 	{
-		public static bool EnableLegacyLayoutBehavior { get; set; }
-
-		public static readonly BindableProperty RowProperty = BindableProperty.CreateAttached("Row", typeof(int), typeof(Grid), default(int), validateValue: (bindable, value) => (int)value >= 0);
-
-		public static readonly BindableProperty RowSpanProperty = BindableProperty.CreateAttached("RowSpan", typeof(int), typeof(Grid), 1, validateValue: (bindable, value) => (int)value >= 1);
-
-		public static readonly BindableProperty ColumnProperty = BindableProperty.CreateAttached("Column", typeof(int), typeof(Grid), default(int), validateValue: (bindable, value) => (int)value >= 0);
-
-		public static readonly BindableProperty ColumnSpanProperty = BindableProperty.CreateAttached("ColumnSpan", typeof(int), typeof(Grid), 1, validateValue: (bindable, value) => (int)value >= 1);
-
-		public static readonly BindableProperty RowSpacingProperty = BindableProperty.Create("RowSpacing", typeof(double), typeof(Grid), 6d,
-			propertyChanged: (bindable, oldValue, newValue) => ((Grid)bindable).InvalidateMeasure(InvalidationTrigger.MeasureChanged));
+		public static readonly BindableProperty ColumnProperty = BindableProperty.CreateAttached("Column", typeof(int), typeof(Grid), default(int),
+			validateValue: ValidateIndex);
 
 		public static readonly BindableProperty ColumnSpacingProperty = BindableProperty.Create("ColumnSpacing", typeof(double), typeof(Grid), 6d,
-			propertyChanged: (bindable, oldValue, newValue) => ((Grid)bindable).InvalidateMeasure(InvalidationTrigger.MeasureChanged));
+			propertyChanged: OnSpacingChanged);
+
+		public static readonly BindableProperty ColumnSpanProperty = BindableProperty.CreateAttached("ColumnSpan", typeof(int), typeof(Grid), 1,
+			validateValue: ValidateSpan);
+
+		public static readonly BindableProperty RowProperty = BindableProperty.CreateAttached("Row", typeof(int), typeof(Grid),
+			default(int), validateValue: ValidateIndex);
+
+		public static readonly BindableProperty RowSpacingProperty = BindableProperty.Create("RowSpacing", typeof(double), typeof(Grid), 6d,
+			propertyChanged: OnSpacingChanged);
+
+		public static readonly BindableProperty RowSpanProperty = BindableProperty.CreateAttached("RowSpan", typeof(int),
+			typeof(Grid), 1, validateValue: ValidateSpan);
 
 		public static readonly BindableProperty ColumnDefinitionsProperty = BindableProperty.Create("ColumnDefinitions", typeof(ColumnDefinitionCollection), typeof(Grid), null,
-			validateValue: (bindable, value) => value != null, propertyChanged: (bindable, oldvalue, newvalue) =>
-			{
-				if (oldvalue != null)
-					((ColumnDefinitionCollection)oldvalue).ItemSizeChanged -= ((Grid)bindable).OnDefinitionChanged;
-				if (newvalue != null)
-					((ColumnDefinitionCollection)newvalue).ItemSizeChanged += ((Grid)bindable).OnDefinitionChanged;
-			}, defaultValueCreator: bindable =>
-			{
-				var colDef = new ColumnDefinitionCollection();
-				colDef.ItemSizeChanged += ((Grid)bindable).OnDefinitionChanged;
-				return colDef;
-			});
+			validateValue: NullCheckValidation, propertyChanged: OnColumnDefinitionsChanged, defaultValueCreator: ColumnDefinitionsValueCreator);
 
 		public static readonly BindableProperty RowDefinitionsProperty = BindableProperty.Create("RowDefinitions", typeof(RowDefinitionCollection), typeof(Grid), null,
-			validateValue: (bindable, value) => value != null, propertyChanged: (bindable, oldvalue, newvalue) =>
-			{
-				if (oldvalue != null)
-					((RowDefinitionCollection)oldvalue).ItemSizeChanged -= ((Grid)bindable).OnDefinitionChanged;
-				if (newvalue != null)
-					((RowDefinitionCollection)newvalue).ItemSizeChanged += ((Grid)bindable).OnDefinitionChanged;
-			}, defaultValueCreator: bindable =>
-			{
-				var rowDef = new RowDefinitionCollection();
-				rowDef.ItemSizeChanged += ((Grid)bindable).OnDefinitionChanged;
-				return rowDef;
-			});
+			validateValue: NullCheckValidation, propertyChanged: OnRowDefinitionsChanged, defaultValueCreator: RowDefinitionsDefaultValueCreator);
 
-		readonly GridElementCollection _children;
-
-		public Grid()
-		{
-			_children = new GridElementCollection(InternalChildren, this) { Parent = this };
-		}
-
-		public new IGridList<View> Children
-		{
-			get { return _children; }
-		}
-
-		public ColumnDefinitionCollection ColumnDefinitions
-		{
-			get { return (ColumnDefinitionCollection)GetValue(ColumnDefinitionsProperty); }
-			set { SetValue(ColumnDefinitionsProperty, value); }
-		}
-
-		public double ColumnSpacing
-		{
-			get { return (double)GetValue(ColumnSpacingProperty); }
-			set { SetValue(ColumnSpacingProperty, value); }
-		}
-
-		public RowDefinitionCollection RowDefinitions
-		{
-			get { return (RowDefinitionCollection)GetValue(RowDefinitionsProperty); }
-			set { SetValue(RowDefinitionsProperty, value); }
-		}
-
-		public double RowSpacing
-		{
-			get { return (double)GetValue(RowSpacingProperty); }
-			set { SetValue(RowSpacingProperty, value); }
-		}
+		public static bool EnableLegacyLayoutBehavior { get; set; }
 
 		public static int GetColumn(BindableObject bindable)
 		{
@@ -126,6 +72,92 @@ namespace Xamarin.Forms
 		public static void SetRowSpan(BindableObject bindable, int value)
 		{
 			bindable.SetValue(RowSpanProperty, value);
+		}
+
+		static object ColumnDefinitionsValueCreator(BindableObject bindable)
+		{
+			var colDef = new ColumnDefinitionCollection();
+			colDef.ItemSizeChanged += ((Grid)bindable).OnDefinitionChanged;
+			return colDef;
+		}
+
+		static bool NullCheckValidation(BindableObject bindable, object value)
+		{
+			return value != null;
+		}
+
+		static void OnColumnDefinitionsChanged(BindableObject bindable, object oldvalue, object newvalue)
+		{
+			if (oldvalue != null)
+				((ColumnDefinitionCollection)oldvalue).ItemSizeChanged -= ((Grid)bindable).OnDefinitionChanged;
+			if (newvalue != null)
+				((ColumnDefinitionCollection)newvalue).ItemSizeChanged += ((Grid)bindable).OnDefinitionChanged;
+		}
+
+		static void OnRowDefinitionsChanged(BindableObject bindable, object oldvalue, object newvalue)
+		{
+			if (oldvalue != null)
+				((RowDefinitionCollection)oldvalue).ItemSizeChanged -= ((Grid)bindable).OnDefinitionChanged;
+			if (newvalue != null)
+				((RowDefinitionCollection)newvalue).ItemSizeChanged += ((Grid)bindable).OnDefinitionChanged;
+		}
+
+		static void OnSpacingChanged(BindableObject bindable, object oldValue, object newValue)
+		{
+			((Grid)bindable).InvalidateMeasure(InvalidationTrigger.MeasureChanged);
+		}
+
+		static object RowDefinitionsDefaultValueCreator(BindableObject bindable)
+		{
+			var rowDef = new RowDefinitionCollection();
+			rowDef.ItemSizeChanged += ((Grid)bindable).OnDefinitionChanged;
+			return rowDef;
+		}
+
+		static bool ValidateIndex(BindableObject bindable, object value)
+		{
+			return (int)value >= 0;
+		}
+
+		static bool ValidateSpan(BindableObject bindable, object value)
+		{
+			return (int)value >= 1;
+		}
+
+		readonly GridElementCollection _children;
+
+		public Grid()
+		{
+			_children = new GridElementCollection(InternalChildren, this) { Parent = this };
+		}
+
+		public new IGridList<View> Children
+		{
+			get { return _children; }
+		}
+
+		public ColumnDefinitionCollection ColumnDefinitions
+		{
+			get { return (ColumnDefinitionCollection)GetValue(ColumnDefinitionsProperty); }
+			set { SetValue(ColumnDefinitionsProperty, value); }
+		}
+
+		public double ColumnSpacing
+		{
+			get { return (double)GetValue(ColumnSpacingProperty); }
+			set { SetValue(ColumnSpacingProperty, value); }
+		}
+
+		public RowDefinitionCollection RowDefinitions
+		{
+			get { return (RowDefinitionCollection)GetValue(RowDefinitionsProperty); }
+			set { SetValue(RowDefinitionsProperty, value); }
+		}
+
+		public double RowSpacing
+		{
+			get { return (double)GetValue(RowSpacingProperty); }
+			set { SetValue(RowSpacingProperty, value); }
 		}
 
 		protected override void OnAdded(View view)
@@ -229,8 +261,9 @@ namespace Xamarin.Forms
 
 		void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == ColumnProperty.PropertyName || e.PropertyName == ColumnSpanProperty.PropertyName || e.PropertyName == RowProperty.PropertyName ||
-				e.PropertyName == RowSpanProperty.PropertyName)
+			if (e.PropertyName == ColumnProperty.PropertyName || e.PropertyName == ColumnSpanProperty.PropertyName ||
+			    e.PropertyName == RowProperty.PropertyName ||
+			    e.PropertyName == RowSpanProperty.PropertyName)
 			{
 				var child = sender as View;
 				if (child != null)
@@ -288,24 +321,24 @@ namespace Xamarin.Forms
 			public void Add(View view, int left, int top)
 			{
 				if (left < 0)
-					throw new ArgumentOutOfRangeException("left");
+					throw new ArgumentOutOfRangeException(nameof(left));
 				if (top < 0)
-					throw new ArgumentOutOfRangeException("top");
+					throw new ArgumentOutOfRangeException(nameof(top));
 				Add(view, left, left + 1, top, top + 1);
 			}
 
 			public void Add(View view, int left, int right, int top, int bottom)
 			{
 				if (left < 0)
-					throw new ArgumentOutOfRangeException("left");
+					throw new ArgumentOutOfRangeException(nameof(left));
 				if (top < 0)
-					throw new ArgumentOutOfRangeException("top");
+					throw new ArgumentOutOfRangeException(nameof(top));
 				if (left >= right)
-					throw new ArgumentOutOfRangeException("right");
+					throw new ArgumentOutOfRangeException(nameof(right));
 				if (top >= bottom)
-					throw new ArgumentOutOfRangeException("bottom");
+					throw new ArgumentOutOfRangeException(nameof(bottom));
 				if (view == null)
-					throw new ArgumentNullException("view");
+					throw new ArgumentNullException(nameof(view));
 
 				SetRow(view, top);
 				SetRowSpan(view, bottom - top);
@@ -318,7 +351,7 @@ namespace Xamarin.Forms
 			public void AddHorizontal(IEnumerable<View> views)
 			{
 				if (views == null)
-					throw new ArgumentNullException("views");
+					throw new ArgumentNullException(nameof(views));
 
 				views.ForEach(AddHorizontal);
 			}
@@ -326,7 +359,7 @@ namespace Xamarin.Forms
 			public void AddHorizontal(View view)
 			{
 				if (view == null)
-					throw new ArgumentNullException("view");
+					throw new ArgumentNullException(nameof(view));
 
 				int lastRow = this.Any() ? this.Max(w => GetRow(w) + GetRowSpan(w) - 1) : -1;
 				lastRow = Math.Max(lastRow, Parent.RowDefinitions.Count - 1);
@@ -339,7 +372,7 @@ namespace Xamarin.Forms
 			public void AddVertical(IEnumerable<View> views)
 			{
 				if (views == null)
-					throw new ArgumentNullException("views");
+					throw new ArgumentNullException(nameof(views));
 
 				views.ForEach(AddVertical);
 			}
@@ -347,7 +380,7 @@ namespace Xamarin.Forms
 			public void AddVertical(View view)
 			{
 				if (view == null)
-					throw new ArgumentNullException("view");
+					throw new ArgumentNullException(nameof(view));
 
 				int lastRow = this.Any() ? this.Max(w => GetRow(w) + GetRowSpan(w) - 1) : -1;
 				lastRow = Math.Max(lastRow, Parent.RowDefinitions.Count - 1);
