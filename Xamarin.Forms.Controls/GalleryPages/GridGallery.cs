@@ -139,6 +139,21 @@ namespace Xamarin.Forms.Controls
 			}, 1,4,1,4);
 			layout.Children.Add (grid);
 
+			//Shrunken Images
+			grid = new Grid
+			{
+				RowDefinitions =
+				{
+					new RowDefinition {Height = GridLength.Auto}
+				},
+				BackgroundColor = Color.Pink
+			};
+			grid.Children.Add(new Image {Source = "oasis.jpg"}, 0, 0);
+			grid.Children.Add(new Image {Source = "oasis.jpg"}, 1, 0);
+			grid.Children.Add(new Image {Source = "oasis.jpg"}, 2, 0);
+			grid.Children.Add(new Image {Source = "oasis.jpg"}, 3, 0);
+
+			layout.Children.Add(grid);
 
 			//Change Width
 			var col0 = new ColumnDefinition { Width = 40 };

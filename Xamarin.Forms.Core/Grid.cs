@@ -8,6 +8,8 @@ namespace Xamarin.Forms
 {
 	public partial class Grid : Layout<View>
 	{
+		public static bool EnableLegacyLayoutBehavior { get; set; }
+
 		public static readonly BindableProperty RowProperty = BindableProperty.CreateAttached("Row", typeof(int), typeof(Grid), default(int), validateValue: (bindable, value) => (int)value >= 0);
 
 		public static readonly BindableProperty RowSpanProperty = BindableProperty.CreateAttached("RowSpan", typeof(int), typeof(Grid), 1, validateValue: (bindable, value) => (int)value >= 1);

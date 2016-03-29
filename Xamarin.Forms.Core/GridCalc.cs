@@ -102,44 +102,12 @@ namespace Xamarin.Forms
 
 		void CalculateAutoCells(double width, double height)
 		{
+			CalculateAutoRows(width, height);
+			CalculateAutoColumns(width, height);
+		}
 
-			for (var rowspan = 1; rowspan <= _rows.Count; rowspan++)
-			{
-				for (var i = 0; i < _rows.Count; i++)
-				{
-					RowDefinition row = _rows[i];
-					if (!row.Height.IsAuto)
-						continue;
-					if (row.ActualHeight >= 0) // if Actual is already set (by a smaller span), skip till pass 3
-						continue;
-
-					double actualHeight = row.ActualHeight;
-					double minimumHeight = row.MinimumHeight;
-					for (var index = 0; index < InternalChildren.Count; index++)
-					{
-						var child = (View)InternalChildren[index];
-						if (!child.IsVisible || GetRowSpan(child) != rowspan || !IsInRow(child, i) || NumberOfUnsetRowHeight(child) > 1)
-							continue;
-						double assignedWidth = GetAssignedColumnWidth(child);
-						double assignedHeight = GetAssignedRowHeight(child);
-						double widthRequest = assignedWidth + GetUnassignedWidth(width);
-						double heightRequest = double.IsPositiveInfinity(height)
-							? double.PositiveInfinity
-							: assignedHeight + GetUnassignedHeight(height);
-
-						SizeRequest sizeRequest = child.Measure(widthRequest, heightRequest, MeasureFlags.IncludeMargins);
-						actualHeight = Math.Max(actualHeight,
-							sizeRequest.Request.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
-						minimumHeight = Math.Max(minimumHeight,
-							sizeRequest.Minimum.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
-					}
-					if (actualHeight >= 0)
-						row.ActualHeight = actualHeight;
-					if (minimumHeight >= 0)
-						row.MinimumHeight = minimumHeight;
-				}
-			}
-
+		void CalculateAutoColumns(double width, double height)
+		{
 			for (var colspan = 1; colspan <= _columns.Count; colspan++)
 			{
 				for (var i = 0; i < _columns.Count; i++)
@@ -179,23 +147,65 @@ namespace Xamarin.Forms
 			}
 		}
 
-		void CalculateStarCells(double width, double height, double totalStarsWidth, double totalStarsHeight)
+		void CalculateAutoRows(double width, double height)
 		{
-			double starColWidth = GetUnassignedWidth(width) / totalStarsWidth;
-			double starRowHeight = GetUnassignedHeight(height) / totalStarsHeight;
-
-			for (var index = 0; index < _columns.Count; index++)
+			for (var rowspan = 1; rowspan <= _rows.Count; rowspan++)
 			{
-				ColumnDefinition col = _columns[index];
-				if (col.Width.IsStar)
-					col.ActualWidth = col.Width.Value * starColWidth;
-			}
+				for (var i = 0; i < _rows.Count; i++)
+				{
+					RowDefinition row = _rows[i];
+					if (!row.Height.IsAuto)
+						continue;
+					if (row.ActualHeight >= 0) // if Actual is already set (by a smaller span), skip till pass 3
+						continue;
 
+					double actualHeight = row.ActualHeight;
+					double minimumHeight = row.MinimumHeight;
+					for (var index = 0; index < InternalChildren.Count; index++)
+					{
+						var child = (View)InternalChildren[index];
+						if (!child.IsVisible || GetRowSpan(child) != rowspan || !IsInRow(child, i) || NumberOfUnsetRowHeight(child) > 1)
+							continue;
+						double assignedWidth = GetAssignedColumnWidth(child);
+						double assignedHeight = GetAssignedRowHeight(child);
+						double widthRequest = assignedWidth + GetUnassignedWidth(width);
+						double heightRequest = double.IsPositiveInfinity(height)
+							? double.PositiveInfinity
+							: assignedHeight + GetUnassignedHeight(height);
+
+						SizeRequest sizeRequest = child.Measure(widthRequest, heightRequest, MeasureFlags.IncludeMargins);
+						actualHeight = Math.Max(actualHeight,
+							sizeRequest.Request.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
+						minimumHeight = Math.Max(minimumHeight,
+							sizeRequest.Minimum.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
+					}
+					if (actualHeight >= 0)
+						row.ActualHeight = actualHeight;
+					if (minimumHeight >= 0)
+						row.MinimumHeight = minimumHeight;
+				}
+			}
+		}
+
+		void CalculateStarRows(double width, double height, double totalStarsHeight)
+		{
+			double starRowHeight = GetUnassignedHeight(height) / totalStarsHeight;
 			for (var index = 0; index < _rows.Count; index++)
 			{
 				RowDefinition row = _rows[index];
 				if (row.Height.IsStar)
 					row.ActualHeight = row.Height.Value * starRowHeight;
+			}
+		}
+
+		void CalculateStarColumns(double width, double height, double totalStarsWidth)
+		{
+			double starColWidth = GetUnassignedWidth(width) / totalStarsWidth;
+			for (var index = 0; index < _columns.Count; index++)
+			{
+				ColumnDefinition col = _columns[index];
+				if (col.Width.IsStar)
+					col.ActualWidth = col.Width.Value * starColWidth;
 			}
 		}
 
@@ -365,8 +375,7 @@ namespace Xamarin.Forms
 		{
 			double starColWidth;
 			starColWidth = MeasuredStarredColumns();
-
-			if (!double.IsPositiveInfinity(width) && double.IsPositiveInfinity(height))
+			if (!double.IsPositiveInfinity(width) && (!EnableLegacyLayoutBehavior || double.IsPositiveInfinity(height)))
 			{
 				// re-zero columns so GetUnassignedWidth returns correctly
 				for (var index = 0; index < _columns.Count; index++)
@@ -376,7 +385,10 @@ namespace Xamarin.Forms
 						col.ActualWidth = 0;
 				}
 
-				starColWidth = Math.Max(starColWidth, GetUnassignedWidth(width) / totalStarsWidth);
+				if (EnableLegacyLayoutBehavior)
+					starColWidth = Math.Max(starColWidth, GetUnassignedWidth(width) / totalStarsWidth);
+				else
+					starColWidth = Math.Min(starColWidth, GetUnassignedWidth(width) / totalStarsWidth);
 			}
 
 			for (var index = 0; index < _columns.Count; index++)
@@ -393,8 +405,7 @@ namespace Xamarin.Forms
 		{
 			double starRowHeight;
 			starRowHeight = MeasureStarredRows();
-
-			if (!double.IsPositiveInfinity(height) && double.IsPositiveInfinity(width))
+			if (!double.IsPositiveInfinity(height) && (!EnableLegacyLayoutBehavior || double.IsPositiveInfinity(width)))
 			{
 				for (var index = 0; index < _rows.Count; index++)
 				{
@@ -403,7 +414,10 @@ namespace Xamarin.Forms
 						row.ActualHeight = 0;
 				}
 
-				starRowHeight = Math.Max(starRowHeight, GetUnassignedHeight(height) / totalStarsHeight);
+				if (EnableLegacyLayoutBehavior)
+					starRowHeight = Math.Max(starRowHeight, GetUnassignedHeight(height) / totalStarsHeight);
+				else
+					starRowHeight = Math.Min(starRowHeight, GetUnassignedHeight(height) / totalStarsHeight);
 			}
 
 			for (var index = 0; index < _rows.Count; index++)
@@ -496,17 +510,48 @@ namespace Xamarin.Forms
 			if (requestSize)
 			{
 				MeasureAndContractStarredColumns(width, height, totalStarsWidth);
+				if (!EnableLegacyLayoutBehavior)
+					SquishAutoRows(width, height);
 				MeasureAndContractStarredRows(width, height, totalStarsHeight);
 			}
 			else
 			{
-				CalculateStarCells(width, height, totalStarsWidth, totalStarsHeight);
+				CalculateStarColumns(width, height, totalStarsWidth);
+				if (!EnableLegacyLayoutBehavior)
+					SquishAutoRows(width, height);
+				CalculateStarRows(width, height, totalStarsHeight);
 			}
 
 			ZeroUnassignedCells();
 
 			ExpandLastAutoRowIfNeeded(height, requestSize);
 			ExpandLastAutoColumnIfNeeded(width, requestSize);
+		}
+
+		void SquishAutoRows(double width, double height)
+		{
+			for (var i = 0; i < _rows.Count; i++)
+			{
+				RowDefinition row = _rows[i];
+				if (!row.Height.IsAuto)
+					continue;
+				row.ActualHeight = -1;
+			}
+
+			CalculateAutoRows(width, height);
+		}
+
+		void SquishAutoColumns(double width, double height)
+		{
+			for (var i = 0; i < _columns.Count; i++)
+			{
+				ColumnDefinition column = _columns[i];
+				if (!column.Width.IsAuto)
+					continue;
+				column.ActualWidth = -1;
+			}
+
+			CalculateAutoColumns(width, height);
 		}
 
 		double MeasureStarredRows()
@@ -589,6 +634,26 @@ namespace Xamarin.Forms
 			int childRow = GetRow(child);
 			int span = GetRowSpan(child);
 			return childRow <= row && row < childRow + span;
+		}
+
+		bool IsInStarColumn(BindableObject child)
+		{
+			int index = GetColumn(child);
+			int span = GetColumnSpan(child);
+			for (int i = index; i < index + span; i++)
+				if (_columns[i].Width.IsStar)
+					return true;
+			return false;
+		}
+
+		bool IsInStarRow(BindableObject child)
+		{
+			int index = GetRow(child);
+			int span = GetRowSpan(child);
+			for (int i = index; i < index + span; i++)
+				if (_rows[i].Height.IsStar)
+					return true;
+			return false;
 		}
 
 		int NumberOfUnsetColumnWidth(BindableObject child)
