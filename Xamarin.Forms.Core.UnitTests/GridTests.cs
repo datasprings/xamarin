@@ -1565,5 +1565,40 @@ namespace Xamarin.Forms.Core.UnitTests
 				delayAction ();
 			}
 		}
+
+		[Test]
+		public void GridMeasureWithImages()
+		{
+			var grid = new Grid {
+				Platform = new UnitPlatform ((ve, wc, hc) =>
+				{
+					var size = 40.0;
+
+					if (ve is Image)
+					{
+						size = Math.Min(200.0, Math.Min(wc, hc));
+					}
+
+					return new SizeRequest(new Size(size, size));
+				}),
+				IsPlatformEnabled = true,
+				ColumnSpacing = 0,
+				RowSpacing = 0,
+				RowDefinitions = {
+					new RowDefinition { Height = new GridLength (1, GridUnitType.Auto) }
+				},
+				ColumnDefinitions = {
+					new ColumnDefinition { Width = new GridLength (1, GridUnitType.Star) },
+					new ColumnDefinition { Width = new GridLength (4, GridUnitType.Star) }
+				}
+			};
+
+			var image = new Image { IsPlatformEnabled = true };
+			grid.Children.Add(image);
+
+			var sizeRequest = grid.Measure(100, double.PositiveInfinity);
+
+			Assert.AreEqual(20, sizeRequest.Request.Height);
+		}
 	}
 }

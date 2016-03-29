@@ -102,74 +102,79 @@ namespace Xamarin.Forms
 
 		void CalculateAutoCells(double width, double height)
 		{
-			// this require multiple passes. First process the 1-span, then 2, 3, ...
-			// And this needs to be run twice, just in case a lower-span column can be determined by a larger span
-			for (var iteration = 0; iteration < 2; iteration++)
+
+			for (var rowspan = 1; rowspan <= _rows.Count; rowspan++)
 			{
-				for (var rowspan = 1; rowspan <= _rows.Count; rowspan++)
+				for (var i = 0; i < _rows.Count; i++)
 				{
-					for (var i = 0; i < _rows.Count; i++)
+					RowDefinition row = _rows[i];
+					if (!row.Height.IsAuto)
+						continue;
+					if (row.ActualHeight >= 0) // if Actual is already set (by a smaller span), skip till pass 3
+						continue;
+
+					double actualHeight = row.ActualHeight;
+					double minimumHeight = row.MinimumHeight;
+					for (var index = 0; index < InternalChildren.Count; index++)
 					{
-						RowDefinition row = _rows[i];
-						if (!row.Height.IsAuto)
+						var child = (View)InternalChildren[index];
+						if (!child.IsVisible || GetRowSpan(child) != rowspan || !IsInRow(child, i) || NumberOfUnsetRowHeight(child) > 1)
 							continue;
-						if (row.ActualHeight >= 0) // if Actual is already set (by a smaller span), skip till pass 3
-							continue;
+						double assignedWidth = GetAssignedColumnWidth(child);
+						double assignedHeight = GetAssignedRowHeight(child);
+						double widthRequest = assignedWidth + GetUnassignedWidth(width);
+						double heightRequest = double.IsPositiveInfinity(height)
+							? double.PositiveInfinity
+							: assignedHeight + GetUnassignedHeight(height);
 
-						double actualHeight = row.ActualHeight;
-						double minimumHeight = row.MinimumHeight;
-						for (var index = 0; index < InternalChildren.Count; index++)
-						{
-							var child = (View)InternalChildren[index];
-							if (!child.IsVisible || GetRowSpan(child) != rowspan || !IsInRow(child, i) || NumberOfUnsetRowHeight(child) > 1)
-								continue;
-							double assignedWidth = GetAssignedColumnWidth(child);
-							double assignedHeight = GetAssignedRowHeight(child);
-							double widthRequest = assignedWidth + GetUnassignedWidth(width);
-							double heightRequest = double.IsPositiveInfinity(height) ? double.PositiveInfinity : assignedHeight + GetUnassignedHeight(height);
-
-							SizeRequest sizeRequest = child.Measure(widthRequest, heightRequest, MeasureFlags.IncludeMargins);
-							actualHeight = Math.Max(actualHeight, sizeRequest.Request.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
-							minimumHeight = Math.Max(minimumHeight, sizeRequest.Minimum.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
-						}
-						if (actualHeight >= 0)
-							row.ActualHeight = actualHeight;
-						if (minimumHeight >= 0)
-							row.MinimumHeight = minimumHeight;
+						SizeRequest sizeRequest = child.Measure(widthRequest, heightRequest, MeasureFlags.IncludeMargins);
+						actualHeight = Math.Max(actualHeight,
+							sizeRequest.Request.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
+						minimumHeight = Math.Max(minimumHeight,
+							sizeRequest.Minimum.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
 					}
+					if (actualHeight >= 0)
+						row.ActualHeight = actualHeight;
+					if (minimumHeight >= 0)
+						row.MinimumHeight = minimumHeight;
 				}
+			}
 
-				for (var colspan = 1; colspan <= _columns.Count; colspan++)
+			for (var colspan = 1; colspan <= _columns.Count; colspan++)
+			{
+				for (var i = 0; i < _columns.Count; i++)
 				{
-					for (var i = 0; i < _columns.Count; i++)
+					ColumnDefinition col = _columns[i];
+					if (!col.Width.IsAuto)
+						continue;
+					if (col.ActualWidth >= 0) // if Actual is already set (by a smaller span), skip
+						continue;
+
+					double actualWidth = col.ActualWidth;
+					double minimumWidth = col.MinimumWidth;
+					for (var index = 0; index < InternalChildren.Count; index++)
 					{
-						ColumnDefinition col = _columns[i];
-						if (!col.Width.IsAuto)
+						var child = (View)InternalChildren[index];
+						if (!child.IsVisible || GetColumnSpan(child) != colspan || !IsInColumn(child, i) ||
+						    NumberOfUnsetColumnWidth(child) > 1)
 							continue;
-						if (col.ActualWidth >= 0) // if Actual is already set (by a smaller span), skip
-							continue;
+						double assignedWidth = GetAssignedColumnWidth(child);
+						double assignedHeight = GetAssignedRowHeight(child);
+						double widthRequest = double.IsPositiveInfinity(width)
+							? double.PositiveInfinity
+							: assignedWidth + GetUnassignedWidth(width);
+						double heightRequest = assignedHeight + GetUnassignedHeight(height);
 
-						double actualWidth = col.ActualWidth;
-						double minimumWidth = col.MinimumWidth;
-						for (var index = 0; index < InternalChildren.Count; index++)
-						{
-							var child = (View)InternalChildren[index];
-							if (!child.IsVisible || GetColumnSpan(child) != colspan || !IsInColumn(child, i) || NumberOfUnsetColumnWidth(child) > 1)
-								continue;
-							double assignedWidth = GetAssignedColumnWidth(child);
-							double assignedHeight = GetAssignedRowHeight(child);
-							double widthRequest = double.IsPositiveInfinity(width) ? double.PositiveInfinity : assignedWidth + GetUnassignedWidth(width);
-							double heightRequest = assignedHeight + GetUnassignedHeight(height);
-
-							SizeRequest sizeRequest = child.Measure(widthRequest, heightRequest, MeasureFlags.IncludeMargins);
-							actualWidth = Math.Max(actualWidth, sizeRequest.Request.Width - assignedWidth - (GetColumnSpan(child) - 1) * ColumnSpacing);
-							minimumWidth = Math.Max(minimumWidth, sizeRequest.Minimum.Width - assignedWidth - (GetColumnSpan(child) - 1) * ColumnSpacing);
-						}
-						if (actualWidth >= 0)
-							col.ActualWidth = actualWidth;
-						if (minimumWidth >= 0)
-							col.MinimumWidth = actualWidth;
+						SizeRequest sizeRequest = child.Measure(widthRequest, heightRequest, MeasureFlags.IncludeMargins);
+						actualWidth = Math.Max(actualWidth,
+							sizeRequest.Request.Width - assignedWidth - (GetColumnSpan(child) - 1) * ColumnSpacing);
+						minimumWidth = Math.Max(minimumWidth,
+							sizeRequest.Minimum.Width - assignedWidth - (GetColumnSpan(child) - 1) * ColumnSpacing);
 					}
+					if (actualWidth >= 0)
+						col.ActualWidth = actualWidth;
+					if (minimumWidth >= 0)
+						col.MinimumWidth = actualWidth;
 				}
 			}
 		}
@@ -203,15 +208,8 @@ namespace Xamarin.Forms
 				columnWidthSum += c.ActualWidth;
 			}
 
-			double rowHeightSum = 0;
-			for (var index = 0; index < _rows.Count; index++)
-			{
-				RowDefinition r = _rows[index];
-				rowHeightSum += r.ActualHeight;
-			}
-
-			var request = new Size(columnWidthSum + (_columns.Count - 1) * ColumnSpacing, rowHeightSum + (_rows.Count - 1) * RowSpacing);
-			if (request.Width > width)
+			var requestWidth = columnWidthSum + (_columns.Count - 1) * ColumnSpacing;
+			if (requestWidth > width)
 			{
 				double contractionSpace = 0;
 				for (var index = 0; index < _columns.Count; index++)
@@ -223,7 +221,7 @@ namespace Xamarin.Forms
 				if (contractionSpace > 0)
 				{
 					// contract as much as we can but no more
-					double contractionNeeded = Math.Min(contractionSpace, Math.Max(request.Width - width, 0));
+					double contractionNeeded = Math.Min(contractionSpace, Math.Max(requestWidth - width, 0));
 					double contractFactor = contractionNeeded / contractionSpace;
 					for (var index = 0; index < _columns.Count; index++)
 					{
@@ -241,12 +239,6 @@ namespace Xamarin.Forms
 
 		void ContractRowsIfNeeded(double height, Func<RowDefinition, bool> predicate)
 		{
-			double columnSum = 0;
-			for (var index = 0; index < _columns.Count; index++)
-			{
-				ColumnDefinition c = _columns[index];
-				columnSum += Math.Max(0, c.ActualWidth);
-			}
 			double rowSum = 0;
 			for (var index = 0; index < _rows.Count; index++)
 			{
@@ -254,8 +246,8 @@ namespace Xamarin.Forms
 				rowSum += Math.Max(0, r.ActualHeight);
 			}
 
-			var request = new Size(columnSum + (_columns.Count - 1) * ColumnSpacing, rowSum + (_rows.Count - 1) * RowSpacing);
-			if (request.Height <= height)
+			var requestHeight = rowSum + (_rows.Count - 1) * RowSpacing;
+			if (requestHeight <= height)
 				return;
 			double contractionSpace = 0;
 			for (var index = 0; index < _rows.Count; index++)
@@ -267,7 +259,7 @@ namespace Xamarin.Forms
 			if (!(contractionSpace > 0))
 				return;
 			// contract as much as we can but no more
-			double contractionNeeded = Math.Min(contractionSpace, Math.Max(request.Height - height, 0));
+			double contractionNeeded = Math.Min(contractionSpace, Math.Max(requestHeight - height, 0));
 			double contractFactor = contractionNeeded / contractionSpace;
 			for (var index = 0; index < _rows.Count; index++)
 			{
@@ -427,37 +419,34 @@ namespace Xamarin.Forms
 		double MeasuredStarredColumns()
 		{
 			double starColWidth;
-			for (var iteration = 0; iteration < 2; iteration++)
+			for (var colspan = 1; colspan <= _columns.Count; colspan++)
 			{
-				for (var colspan = 1; colspan <= _columns.Count; colspan++)
+				for (var i = 0; i < _columns.Count; i++)
 				{
-					for (var i = 0; i < _columns.Count; i++)
+					ColumnDefinition col = _columns[i];
+					if (!col.Width.IsStar)
+						continue;
+					if (col.ActualWidth >= 0) // if Actual is already set (by a smaller span), skip
+						continue;
+
+					double actualWidth = col.ActualWidth;
+					double minimumWidth = col.MinimumWidth;
+					for (var index = 0; index < InternalChildren.Count; index++)
 					{
-						ColumnDefinition col = _columns[i];
-						if (!col.Width.IsStar)
+						var child = (View)InternalChildren[index];
+						if (!child.IsVisible || GetColumnSpan(child) != colspan || !IsInColumn(child, i) || NumberOfUnsetColumnWidth(child) > 1)
 							continue;
-						if (col.ActualWidth >= 0) // if Actual is already set (by a smaller span), skip
-							continue;
+						double assignedWidth = GetAssignedColumnWidth(child);
 
-						double actualWidth = col.ActualWidth;
-						double minimumWidth = col.MinimumWidth;
-						for (var index = 0; index < InternalChildren.Count; index++)
-						{
-							var child = (View)InternalChildren[index];
-							if (!child.IsVisible || GetColumnSpan(child) != colspan || !IsInColumn(child, i) || NumberOfUnsetColumnWidth(child) > 1)
-								continue;
-							double assignedWidth = GetAssignedColumnWidth(child);
-
-							SizeRequest sizeRequest = child.Measure(double.PositiveInfinity, double.PositiveInfinity, MeasureFlags.IncludeMargins);
-							actualWidth = Math.Max(actualWidth, sizeRequest.Request.Width - assignedWidth - (GetColumnSpan(child) - 1) * ColumnSpacing);
-							minimumWidth = Math.Max(minimumWidth, sizeRequest.Minimum.Width - assignedWidth - (GetColumnSpan(child) - 1) * ColumnSpacing);
-						}
-						if (actualWidth >= 0)
-							col.ActualWidth = actualWidth;
-
-						if (minimumWidth >= 0)
-							col.MinimumWidth = minimumWidth;
+						SizeRequest sizeRequest = child.Measure(double.PositiveInfinity, double.PositiveInfinity, MeasureFlags.IncludeMargins);
+						actualWidth = Math.Max(actualWidth, sizeRequest.Request.Width - assignedWidth - (GetColumnSpan(child) - 1) * ColumnSpacing);
+						minimumWidth = Math.Max(minimumWidth, sizeRequest.Minimum.Width - assignedWidth - (GetColumnSpan(child) - 1) * ColumnSpacing);
 					}
+					if (actualWidth >= 0)
+						col.ActualWidth = actualWidth;
+
+					if (minimumWidth >= 0)
+						col.MinimumWidth = minimumWidth;
 				}
 			}
 
@@ -523,38 +512,35 @@ namespace Xamarin.Forms
 		double MeasureStarredRows()
 		{
 			double starRowHeight;
-			for (var iteration = 0; iteration < 2; iteration++)
+			for (var rowspan = 1; rowspan <= _rows.Count; rowspan++)
 			{
-				for (var rowspan = 1; rowspan <= _rows.Count; rowspan++)
+				for (var i = 0; i < _rows.Count; i++)
 				{
-					for (var i = 0; i < _rows.Count; i++)
+					RowDefinition row = _rows[i];
+					if (!row.Height.IsStar)
+						continue;
+					if (row.ActualHeight >= 0) // if Actual is already set (by a smaller span), skip till pass 3
+						continue;
+
+					double actualHeight = row.ActualHeight;
+					double minimumHeight = row.MinimumHeight;
+					for (var index = 0; index < InternalChildren.Count; index++)
 					{
-						RowDefinition row = _rows[i];
-						if (!row.Height.IsStar)
+						var child = (View)InternalChildren[index];
+						if (!child.IsVisible || GetRowSpan(child) != rowspan || !IsInRow(child, i) || NumberOfUnsetRowHeight(child) > 1)
 							continue;
-						if (row.ActualHeight >= 0) // if Actual is already set (by a smaller span), skip till pass 3
-							continue;
+						double assignedHeight = GetAssignedRowHeight(child);
+						double assignedWidth = GetAssignedColumnWidth(child);
 
-						double actualHeight = row.ActualHeight;
-						double minimumHeight = row.MinimumHeight;
-						for (var index = 0; index < InternalChildren.Count; index++)
-						{
-							var child = (View)InternalChildren[index];
-							if (!child.IsVisible || GetRowSpan(child) != rowspan || !IsInRow(child, i) || NumberOfUnsetRowHeight(child) > 1)
-								continue;
-							double assignedHeight = GetAssignedRowHeight(child);
-							double assignedWidth = GetAssignedColumnWidth(child);
-
-							SizeRequest sizeRequest = child.Measure(assignedWidth, double.PositiveInfinity, MeasureFlags.IncludeMargins);
-							actualHeight = Math.Max(actualHeight, sizeRequest.Request.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
-							minimumHeight = Math.Max(minimumHeight, sizeRequest.Minimum.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
-						}
-						if (actualHeight >= 0)
-							row.ActualHeight = actualHeight;
-
-						if (minimumHeight >= 0)
-							row.MinimumHeight = minimumHeight;
+						SizeRequest sizeRequest = child.Measure(assignedWidth, double.PositiveInfinity, MeasureFlags.IncludeMargins);
+						actualHeight = Math.Max(actualHeight, sizeRequest.Request.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
+						minimumHeight = Math.Max(minimumHeight, sizeRequest.Minimum.Height - assignedHeight - RowSpacing * (GetRowSpan(child) - 1));
 					}
+					if (actualHeight >= 0)
+						row.ActualHeight = actualHeight;
+
+					if (minimumHeight >= 0)
+						row.MinimumHeight = minimumHeight;
 				}
 			}
 
