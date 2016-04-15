@@ -86,7 +86,7 @@ namespace Xamarin.Forms
 
 		internal ObservableCollection<Element> InternalChildren { get; } = new ObservableCollection<Element>();
 
-		internal override ReadOnlyCollection<Element> LogicalChildren
+		public override ReadOnlyCollection<Element> LogicalChildren
 		{
 			get { return _logicalChildren ?? (_logicalChildren = new ReadOnlyCollection<Element>(InternalChildren)); }
 		}

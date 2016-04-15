@@ -58,7 +58,7 @@ namespace Xamarin.Forms
 
 		internal Task CurrentNavigationTask { get; set; }
 
-		internal Stack<Page> StackCopy
+		public Stack<Page> StackCopy
 		{
 			get
 			{
@@ -69,7 +69,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal int StackDepth
+		public int StackDepth
 		{
 			get { return InternalChildren.Count; }
 		}
@@ -215,7 +215,7 @@ namespace Xamarin.Forms
 			return base.OnBackButtonPressed();
 		}
 
-		internal event EventHandler<NavigationRequestedEventArgs> InsertPageBeforeRequested;
+		public event EventHandler<NavigationRequestedEventArgs> InsertPageBeforeRequested;
 
 		internal async Task<Page> PopAsyncInner(bool animated, bool fast = false)
 		{
@@ -252,13 +252,13 @@ namespace Xamarin.Forms
 			return page;
 		}
 
-		internal event EventHandler<NavigationRequestedEventArgs> PopRequested;
+		public event EventHandler<NavigationRequestedEventArgs> PopRequested;
 
-		internal event EventHandler<NavigationRequestedEventArgs> PopToRootRequested;
+		public event EventHandler<NavigationRequestedEventArgs> PopToRootRequested;
 
-		internal event EventHandler<NavigationRequestedEventArgs> PushRequested;
+		public event EventHandler<NavigationRequestedEventArgs> PushRequested;
 
-		internal event EventHandler<NavigationRequestedEventArgs> RemovePageRequested;
+		public event EventHandler<NavigationRequestedEventArgs> RemovePageRequested;
 
 		void InsertPageBefore(Page page, Page before)
 		{

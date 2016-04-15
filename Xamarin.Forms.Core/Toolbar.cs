@@ -7,7 +7,7 @@ namespace Xamarin.Forms
 {
 	// Marked as internal for 1.0 release until we are ready to release this
 	[RenderWith(typeof(_ToolbarRenderer))]
-	internal class Toolbar : View
+	public class Toolbar : View
 	{
 		readonly List<ToolbarItem> _items = new List<ToolbarItem>();
 

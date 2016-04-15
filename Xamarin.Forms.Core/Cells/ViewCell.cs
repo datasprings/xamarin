@@ -43,6 +43,6 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal override ReadOnlyCollection<Element> LogicalChildren => _logicalChildren ?? base.LogicalChildren;
+		public override ReadOnlyCollection<Element> LogicalChildren => _logicalChildren ?? base.LogicalChildren;
 	}
 }

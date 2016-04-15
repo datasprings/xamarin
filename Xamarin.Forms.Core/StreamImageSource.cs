@@ -23,7 +23,7 @@ namespace Xamarin.Forms
 			base.OnPropertyChanged(propertyName);
 		}
 
-		internal async Task<Stream> GetStreamAsync(CancellationToken userToken = default(CancellationToken))
+		public async Task<Stream> GetStreamAsync(CancellationToken userToken = default(CancellationToken))
 		{
 			if (Stream == null)
 				return null;

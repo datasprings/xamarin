@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms
 {
-	internal interface IPlatformServices
+	public interface IPlatformServices
 	{
 		bool IsInvokeRequired { get; }
 

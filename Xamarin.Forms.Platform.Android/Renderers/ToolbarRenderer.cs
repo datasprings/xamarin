@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Platform.Android
 			}
 			else
 			{
-				var oldToolbar = (Toolbar)e.OldElement;
+                var oldToolbar = (Xamarin.Forms.Toolbar)e.OldElement;
 				oldToolbar.ItemAdded -= OnToolbarItemsChanged;
 				oldToolbar.ItemRemoved -= OnToolbarItemsChanged;
 			}

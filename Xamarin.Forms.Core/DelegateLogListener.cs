@@ -2,7 +2,7 @@ using System;
 
 namespace Xamarin.Forms
 {
-	internal class DelegateLogListener : LogListener
+	public class DelegateLogListener : LogListener
 	{
 		readonly Action<string, string> _log;
 

@@ -2,7 +2,7 @@ using System;
 
 namespace Xamarin.Forms
 {
-	internal class EventArg<T> : EventArgs
+	public class EventArg<T> : EventArgs
 	{
 		// Property variable
 

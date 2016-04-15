@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 
 namespace Xamarin.Forms
 {
-	internal static class NotifyCollectionChangedEventArgsExtensions
+	public static class NotifyCollectionChangedEventArgsExtensions
 	{
 		public static void Apply<TFrom>(this NotifyCollectionChangedEventArgs self, IList<TFrom> from, IList<object> to)
 		{
@@ -81,7 +81,7 @@ namespace Xamarin.Forms
 			return self.Action;
 		}
 
-		public static NotifyCollectionChangedEventArgsEx WithCount(this NotifyCollectionChangedEventArgs e, int count)
+		internal static NotifyCollectionChangedEventArgsEx WithCount(this NotifyCollectionChangedEventArgs e, int count)
 		{
 			switch (e.Action)
 			{

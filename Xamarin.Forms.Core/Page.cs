@@ -12,11 +12,11 @@ namespace Xamarin.Forms
 	[RenderWith(typeof(_PageRenderer))]
 	public class Page : VisualElement, ILayout
 	{
-		internal const string BusySetSignalName = "Xamarin.BusySet";
+        public const string BusySetSignalName = "Xamarin.BusySet";
 
-		internal const string AlertSignalName = "Xamarin.SendAlert";
+        public const string AlertSignalName = "Xamarin.SendAlert";
 
-		internal const string ActionSheetSignalName = "Xamarin.ShowActionSheet";
+        public const string ActionSheetSignalName = "Xamarin.ShowActionSheet";
 
 		internal static readonly BindableProperty IgnoresContainerAreaProperty = BindableProperty.Create("IgnoresContainerArea", typeof(bool), typeof(Page), false);
 
@@ -83,7 +83,7 @@ namespace Xamarin.Forms
 
 		public IList<ToolbarItem> ToolbarItems { get; internal set; }
 
-		internal Rectangle ContainerArea
+		public Rectangle ContainerArea
 		{
 			get { return _containerArea; }
 			set
@@ -96,15 +96,15 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal bool IgnoresContainerArea
+		public bool IgnoresContainerArea
 		{
 			get { return (bool)GetValue(IgnoresContainerAreaProperty); }
 			set { SetValue(IgnoresContainerAreaProperty, value); }
 		}
 
-		internal ObservableCollection<Element> InternalChildren { get; } = new ObservableCollection<Element>();
+		public ObservableCollection<Element> InternalChildren { get; } = new ObservableCollection<Element>();
 
-		internal override ReadOnlyCollection<Element> LogicalChildren
+		public override ReadOnlyCollection<Element> LogicalChildren
 		{
 			get { return _logicalChildren ?? (_logicalChildren = new ReadOnlyCollection<Element>(InternalChildren)); }
 		}
@@ -290,7 +290,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal void SendAppearing()
+		public void SendAppearing()
 		{
 			if (_hasAppeared)
 				return;
@@ -309,7 +309,7 @@ namespace Xamarin.Forms
 			pageContainer?.CurrentPage?.SendAppearing();
 		}
 
-		internal void SendDisappearing()
+		public void SendDisappearing()
 		{
 			if (!_hasAppeared)
 				return;

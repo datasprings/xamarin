@@ -51,9 +51,9 @@ namespace Xamarin.Forms.Platform.Android
 			if (view == null)
 				return;
 
-			foreach (Element logicalChild in view.LogicalChildren)
-			{
-				var child = logicalChild as VisualElement;
+            foreach (Element logicalChild in view.LogicalChildren)
+            {
+                var child = logicalChild as VisualElement;
 				if (child != null)
 				{
 					IVisualElementRenderer renderer = Platform.GetRenderer(child);

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms
 {
-	internal class NavigationProxy : INavigation
+	public class NavigationProxy : INavigation
 	{
 		INavigation _inner;
 		Lazy<List<Page>> _modalStack = new Lazy<List<Page>>(() => new List<Page>());

@@ -1,6 +1,6 @@
 namespace Xamarin.Forms
 {
-	internal interface IFontElement
+	public interface IFontElement
 	{
 		FontAttributes FontAttributes { get; }
 

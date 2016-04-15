@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Xamarin.Forms
 {
-	internal class ObservableList<T> : ObservableCollection<T>
+	public class ObservableList<T> : ObservableCollection<T>
 	{
 		// There's lots of special-casing optimizations that could be done here
 		// but right now this is only being used for tests.

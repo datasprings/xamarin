@@ -1,7 +1,7 @@
 namespace Xamarin.Forms
 {
-	internal abstract class ExpressionSearch
+    public abstract class ExpressionSearch
 	{
-		internal static IExpressionSearch Default { get; set; }
+        public static IExpressionSearch Default { get; set; }
 	}
 }

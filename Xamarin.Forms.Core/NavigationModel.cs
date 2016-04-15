@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Xamarin.Forms
 {
-	internal class NavigationModel
+	public class NavigationModel
 	{
 		readonly List<Page> _modalStack = new List<Page>();
 		readonly List<List<Page>> _navTree = new List<List<Page>>();

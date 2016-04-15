@@ -73,7 +73,7 @@ namespace Xamarin.Forms
 			ComputeConstraintForView(view, false);
 		}
 
-		internal override void InvalidateMeasure(InvalidationTrigger trigger)
+		public override void InvalidateMeasure(InvalidationTrigger trigger)
 		{
 			_layoutInformation = new LayoutInformation();
 			base.InvalidateMeasure(trigger);

@@ -1,6 +1,6 @@
 ﻿namespace Xamarin.Forms
 {
-	internal interface IListViewController : IViewController
+	public interface IListViewController : IViewController
 	{
 		Element FooterElement { get; }
 

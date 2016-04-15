@@ -8,15 +8,15 @@ namespace Xamarin.Forms
 {
 	public static class Device
 	{
-		internal static DeviceInfo info;
+        public static DeviceInfo info;
 
 		static IPlatformServices s_platformServices;
 
-		public static TargetIdiom Idiom { get; internal set; }
+		public static TargetIdiom Idiom { get; set; }
 
-		public static TargetPlatform OS { get; internal set; }
+		public static TargetPlatform OS { get; set; }
 
-		internal static DeviceInfo Info
+        public static DeviceInfo Info
 		{
 			get
 			{
@@ -27,12 +27,12 @@ namespace Xamarin.Forms
 			set { info = value; }
 		}
 
-		internal static bool IsInvokeRequired
+		public static bool IsInvokeRequired
 		{
 			get { return PlatformServices.IsInvokeRequired; }
 		}
 
-		internal static IPlatformServices PlatformServices
+        public static IPlatformServices PlatformServices
 		{
 			get
 			{
@@ -119,7 +119,7 @@ namespace Xamarin.Forms
 			return PlatformServices.GetAssemblies();
 		}
 
-		internal static double GetNamedSize(NamedSize size, Type targetElementType, bool useOldSizes)
+		public static double GetNamedSize(NamedSize size, Type targetElementType, bool useOldSizes)
 		{
 			return PlatformServices.GetNamedSize(size, targetElementType, useOldSizes);
 		}

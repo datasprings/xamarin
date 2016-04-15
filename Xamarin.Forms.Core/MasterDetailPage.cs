@@ -89,9 +89,9 @@ namespace Xamarin.Forms
 			set { SetValue(MasterBehaviorProperty, value); }
 		}
 
-		internal bool CanChangeIsPresented { get; set; } = true;
+		public bool CanChangeIsPresented { get; set; } = true;
 
-		internal Rectangle DetailBounds
+		public Rectangle DetailBounds
 		{
 			get { return _detailBounds; }
 			set
@@ -103,7 +103,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal Rectangle MasterBounds
+		public Rectangle MasterBounds
 		{
 			get { return _masterBounds; }
 			set
@@ -115,7 +115,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal bool ShouldShowSplitMode
+		public bool ShouldShowSplitMode
 		{
 			get
 			{
@@ -193,7 +193,7 @@ namespace Xamarin.Forms
 			base.OnParentSet();
 		}
 
-		internal event EventHandler<BackButtonPressedEventArgs> BackButtonPressed;
+		public event EventHandler<BackButtonPressedEventArgs> BackButtonPressed;
 
 		internal static void UpdateMasterBehavior(MasterDetailPage page)
 		{

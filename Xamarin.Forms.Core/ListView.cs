@@ -189,7 +189,7 @@ namespace Xamarin.Forms
 			set { SetValue(SeparatorVisibilityProperty, value); }
 		}
 
-		internal ListViewCachingStrategy CachingStrategy { get; private set; }
+		public ListViewCachingStrategy CachingStrategy { get; private set; }
 
 		internal bool TakePerformanceHit { get; set; }
 
@@ -343,7 +343,7 @@ namespace Xamarin.Forms
 			return CreateDefault(item);
 		}
 
-		internal void NotifyRowTapped(int groupIndex, int inGroupIndex, Cell cell = null)
+		public void NotifyRowTapped(int groupIndex, int inGroupIndex, Cell cell = null)
 		{
 			TemplatedItemsList<ItemsView<Cell>, Cell> group = TemplatedItems.GetGroup(groupIndex);
 
@@ -364,7 +364,7 @@ namespace Xamarin.Forms
 			ItemTapped?.Invoke(this, new ItemTappedEventArgs(group, cell.BindingContext));
 		}
 
-		internal void NotifyRowTapped(int index, Cell cell = null)
+		public void NotifyRowTapped(int index, Cell cell = null)
 		{
 			if (IsGroupingEnabled)
 			{
@@ -388,7 +388,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal event EventHandler<ScrollToRequestedEventArgs> ScrollToRequested;
+		public event EventHandler<ScrollToRequestedEventArgs> ScrollToRequested;
 
 		void OnCommandCanExecuteChanged(object sender, EventArgs eventArgs)
 		{

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms
 {
-	internal interface IIsolatedStorageFile
+	public interface IIsolatedStorageFile
 	{
 		Task CreateDirectoryAsync(string path);
 		Task<bool> GetDirectoryExistsAsync(string path);

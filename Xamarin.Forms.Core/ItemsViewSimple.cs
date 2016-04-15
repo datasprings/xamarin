@@ -95,7 +95,7 @@ namespace Xamarin.Forms
 			base.OnPropertyChanged(propertyName);
 		}
 
-		internal event NotifyCollectionChangedEventHandler CollectionChanged;
+		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
 		internal void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{

@@ -147,7 +147,7 @@ namespace Xamarin.Forms
 			IsInitialized = true;
 		}
 
-		class AndroidDeviceInfo : DeviceInfo
+        public class AndroidDeviceInfo : DeviceInfo
 		{
 			readonly IDeviceInfoProvider _formsActivity;
 			readonly Size _pixelScreenSize;

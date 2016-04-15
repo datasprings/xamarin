@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Xamarin.Forms
 {
-	internal class ResourcesChangedEventArgs : EventArgs
+	public class ResourcesChangedEventArgs : EventArgs
 	{
 		public ResourcesChangedEventArgs(IEnumerable<KeyValuePair<string, object>> values)
 		{

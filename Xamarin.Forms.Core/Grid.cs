@@ -211,7 +211,7 @@ namespace Xamarin.Forms
 			view.ComputedConstraint = result;
 		}
 
-		internal override void InvalidateMeasure(InvalidationTrigger trigger)
+		public override void InvalidateMeasure(InvalidationTrigger trigger)
 		{
 			base.InvalidateMeasure(trigger);
 			_columns = null;

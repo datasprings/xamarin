@@ -36,7 +36,7 @@ namespace Xamarin.Forms
 		public static Application Current
 		{
 			get { return s_current; }
-			internal set
+			set
 			{
 				if (s_current == value)
 					return;
@@ -81,14 +81,14 @@ namespace Xamarin.Forms
 			get { return _propertiesTask.Result; }
 		}
 
-		internal override ReadOnlyCollection<Element> LogicalChildren
+		public override ReadOnlyCollection<Element> LogicalChildren
 		{
 			get { return _logicalChildren ?? (_logicalChildren = new ReadOnlyCollection<Element>(InternalChildren)); }
 		}
 
-		internal NavigationProxy NavigationProxy { get; }
+		public NavigationProxy NavigationProxy { get; }
 
-		internal int PanGestureId { get; set; }
+        public int PanGestureId { get; set; }
 
 		internal IResourceDictionary SystemResources { get; }
 
@@ -145,12 +145,12 @@ namespace Xamarin.Forms
 		{
 		}
 
-		internal static void ClearCurrent()
+        public static void ClearCurrent()
 		{
 			s_current = null;
 		}
 
-		internal static bool IsApplicationOrNull(Element element)
+		public static bool IsApplicationOrNull(Element element)
 		{
 			return element == null || element is Application;
 		}
@@ -177,19 +177,19 @@ namespace Xamarin.Forms
 
 		internal event EventHandler PopCanceled;
 
-		internal void SendResume()
+        public void SendResume()
 		{
 			s_current = this;
 			OnResume();
 		}
 
-		internal Task SendSleepAsync()
+		public Task SendSleepAsync()
 		{
 			OnSleep();
 			return SavePropertiesAsync();
 		}
 
-		internal void SendStart()
+        public void SendStart()
 		{
 			OnStart();
 		}

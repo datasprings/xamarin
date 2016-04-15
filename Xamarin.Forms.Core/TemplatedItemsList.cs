@@ -9,7 +9,7 @@ using Cadenza.Collections;
 
 namespace Xamarin.Forms
 {
-	internal sealed class TemplatedItemsList<TView, TItem> : BindableObject, IReadOnlyList<TItem>, IList, INotifyCollectionChanged, IDisposable where TView : BindableObject, IItemsView<TItem>
+	public sealed class TemplatedItemsList<TView, TItem> : BindableObject, IReadOnlyList<TItem>, IList, INotifyCollectionChanged, IDisposable where TView : BindableObject, IItemsView<TItem>
 																																				where TItem : BindableObject
 	{
 		public static readonly BindableProperty NameProperty = BindableProperty.Create("Name", typeof(string), typeof(TemplatedItemsList<TView, TItem>), null);
@@ -179,7 +179,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal ListProxy ListProxy
+		public ListProxy ListProxy
 		{
 			get { return (ListProxy)GetValue(ListProxyPropertyKey.BindableProperty); }
 			private set { SetValue(ListProxyPropertyKey, value); }
@@ -528,7 +528,7 @@ namespace Xamarin.Forms
 			ListProxy.Clear();
 		}
 
-		internal TemplatedItemsList<TView, TItem> GetGroup(int index)
+		public TemplatedItemsList<TView, TItem> GetGroup(int index)
 		{
 			if (!IsGroupingEnabled)
 				return this;
@@ -552,7 +552,7 @@ namespace Xamarin.Forms
 			return (int)item.GetValue(IndexProperty);
 		}
 
-		internal static bool GetIsGroupHeader(BindableObject bindable)
+		public static bool GetIsGroupHeader(BindableObject bindable)
 		{
 			return (bool)bindable.GetValue(IsGroupHeaderPropertyKey.BindableProperty);
 		}
@@ -571,7 +571,7 @@ namespace Xamarin.Forms
 			bindable.SetValue(IsGroupHeaderPropertyKey, value);
 		}
 
-		internal TItem UpdateContent(TItem content, int index, object item)
+		public TItem UpdateContent(TItem content, int index, object item)
 		{
 			content.BindingContext = item;
 
@@ -585,13 +585,13 @@ namespace Xamarin.Forms
 			return content;
 		}
 
-		internal TItem UpdateContent(TItem content, int index)
+		public TItem UpdateContent(TItem content, int index)
 		{
 			object item = ListProxy[index];
 			return UpdateContent(content, index, item);
 		}
 
-		internal TItem UpdateHeader(TItem content, int groupIndex)
+		public TItem UpdateHeader(TItem content, int groupIndex)
 		{
 			if (Parent != null && Parent.GroupHeaderTemplate == null)
 			{

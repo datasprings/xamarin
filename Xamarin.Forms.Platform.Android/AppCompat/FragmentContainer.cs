@@ -7,7 +7,7 @@ using AView = Android.Views.View;
 
 namespace Xamarin.Forms.Platform.Android.AppCompat
 {
-	internal class FragmentContainer : Fragment
+	public class FragmentContainer : Fragment
 	{
 		readonly WeakReference _pageReference;
 

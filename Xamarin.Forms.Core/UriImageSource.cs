@@ -64,7 +64,7 @@ namespace Xamarin.Forms
 			set { SetValue(UriProperty, value); }
 		}
 
-		internal async Task<Stream> GetStreamAsync(CancellationToken userToken = default(CancellationToken))
+		public async Task<Stream> GetStreamAsync(CancellationToken userToken = default(CancellationToken))
 		{
 			OnLoadingStarted();
 			userToken.Register(CancellationTokenSource.Cancel);

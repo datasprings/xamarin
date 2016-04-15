@@ -3,7 +3,7 @@ using System;
 namespace Xamarin.Forms
 {
 	[Flags]
-	internal enum InvalidationTrigger
+    public enum InvalidationTrigger
 	{
 		Undefined = 0,
 		MeasureChanged = 1 << 0,

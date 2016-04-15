@@ -22,12 +22,12 @@ namespace Xamarin.Forms
 			get { return new Color(-1d, -1d, -1d, -1d, Mode.Default); }
 		}
 
-		internal bool IsDefault
+		public bool IsDefault
 		{
 			get { return _mode == Mode.Default; }
 		}
 
-		public static Color Accent { get; internal set; }
+		public static Color Accent { get; set; }
 
 		readonly float _a;
 

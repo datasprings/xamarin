@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms
 {
-	internal class ActionSheetArguments
+    public class ActionSheetArguments
 	{
 		public ActionSheetArguments(string title, string cancel, string destruction, IEnumerable<string> buttons)
 		{

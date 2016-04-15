@@ -35,7 +35,7 @@ namespace Xamarin.Forms
 
 		public event EventHandler Tapped;
 
-		internal void SendTapped(View sender)
+		public void SendTapped(View sender)
 		{
 			ICommand cmd = Command;
 			if (cmd != null && cmd.CanExecute(CommandParameter))

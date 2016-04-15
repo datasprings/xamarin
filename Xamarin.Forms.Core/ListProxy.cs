@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Xamarin.Forms
 {
-	internal sealed class ListProxy : IReadOnlyList<object>, IList, INotifyCollectionChanged
+	public sealed class ListProxy : IReadOnlyList<object>, IList, INotifyCollectionChanged
 	{
 		readonly ICollection _collection;
 		readonly IList _list;

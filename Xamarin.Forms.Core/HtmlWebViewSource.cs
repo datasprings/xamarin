@@ -20,7 +20,7 @@ namespace Xamarin.Forms
 			set { SetValue(HtmlProperty, value); }
 		}
 
-		internal override void Load(IWebViewRenderer renderer)
+		public override void Load(IWebViewRenderer renderer)
 		{
 			renderer.LoadHtml(Html, BaseUrl);
 		}

@@ -2,7 +2,7 @@ using System;
 
 namespace Xamarin.Forms
 {
-	internal abstract class TableModel
+	public abstract class TableModel
 	{
 		public virtual Cell GetCell(int section, int row)
 		{

@@ -1,6 +1,6 @@
 namespace Xamarin.Forms
 {
-	internal static class DeviceOrientationExtensions
+	public static class DeviceOrientationExtensions
 	{
 		public static bool IsLandscape(this DeviceOrientation orientation)
 		{

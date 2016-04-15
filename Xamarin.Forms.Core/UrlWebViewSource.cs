@@ -11,7 +11,7 @@ namespace Xamarin.Forms
 			set { SetValue(UrlProperty, value); }
 		}
 
-		internal override void Load(IWebViewRenderer renderer)
+		public override void Load(IWebViewRenderer renderer)
 		{
 			renderer.LoadUrl(Url);
 		}

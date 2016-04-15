@@ -34,13 +34,13 @@ namespace Xamarin.Forms
 		public bool CanGoBack
 		{
 			get { return (bool)GetValue(CanGoBackProperty); }
-			internal set { SetValue(CanGoBackPropertyKey, value); }
+			set { SetValue(CanGoBackPropertyKey, value); }
 		}
 
 		public bool CanGoForward
 		{
 			get { return (bool)GetValue(CanGoForwardProperty); }
-			internal set { SetValue(CanGoForwardPropertyKey, value); }
+			set { SetValue(CanGoForwardPropertyKey, value); }
 		}
 
 		[TypeConverter(typeof(WebViewSourceTypeConverter))]
@@ -103,20 +103,20 @@ namespace Xamarin.Forms
 			OnPropertyChanged(SourceProperty.PropertyName);
 		}
 
-		internal event EventHandler<EventArg<string>> EvalRequested;
+		public event EventHandler<EventArg<string>> EvalRequested;
 
-		internal event EventHandler GoBackRequested;
+        public event EventHandler GoBackRequested;
 
-		internal event EventHandler GoForwardRequested;
+        public event EventHandler GoForwardRequested;
 
-		internal void SendNavigated(WebNavigatedEventArgs args)
+		public void SendNavigated(WebNavigatedEventArgs args)
 		{
 			EventHandler<WebNavigatedEventArgs> handler = Navigated;
 			if (handler != null)
 				handler(this, args);
 		}
 
-		internal void SendNavigating(WebNavigatingEventArgs args)
+		public void SendNavigating(WebNavigatingEventArgs args)
 		{
 			EventHandler<WebNavigatingEventArgs> handler = Navigating;
 			if (handler != null)

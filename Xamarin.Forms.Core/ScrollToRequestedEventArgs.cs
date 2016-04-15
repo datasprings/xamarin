@@ -49,8 +49,8 @@ namespace Xamarin.Forms
 
 		public bool ShouldAnimate { get; private set; }
 
-		internal object Group { get; private set; }
+		public object Group { get; private set; }
 
-		internal object Item { get; private set; }
+		public object Item { get; private set; }
 	}
 }

@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Xamarin.Forms
 {
-	internal class Registrar<TRegistrable> where TRegistrable : class
+	public class Registrar<TRegistrable> where TRegistrable : class
 	{
 		readonly Dictionary<Type, Type> _handlers = new Dictionary<Type, Type>();
 
@@ -24,12 +24,12 @@ namespace Xamarin.Forms
 			return (TRegistrable)handler;
 		}
 
-		internal TOut GetHandler<TOut>(Type type) where TOut : TRegistrable
+		public TOut GetHandler<TOut>(Type type) where TOut : TRegistrable
 		{
 			return (TOut)GetHandler(type);
 		}
 
-		internal Type GetHandlerType(Type viewType)
+        public Type GetHandlerType(Type viewType)
 		{
 			Type type = LookupHandlerType(viewType);
 			if (type != null)
@@ -78,7 +78,7 @@ namespace Xamarin.Forms
 		}
 	}
 
-	internal static class Registrar
+	public static class Registrar
 	{
 		static Registrar()
 		{
@@ -89,9 +89,9 @@ namespace Xamarin.Forms
 
 		internal static IEnumerable<Assembly> ExtraAssemblies { get; set; }
 
-		internal static Registrar<IRegisterable> Registered { get; }
+		public static Registrar<IRegisterable> Registered { get; }
 
-		internal static void RegisterAll(Type[] attrTypes)
+		public static void RegisterAll(Type[] attrTypes)
 		{
 			Assembly[] assemblies = Device.GetAssemblies();
 			if (ExtraAssemblies != null)

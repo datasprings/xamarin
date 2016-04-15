@@ -2,7 +2,7 @@ using System;
 
 namespace Xamarin.Forms
 {
-	internal class ToolbarItemEventArgs : EventArgs
+	public class ToolbarItemEventArgs : EventArgs
 	{
 		public ToolbarItemEventArgs(ToolbarItem item)
 		{

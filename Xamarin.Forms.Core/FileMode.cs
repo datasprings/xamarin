@@ -1,6 +1,6 @@
 namespace Xamarin.Forms
 {
-	internal enum FileMode
+	public enum FileMode
 	{
 		CreateNew = 1,
 		Create = 2,

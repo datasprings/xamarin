@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Xamarin.Forms
 {
-	internal static class Performance
+	public static class Performance
 	{
 		static readonly Dictionary<string, Stats> Statistics = new Dictionary<string, Stats>();
 

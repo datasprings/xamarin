@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Xamarin.Forms
 {
-	internal interface IResourceDictionary : IEnumerable<KeyValuePair<string, object>>
+	public interface IResourceDictionary : IEnumerable<KeyValuePair<string, object>>
 	{
 		bool TryGetValue(string key, out object value);
 

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Xamarin.Forms
 {
-	internal class ToolbarTracker
+	public class ToolbarTracker
 	{
 		int _masterDetails;
 		Page _target;

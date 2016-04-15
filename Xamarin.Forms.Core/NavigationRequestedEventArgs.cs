@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms
 {
-	internal class NavigationRequestedEventArgs : NavigationEventArgs
+	public class NavigationRequestedEventArgs : NavigationEventArgs
 	{
 		public NavigationRequestedEventArgs(Page page, bool animated, bool realize = true) : base(page)
 		{

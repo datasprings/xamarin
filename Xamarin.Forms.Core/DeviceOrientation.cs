@@ -1,6 +1,6 @@
 namespace Xamarin.Forms
 {
-	internal enum DeviceOrientation
+    public enum DeviceOrientation
 	{
 		Portrait,
 		Landscape,

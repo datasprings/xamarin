@@ -148,9 +148,9 @@ namespace Xamarin.Forms
 			base.OnPropertyChanging(propertyName);
 		}
 
-		internal event EventHandler ForceUpdateSizeRequested;
+		public event EventHandler ForceUpdateSizeRequested;
 
-		internal void SendAppearing()
+		public void SendAppearing()
 		{
 			OnAppearing();
 
@@ -159,7 +159,7 @@ namespace Xamarin.Forms
 				container.SendCellAppearing(this);
 		}
 
-		internal void SendDisappearing()
+		public void SendDisappearing()
 		{
 			OnDisappearing();
 

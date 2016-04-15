@@ -76,7 +76,7 @@ namespace Xamarin.Forms
 			set { SetValue(RowHeightProperty, value); }
 		}
 
-		internal TableModel Model
+		public TableModel Model
 		{
 			get { return _model; }
 			set
@@ -112,7 +112,7 @@ namespace Xamarin.Forms
 			return new SizeRequest(request, minimumSize);
 		}
 
-		internal event EventHandler ModelChanged;
+		public event EventHandler ModelChanged;
 
 		void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{

@@ -17,7 +17,7 @@ namespace Xamarin.Forms
 
 		public static readonly BindableProperty IconProperty = BindableProperty.Create("Icon", typeof(FileImageSource), typeof(MenuItem), default(FileImageSource));
 
-		internal static readonly BindableProperty IsEnabledProperty = BindableProperty.Create("IsEnabled", typeof(bool), typeof(ToolbarItem), true);
+		public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create("IsEnabled", typeof(bool), typeof(ToolbarItem), true);
 
 		public ICommand Command
 		{
@@ -49,7 +49,7 @@ namespace Xamarin.Forms
 			set { SetValue(TextProperty, value); }
 		}
 
-		internal bool IsEnabled
+		public bool IsEnabled
 		{
 			get { return (bool)GetValue(IsEnabledProperty); }
 			set { SetValue(IsEnabledProperty, value); }
@@ -69,7 +69,7 @@ namespace Xamarin.Forms
 				handler(this, EventArgs.Empty);
 		}
 
-		internal void Activate()
+		public void Activate()
 		{
 			if (Command != null)
 			{

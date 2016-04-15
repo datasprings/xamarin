@@ -7,7 +7,7 @@ namespace Xamarin.Forms
 {
 	// Mark as internal until renderers are ready for release after 1.0
 	[RenderWith(typeof(_NavigationMenuRenderer))]
-	internal class NavigationMenu : View
+	public class NavigationMenu : View
 	{
 		readonly List<Page> _targets = new List<Page>();
 
@@ -52,7 +52,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal void SendTargetSelected(Page target)
+		public void SendTargetSelected(Page target)
 		{
 			TargetSelected(target);
 		}

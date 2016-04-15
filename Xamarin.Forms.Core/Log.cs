@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms
 {
-	internal static class Log
+	public static class Log
 	{
 		static Log()
 		{

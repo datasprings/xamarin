@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms
 {
-	internal interface IDeserializer
+	public interface IDeserializer
 	{
 		Task<IDictionary<string, object>> DeserializePropertiesAsync();
 		Task SerializePropertiesAsync(IDictionary<string, object> properties);

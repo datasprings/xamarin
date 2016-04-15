@@ -57,7 +57,7 @@ namespace Xamarin.Forms
 
 		public event EventHandler<TextChangedEventArgs> TextChanged;
 
-		internal void SendCompleted()
+		public void SendCompleted()
 		{
 			EventHandler handler = Completed;
 			if (handler != null)

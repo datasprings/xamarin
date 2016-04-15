@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Xamarin.Forms
 {
-	internal class Ticker
+    public class Ticker
 	{
 		static Ticker s_ticker;
 		readonly Stopwatch _stopwatch;
@@ -17,7 +17,7 @@ namespace Xamarin.Forms
 		int _count;
 		bool _enabled;
 
-		internal Ticker()
+		public Ticker()
 		{
 			_sync = SynchronizationContext.Current;
 			_count = 0;
@@ -29,7 +29,7 @@ namespace Xamarin.Forms
 
 		public static Ticker Default
 		{
-			internal set { s_ticker = value; }
+		    set { s_ticker = value; }
 			get { return s_ticker ?? (s_ticker = new Ticker()); }
 		}
 

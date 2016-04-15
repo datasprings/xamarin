@@ -3,7 +3,7 @@ using System;
 namespace Xamarin.Forms
 {
 	[Flags]
-	internal enum FileShare
+	public enum FileShare
 	{
 		None = 0,
 		Read = 1,

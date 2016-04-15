@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Xamarin.Forms
 {
-	internal abstract class DeviceInfo : INotifyPropertyChanged, IDisposable
+    public abstract class DeviceInfo : INotifyPropertyChanged, IDisposable
 	{
 		DeviceOrientation _currentOrientation;
 		bool _disposed;
@@ -12,7 +12,7 @@ namespace Xamarin.Forms
 		public DeviceOrientation CurrentOrientation
 		{
 			get { return _currentOrientation; }
-			internal set
+			set
 			{
 				if (Equals(_currentOrientation, value))
 					return;

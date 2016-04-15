@@ -40,12 +40,12 @@ namespace Xamarin.Forms
 			this.templatedItems.ForceUpdate();
 		}*/
 
-		internal ListProxy ListProxy
+		public ListProxy ListProxy
 		{
 			get { return TemplatedItems.ListProxy; }
 		}
 
-		internal TemplatedItemsList<ItemsView<TVisual>, TVisual> TemplatedItems { get; }
+		public TemplatedItemsList<ItemsView<TVisual>, TVisual> TemplatedItems { get; }
 
 		TVisual IItemsView<TVisual>.CreateDefault(object item)
 		{

@@ -156,7 +156,7 @@ namespace Xamarin.Forms
 		{
 		}
 
-		internal static int GetIndex(T page)
+		public static int GetIndex(T page)
 		{
 			if (page == null)
 				throw new ArgumentNullException("page");

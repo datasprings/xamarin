@@ -113,7 +113,7 @@ namespace Xamarin.Forms
 
 		public event EventHandler<TextChangedEventArgs> TextChanged;
 
-		internal void OnSearchButtonPressed()
+		public void OnSearchButtonPressed()
 		{
 			ICommand cmd = SearchCommand;
 

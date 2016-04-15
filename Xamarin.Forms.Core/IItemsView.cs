@@ -1,6 +1,6 @@
 namespace Xamarin.Forms
 {
-	internal interface IItemsView<T> where T : BindableObject
+	public interface IItemsView<T> where T : BindableObject
 	{
 		T CreateDefault(object item);
 		void SetupContent(T content, int index);
