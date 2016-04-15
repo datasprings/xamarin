@@ -191,7 +191,7 @@ namespace Xamarin.Forms
 
 		public ListViewCachingStrategy CachingStrategy { get; private set; }
 
-		internal bool TakePerformanceHit { get; set; }
+		public bool TakePerformanceHit { get; set; }
 
 		bool RefreshAllowed
 		{
@@ -338,7 +338,7 @@ namespace Xamarin.Forms
 			content.Parent = null;
 		}
 
-		internal Cell CreateDefaultCell(object item)
+		public Cell CreateDefaultCell(object item)
 		{
 			return CreateDefault(item);
 		}

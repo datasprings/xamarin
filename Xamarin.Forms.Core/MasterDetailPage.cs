@@ -195,7 +195,7 @@ namespace Xamarin.Forms
 
 		public event EventHandler<BackButtonPressedEventArgs> BackButtonPressed;
 
-		internal static void UpdateMasterBehavior(MasterDetailPage page)
+		public static void UpdateMasterBehavior(MasterDetailPage page)
 		{
 			if (page.ShouldShowSplitMode)
 			{

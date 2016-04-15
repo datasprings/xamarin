@@ -322,7 +322,7 @@ namespace Xamarin.Forms
 
         public bool DisableLayout { get; set; }
 
-		internal bool IsInNativeLayout
+		public bool IsInNativeLayout
 		{
 			get
 			{
@@ -343,7 +343,7 @@ namespace Xamarin.Forms
 			set { _isInNativeLayout = value; }
 		}
 
-		internal bool IsNativeStateConsistent
+		public bool IsNativeStateConsistent
 		{
 			get { return _isNativeStateConsistent; }
 			set
@@ -372,7 +372,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal NavigationProxy NavigationProxy
+		public NavigationProxy NavigationProxy
 		{
 			get { return Navigation as NavigationProxy; }
 		}

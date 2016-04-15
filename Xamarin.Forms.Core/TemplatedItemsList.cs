@@ -536,7 +536,7 @@ namespace Xamarin.Forms
 			return _groupedItems[index];
 		}
 
-		internal static TemplatedItemsList<TView, TItem> GetGroup(TItem item)
+        public static TemplatedItemsList<TView, TItem> GetGroup(TItem item)
 		{
 			if (item == null)
 				throw new ArgumentNullException("item");
@@ -544,7 +544,7 @@ namespace Xamarin.Forms
 			return (TemplatedItemsList<TView, TItem>)item.GetValue(GroupProperty);
 		}
 
-		internal static int GetIndex(TItem item)
+		public static int GetIndex(TItem item)
 		{
 			if (item == null)
 				throw new ArgumentNullException("item");
@@ -566,7 +566,7 @@ namespace Xamarin.Forms
 			return content;
 		}
 
-		internal static void SetIsGroupHeader(BindableObject bindable, bool value)
+		public static void SetIsGroupHeader(BindableObject bindable, bool value)
 		{
 			bindable.SetValue(IsGroupHeaderPropertyKey, value);
 		}

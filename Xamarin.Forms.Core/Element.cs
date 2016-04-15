@@ -466,7 +466,7 @@ namespace Xamarin.Forms
 
 		internal event EventHandler ParentSet;
 
-		internal event EventHandler PlatformSet;
+		public event EventHandler PlatformSet;
 
 		internal virtual void SetChildInheritedBindingContext(Element child, object context)
 		{

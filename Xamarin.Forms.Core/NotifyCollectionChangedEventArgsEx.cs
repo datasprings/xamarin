@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace Xamarin.Forms
 {
-	internal class NotifyCollectionChangedEventArgsEx : NotifyCollectionChangedEventArgs
+	public class NotifyCollectionChangedEventArgsEx : NotifyCollectionChangedEventArgs
 	{
 		public NotifyCollectionChangedEventArgsEx(int count, NotifyCollectionChangedAction action) : base(action)
 		{

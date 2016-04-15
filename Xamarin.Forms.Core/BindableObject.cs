@@ -164,7 +164,7 @@ namespace Xamarin.Forms
 			return bpcontext != null && bpcontext.Binding != null;
 		}
 
-		internal object[] GetValues(BindableProperty property0, BindableProperty property1)
+		public object[] GetValues(BindableProperty property0, BindableProperty property1)
 		{
 			var values = new object[2];
 
@@ -195,7 +195,7 @@ namespace Xamarin.Forms
 			return values;
 		}
 
-		internal object[] GetValues(BindableProperty property0, BindableProperty property1, BindableProperty property2)
+		public object[] GetValues(BindableProperty property0, BindableProperty property1, BindableProperty property2)
 		{
 			var values = new object[3];
 
@@ -314,12 +314,12 @@ namespace Xamarin.Forms
 			SetValue(property, value, fromStyle, true);
 		}
 
-		internal void SetValueCore(BindablePropertyKey propertyKey, object value, SetValueFlags attributes = SetValueFlags.None)
+		public void SetValueCore(BindablePropertyKey propertyKey, object value, SetValueFlags attributes = SetValueFlags.None)
 		{
 			SetValueCore(propertyKey.BindableProperty, value, attributes, SetValuePrivateFlags.None);
 		}
 
-		internal void SetValueCore(BindableProperty property, object value, SetValueFlags attributes = SetValueFlags.None)
+        public void SetValueCore(BindableProperty property, object value, SetValueFlags attributes = SetValueFlags.None)
 		{
 			SetValueCore(property, value, attributes, SetValuePrivateFlags.Default);
 		}
@@ -605,7 +605,7 @@ namespace Xamarin.Forms
 		}
 
 		[Flags]
-		internal enum SetValueFlags
+		public enum SetValueFlags
 		{
 			None = 0,
 			ClearOneWayBindings = 1 << 0,

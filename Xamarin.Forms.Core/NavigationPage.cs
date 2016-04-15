@@ -217,7 +217,7 @@ namespace Xamarin.Forms
 
 		public event EventHandler<NavigationRequestedEventArgs> InsertPageBeforeRequested;
 
-		internal async Task<Page> PopAsyncInner(bool animated, bool fast = false)
+		public async Task<Page> PopAsyncInner(bool animated, bool fast = false)
 		{
 			if (StackDepth == 1)
 			{

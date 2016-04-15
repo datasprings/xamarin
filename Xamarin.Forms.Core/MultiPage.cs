@@ -164,7 +164,7 @@ namespace Xamarin.Forms
 			return (int)page.GetValue(IndexProperty);
 		}
 
-		internal T GetPageByIndex(int index)
+		public T GetPageByIndex(int index)
 		{
 			foreach (T page in InternalChildren)
 			{
@@ -174,7 +174,7 @@ namespace Xamarin.Forms
 			return null;
 		}
 
-		internal static void SetIndex(Page page, int index)
+		public static void SetIndex(Page page, int index)
 		{
 			if (page == null)
 				throw new ArgumentNullException("page");

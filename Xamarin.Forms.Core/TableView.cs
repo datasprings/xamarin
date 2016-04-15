@@ -132,7 +132,7 @@ namespace Xamarin.Forms
 				OnModelChanged();
 		}
 
-		internal class TableSectionModel : TableModel
+		public class TableSectionModel : TableModel
 		{
 			static readonly BindableProperty PathProperty = BindableProperty.Create("Path", typeof(Tuple<int, int>), typeof(Cell), null);
 
@@ -193,7 +193,7 @@ namespace Xamarin.Forms
 				((Cell)item).OnTapped();
 			}
 
-			internal static Tuple<int, int> GetPath(Cell item)
+			public static Tuple<int, int> GetPath(Cell item)
 			{
 				if (item == null)
 					throw new ArgumentNullException("item");

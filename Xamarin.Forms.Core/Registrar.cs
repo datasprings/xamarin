@@ -14,7 +14,7 @@ namespace Xamarin.Forms
 			_handlers[tview] = trender;
 		}
 
-		internal TRegistrable GetHandler(Type type)
+		public TRegistrable GetHandler(Type type)
 		{
 			Type handlerType = GetHandlerType(type);
 			if (handlerType == null)
@@ -87,7 +87,7 @@ namespace Xamarin.Forms
 
 		internal static Dictionary<string, Type> Effects { get; } = new Dictionary<string, Type>();
 
-		internal static IEnumerable<Assembly> ExtraAssemblies { get; set; }
+		public static IEnumerable<Assembly> ExtraAssemblies { get; set; }
 
 		public static Registrar<IRegisterable> Registered { get; }
 

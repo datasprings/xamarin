@@ -23,7 +23,7 @@ namespace Xamarin.Forms
 			}
 		}
 
-		internal static IEnumerable<T> Append<T>(this IEnumerable<T> enumerable, T item)
+		public static IEnumerable<T> Append<T>(this IEnumerable<T> enumerable, T item)
 		{
 			foreach (T x in enumerable)
 				yield return x;
@@ -70,7 +70,7 @@ namespace Xamarin.Forms
 			return -1;
 		}
 
-		internal static IEnumerable<T> Prepend<T>(this IEnumerable<T> enumerable, T item)
+		public static IEnumerable<T> Prepend<T>(this IEnumerable<T> enumerable, T item)
 		{
 			yield return item;
 

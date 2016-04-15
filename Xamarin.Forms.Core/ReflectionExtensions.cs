@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Xamarin.Forms
 {
-	internal static class ReflectionExtensions
+	public static class ReflectionExtensions
 	{
 		public static FieldInfo GetField(this Type type, Func<FieldInfo, bool> predicate)
 		{
