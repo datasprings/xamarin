@@ -19,12 +19,13 @@ namespace Xamarin.Forms.Xaml.UnitTests
 		[TestFixture]
 		public class Tests
 		{
-			[TestCase (false)]
-			[TestCase (true)]
-			public void MergedResourcesAreFound (bool useCompiledXaml)
+			[TestCase(false)]
+			[TestCase(true)]
+			public void MergedResourcesAreFound(bool useCompiledXaml)
 			{
-				var layout = new TestSharedResourceDictionary (useCompiledXaml);
-				Assert.AreEqual (Color.Pink, layout.label.TextColor);
+				var layout = new TestSharedResourceDictionary(useCompiledXaml);
+				Assert.AreEqual(Color.Pink, layout.label.TextColor);
+				Assert.AreEqual(Color.Red, layout.implicitLabel.TextColor);
 			}
 		}
 	}

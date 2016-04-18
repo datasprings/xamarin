@@ -8,4 +8,5 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<Label x:Name="label" Style="{StaticResource sharedfoo}"/>
+	<Label x:Name="implicitLabel" />
 </ContentPage>

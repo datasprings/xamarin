@@ -12,27 +12,38 @@ namespace Xamarin.Forms
 		readonly Dictionary<string, object> _innerDictionary = new Dictionary<string, object>();
 
 		Type _mergedWith;
-		[TypeConverter (typeof(TypeTypeConverter))]
-		public Type MergedWith {
+
+		[TypeConverter(typeof(TypeTypeConverter))]
+		public Type MergedWith
+		{
 			get { return _mergedWith; }
-			set { 
+			set
+			{
 				if (_mergedWith == value)
 					return;
 				_mergedWith = value;
 				if (_mergedWith == null)
 					return;
 
-				_mergedInstance = _mergedWith.GetTypeInfo().BaseType.GetTypeInfo().DeclaredMethods.First(mi => mi.Name == "GetInstance").Invoke(null, new object[] {_mergedWith}) as ResourceDictionary;
+				var mergedInstance =
+					_mergedWith.GetTypeInfo()
+						.BaseType.GetTypeInfo()
+						.DeclaredMethods.First(mi => mi.Name == "GetInstance")
+						.Invoke(null, new object[] { _mergedWith }) as ResourceDictionary;
+				foreach (var item in mergedInstance)
+				{
+					if (!_innerDictionary.ContainsKey(item.Key))
+						_innerDictionary.Add(item.Key, item.Value);
+				}
 			}
 		}
 
 		static ResourceDictionary _instance;
+
 		static ResourceDictionary GetInstance(Type type)
 		{
-			return _instance ?? (_instance = ((ResourceDictionary)Activator.CreateInstance (type)));
+			return _instance ?? (_instance = ((ResourceDictionary)Activator.CreateInstance(type)));
 		}
-
-		ResourceDictionary _mergedInstance;
 
 		void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item)
 		{
@@ -55,10 +66,7 @@ namespace Xamarin.Forms
 			((ICollection<KeyValuePair<string, object>>)_innerDictionary).CopyTo(array, arrayIndex);
 		}
 
-		public int Count
-		{
-			get { return _innerDictionary.Count; }
-		}
+		public int Count => _innerDictionary.Count;
 
 		bool ICollection<KeyValuePair<string, object>>.IsReadOnly
 		{
@@ -119,7 +127,7 @@ namespace Xamarin.Forms
 
 		public bool TryGetValue(string key, out object value)
 		{
-			return _innerDictionary.TryGetValue(key, out value) || (_mergedInstance != null && _mergedInstance.TryGetValue(key, out value));
+			return _innerDictionary.TryGetValue(key, out value);
 		}
 
 		event EventHandler<ResourcesChangedEventArgs> IResourceDictionary.ValuesChanged
@@ -136,7 +144,8 @@ namespace Xamarin.Forms
 			{
 				IList<Style> classes;
 				object outclasses;
-				if (!TryGetValue(Style.StyleClassPrefix + style.Class, out outclasses) || (classes = outclasses as IList<Style>) == null)
+				if (!TryGetValue(Style.StyleClassPrefix + style.Class, out outclasses) ||
+				    (classes = outclasses as IList<Style>) == null)
 					classes = new List<Style>();
 				classes.Add(style);
 				this[Style.StyleClassPrefix + style.Class] = classes;
