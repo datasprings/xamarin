@@ -101,15 +101,6 @@ namespace Xamarin.Forms
 			return new SizeRequest(new Size(width, height));
 		}
 
-		protected override void OnPropertyChanged(string propertyName = null)
-		{
-			base.OnPropertyChanged(propertyName);
-
-			// All Images are implicitly Fill; Setting the LayoutOptions explicitly to Fill will allow 
-			// Layout.LayoutChildIntoBoundingRegion to size it properly.
-			HorizontalOptions = VerticalOptions = LayoutOptions.Fill;
-		}
-
 		void OnSourceChanged(object sender, EventArgs eventArgs)
 		{
 			OnPropertyChanged(SourceProperty.PropertyName);
