@@ -63,12 +63,12 @@ namespace Xamarin.Forms
 			// Arbitrarily cap size at the screen size because infinity is just crazy.
 			Size screenSize = Device.Info.PixelScreenSize;
 			if (heightConstraint == double.PositiveInfinity)
-				heightConstraint = Device.info.CurrentOrientation == DeviceOrientation.Portrait
+				heightConstraint = Device.info.CurrentOrientation.IsPortrait()
 				? screenSize.Height
 				: screenSize.Width;
 
 			if (widthConstraint == double.PositiveInfinity)
-				widthConstraint = Device.info.CurrentOrientation == DeviceOrientation.Landscape
+				widthConstraint = Device.info.CurrentOrientation.IsLandscape()
 				? screenSize.Height
 				: screenSize.Width;
 
