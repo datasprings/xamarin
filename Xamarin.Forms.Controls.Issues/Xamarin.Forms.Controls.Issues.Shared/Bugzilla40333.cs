@@ -56,8 +56,6 @@ namespace Xamarin.Forms.Controls
 				{
 					Detail = new NavigationPage(new _40333DetailPage("Detail") { Title = "DetailPage" }) { Title = "DetailNav" };
 				}
-
-				MasterBehavior = MasterBehavior.Split;
 			}
 
 			[Preserve(AllMembers = true)]
