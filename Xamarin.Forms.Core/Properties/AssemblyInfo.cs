@@ -22,6 +22,7 @@ using Xamarin.Forms.Internals;
 
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.iOS")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.iOS.Classic")]
+[assembly: InternalsVisibleTo ("Xamarin.Forms.Platform.Mac")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.Android")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.UAP")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Platform.WinRT")]

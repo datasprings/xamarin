@@ -10,11 +10,12 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Xamarin.Forms.ControlGallery.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>XamarinFormsControlGalleryiOS</AssemblyName>
+    <AssemblyName>ControlGallery</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <UseMSBuildEngine>True</UseMSBuildEngine>
     <DefineConstants>_CLASSIC_</DefineConstants>
+    <BaseIntermediateOutputPath>classic_obj</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E917593E-09AA-4071-BE46-760921B60D33}</ProjectGuid>
+    <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Xamarin.Forms.Platform.Mac</RootNamespace>
+    <AssemblyName>Xamarin.Forms.Platform.Mac</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
+    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>false</EnablePackageSigning>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <UseSGen>false</UseSGen>
+    <XamMacArch></XamMacArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>false</EnablePackageSigning>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <UseSGen>false</UseSGen>
+    <XamMacArch></XamMacArch>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Mac" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Forms.cs" />
+    <Compile Include="ViewInitializedEventArgs.cs" />
+    <Compile Include="PageExtensions.cs" />
+    <Compile Include="Platform.cs" />
+    <Compile Include="PlatformRenderer.cs" />
+    <Compile Include="IVisualElementRenderer.cs" />
+    <Compile Include="ElementChangedEventArgs.cs" />
+    <Compile Include="VisualElementRenderer.cs" />
+    <Compile Include="VisualElementTracker.cs" />
+    <Compile Include="CVDisplayTicker.cs" />
+    <Compile Include="EventTracker.cs" />
+    <Compile Include="VisualElementPackager.cs" />
+    <Compile Include="PlatformEffect.cs" />
+    <Compile Include="Extensions\NSViewExtensions.cs" />
+    <Compile Include="EffectUtilities.cs" />
+    <Compile Include="RendererPool.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
+      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
+      <Name>Xamarin.Forms.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
+</Project>

@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4A47B5DF-DDFC-476B-AC41-5105FF3B9B8B}</ProjectGuid>
@@ -67,7 +67,6 @@
     <Compile Include="CADisplayLinkTicker.cs" />
     <Compile Include="ContextActionCell.cs" />
     <Compile Include="ContextScrollViewDelegate.cs" />
-    <Compile Include="EffectUtilities.cs" />
     <Compile Include="Extensions\CellExtensions.cs" />
     <Compile Include="Forms.cs" />
     <Compile Include="GlobalCloseContextGestureRecognizer.cs" />
