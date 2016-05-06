@@ -33,8 +33,10 @@ namespace Xamarin.Forms.Platform.iOS
 
 		public CarouselPageRenderer()
 		{
+#if !__TVOS__
 			if (!Forms.IsiOS7OrNewer)
 				WantsFullScreenLayout = true;
+#endif
 		}
 
 		protected CarouselPage Carousel
@@ -83,13 +85,13 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			get { return this; }
 		}
-
+#if !__TVOS__
 		public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
 		{
 			_ignoreNativeScrolling = false;
 			View.SetNeedsLayout();
 		}
-
+#endif
 		public override void ViewDidAppear(bool animated)
 		{
 			base.ViewDidAppear(animated);
@@ -152,7 +154,7 @@ namespace Xamarin.Forms.Platform.iOS
 			Carousel.PropertyChanged += OnPropertyChanged;
 			Carousel.PagesChanged += OnPagesChanged;
 		}
-
+#if !__TVOS__
 		public override void ViewDidUnload()
 		{
 			base.ViewDidUnload();
@@ -171,7 +173,7 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			_ignoreNativeScrolling = true;
 		}
-
+#endif
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && !_disposed)
@@ -312,8 +314,9 @@ namespace Xamarin.Forms.Platform.iOS
 				container.Frame = new RectangleF(x, bounds.Y, bounds.Width, bounds.Height);
 				x += bounds.Width;
 			}
-
+#if !__TVOS__
 			_scrollView.PagingEnabled = true;
+#endif
 			_scrollView.ContentSize = new SizeF(bounds.Width * ((CarouselPage)Element).Children.Count, bounds.Height);
 		}
 

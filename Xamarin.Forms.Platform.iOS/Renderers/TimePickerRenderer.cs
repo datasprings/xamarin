@@ -18,7 +18,7 @@ using nfloat=System.Single;
 using nint=System.Int32;
 using nuint=System.UInt32;
 #endif
-
+#if !__TVOS__
 namespace Xamarin.Forms.Platform.iOS
 {
 	public class TimePickerRenderer : ViewRenderer<TimePicker, UITextField>
@@ -119,3 +119,4 @@ namespace Xamarin.Forms.Platform.iOS
 		}
 	}
 }
+#endif

@@ -7,6 +7,7 @@ using UIKit;
 using MonoTouch.UIKit;
 #endif
 
+#if !__TVOS__
 namespace Xamarin.Forms.Platform.iOS
 {
 	public class SwitchRenderer : ViewRenderer<Switch, UISwitch>
@@ -50,3 +51,4 @@ namespace Xamarin.Forms.Platform.iOS
 		}
 	}
 }
+#endif

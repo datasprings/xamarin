@@ -109,7 +109,7 @@ namespace Xamarin.Forms.Platform.iOS
 				});
 				return uiRecognizer;
 			}
-
+#if !__TVOS__
 			var pinchRecognizer = recognizer as PinchGestureRecognizer;
 			if (pinchRecognizer != null)
 			{
@@ -168,7 +168,7 @@ namespace Xamarin.Forms.Platform.iOS
 				});
 				return uiRecognizer;
 			}
-
+#endif
 			var panRecognizer = recognizer as PanGestureRecognizer;
 			if (panRecognizer != null)
 			{
@@ -222,20 +222,24 @@ namespace Xamarin.Forms.Platform.iOS
 		UIPanGestureRecognizer CreatePanRecognizer(int numTouches, Action<UIPanGestureRecognizer> action)
 		{
 			var result = new UIPanGestureRecognizer(action);
+#if !__TVOS__
 			result.MinimumNumberOfTouches = result.MaximumNumberOfTouches = (uint)numTouches;
+#endif
 			return result;
 		}
-
+#if !__TVOS__
 		UIPinchGestureRecognizer CreatePinchRecognizer(Action<UIPinchGestureRecognizer> action)
 		{
 			var result = new UIPinchGestureRecognizer(action);
 			return result;
 		}
-
+#endif
 		UITapGestureRecognizer CreateTapRecognizer(int numFingers, int numTaps, Action<UITapGestureRecognizer> action)
 		{
 			var result = new UITapGestureRecognizer(action);
+#if !__TVOS__
 			result.NumberOfTouchesRequired = (uint)numFingers;
+#endif
 			result.NumberOfTapsRequired = (uint)numTaps;
 			return result;
 		}

@@ -38,8 +38,10 @@ namespace Xamarin.Forms.Platform.iOS
 			_targetView = targetView;
 			_fetchWindow = fetchWindow;
 			_setInsetAction = setInsetAction;
+#if !__TVOS__
 			KeyboardObserver.KeyboardWillShow += OnKeyboardShown;
 			KeyboardObserver.KeyboardWillHide += OnKeyboardHidden;
+#endif
 		}
 
 		public void Dispose()
@@ -47,9 +49,10 @@ namespace Xamarin.Forms.Platform.iOS
 			if (_disposed)
 				return;
 			_disposed = true;
-
+#if !__TVOS__
 			KeyboardObserver.KeyboardWillShow -= OnKeyboardShown;
 			KeyboardObserver.KeyboardWillHide -= OnKeyboardHidden;
+#endif
 		}
 
 		//This method allows us to update the insets if the Frame changes
@@ -93,7 +96,7 @@ namespace Xamarin.Forms.Platform.iOS
 					_setContentOffset(new PointF(0, offset));
 			}
 		}
-
+#if !__TVOS__
 		void OnKeyboardHidden(object sender, UIKeyboardEventArgs args)
 		{
 			_setInsetAction(new UIEdgeInsets(0, 0, 0, 0));
@@ -105,5 +108,6 @@ namespace Xamarin.Forms.Platform.iOS
 			_lastKeyboardRect = args.FrameEnd;
 			UpdateInsets();
 		}
+#endif
 	}
 }

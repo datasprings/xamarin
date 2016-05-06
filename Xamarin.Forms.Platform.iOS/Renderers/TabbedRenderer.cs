@@ -59,8 +59,9 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			var oldElement = Element;
 			Element = element;
-
+#if !__TVOS__
 			FinishedCustomizingViewControllers += HandleFinishedCustomizingViewControllers;
+#endif
 			Tabbed.PropertyChanged += OnPropertyChanged;
 			Tabbed.PagesChanged += OnPagesChanged;
 
@@ -72,7 +73,9 @@ namespace Xamarin.Forms.Platform.iOS
 				element.SendViewInitialized(NativeView);
 
 			//disable edit/reorder of tabs
+#if !__TVOS__
 			CustomizableViewControllers = null;
+#endif
 
 			UpdateBarBackgroundColor();
 			UpdateBarTextColor();
@@ -92,14 +95,14 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			get { return this; }
 		}
-
+#if !__TVOS__
 		public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
 		{
 			base.DidRotate(fromInterfaceOrientation);
 
 			View.SetNeedsLayout();
 		}
-
+#endif
 		public override void ViewDidAppear(bool animated)
 		{
 			((TabbedPage)Element).SendAppearing();
@@ -136,7 +139,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 			_loaded = true;
 		}
-
+#if !__TVOS__
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
@@ -144,7 +147,7 @@ namespace Xamarin.Forms.Platform.iOS
 			if (!Forms.IsiOS7OrNewer)
 				WantsFullScreenLayout = false;
 		}
-
+#endif
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -152,7 +155,9 @@ namespace Xamarin.Forms.Platform.iOS
 				((TabbedPage)Element).SendDisappearing();
 				Tabbed.PropertyChanged -= OnPropertyChanged;
 				Tabbed.PagesChanged -= OnPagesChanged;
+#if !__TVOS__
 				FinishedCustomizingViewControllers -= HandleFinishedCustomizingViewControllers;
+#endif
 			}
 
 			base.Dispose(disposing);
@@ -173,13 +178,13 @@ namespace Xamarin.Forms.Platform.iOS
 
 			return renderer.ViewController;
 		}
-
+#if !__TVOS__
 		void HandleFinishedCustomizingViewControllers(object sender, UITabBarCustomizeChangeEventArgs e)
 		{
 			if (e.Changed)
 				UpdateChildrenOrderIndex(e.ViewControllers);
 		}
-
+#endif
 		void OnPagePropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == Page.TitleProperty.PropertyName)
@@ -322,7 +327,7 @@ namespace Xamarin.Forms.Platform.iOS
 				return;
 
 			var barTextColor = Tabbed.BarTextColor;
-
+#if !__TVOS__
 			var globalAttributes = UINavigationBar.Appearance.GetTitleTextAttributes();
 
 			var attributes = new UITextAttributes { Font = globalAttributes.Font };
@@ -336,7 +341,7 @@ namespace Xamarin.Forms.Platform.iOS
 			{
 				item.SetTitleTextAttributes(attributes, UIControlState.Normal);
 			}
-
+#endif
 			// set TintColor for selected icon
 			// setting the unselected icon tint is not supported by iOS
 			if (Forms.IsiOS7OrNewer)

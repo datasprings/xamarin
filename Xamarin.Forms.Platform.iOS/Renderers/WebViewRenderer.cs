@@ -11,6 +11,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 #endif
 
+#if !__TVOS__
 namespace Xamarin.Forms.Platform.iOS
 {
 	public class WebViewRenderer : UIWebView, IVisualElementRenderer, IWebViewDelegate
@@ -253,7 +254,7 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 		}
 
-		#region IPlatformRenderer implementation
+#region IPlatformRenderer implementation
 
 		public UIView NativeView
 		{
@@ -265,6 +266,7 @@ namespace Xamarin.Forms.Platform.iOS
 			get { return null; }
 		}
 
-		#endregion
+#endregion
 	}
 }
+#endif

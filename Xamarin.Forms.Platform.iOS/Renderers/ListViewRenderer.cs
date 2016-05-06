@@ -577,15 +577,18 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void UpdateSeparatorColor()
 		{
+#if !__TVOS__
 			var color = Element.SeparatorColor;
 			// ...and Steve said to the unbelievers the separator shall be gray, and gray it was. The unbelievers looked on, and saw that it was good, and 
 			// they went forth and documented the default color. The holy scripture still reflects this default.
 			// Defined here: https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/separatorColor
 			Control.SeparatorColor = color.ToUIColor(UIColor.Gray);
+#endif
 		}
 
 		void UpdateSeparatorVisibility()
 		{
+#if !__TVOS__
 			var visibility = Element.SeparatorVisibility;
 			switch (visibility)
 			{
@@ -598,6 +601,7 @@ namespace Xamarin.Forms.Platform.iOS
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
+#endif
 		}
 
 		internal class UnevenListViewDataSource : ListViewDataSource
@@ -724,7 +728,11 @@ namespace Xamarin.Forms.Platform.iOS
 				else if (cachingStrategy == ListViewCachingStrategy.RecycleElement)
 				{
 					var id = TemplateIdForPath(indexPath);
+#if !__TVOS__
 					nativeCell = tableView.DequeueReusableCell(ContextActionsCell.Key + id);
+#else
+					nativeCell = tableView.DequeueReusableCell(id.ToString());
+#endif
 					if (nativeCell == null)
 					{
 						var cell = GetCellForPath(indexPath);
@@ -808,6 +816,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 					if (selectedIndexPath != null)
 					{
+#if !__TVOS__
 						var cell = _uiTableView.CellAt(selectedIndexPath) as ContextActionsCell;
 						if (cell != null)
 						{
@@ -815,6 +824,7 @@ namespace Xamarin.Forms.Platform.iOS
 							if (cell.IsOpen)
 								animate = false;
 						}
+#endif
 					}
 
 					if (selectedIndexPath != null)
@@ -876,7 +886,7 @@ namespace Xamarin.Forms.Platform.iOS
 				if (_isDragging && scrollView.ContentOffset.Y < 0)
 					_uiTableViewController.UpdateShowHideRefresh(true);
 			}
-
+#if !__TVOS__
 			public override string[] SectionIndexTitles(UITableView tableView)
 			{
 				if (List.TemplatedItems.ShortNames == null)
@@ -884,7 +894,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 				return List.TemplatedItems.ShortNames.ToArray();
 			}
-
+#endif
 			public override string TitleForHeader(UITableView tableView, nint section)
 			{
 				if (!List.IsGroupingEnabled)
@@ -941,10 +951,12 @@ namespace Xamarin.Forms.Platform.iOS
 
 			static void SetCellBackgroundColor(UITableViewCell cell, UIColor color)
 			{
-				var contextCell = cell as ContextActionsCell;
 				cell.BackgroundColor = color;
+#if !__TVOS__
+				var contextCell = cell as ContextActionsCell;
 				if (contextCell != null)
 					contextCell.ContentCell.BackgroundColor = color;
+#endif
 			}
 
 			int TemplateIdForPath(NSIndexPath indexPath)
@@ -1000,21 +1012,25 @@ namespace Xamarin.Forms.Platform.iOS
 	internal class FormsUITableViewController : UITableViewController
 	{
 		readonly ListView _list;
+#if !__TVOS__
 		UIRefreshControl _refresh;
-
+#endif
 		bool _refreshAdded;
 
 		public FormsUITableViewController(ListView element)
 		{
 			if (Forms.IsiOS9OrNewer)
 				TableView.CellLayoutMarginsFollowReadableWidth = false;
+#if !__TVOS__
 			_refresh = new UIRefreshControl();
 			_refresh.ValueChanged += OnRefreshingChanged;
+#endif
 			_list = element;
 		}
 
 		public void UpdateIsRefreshing(bool refreshing)
 		{
+#if !__TVOS__
 			if (refreshing)
 			{
 				if (!_refreshAdded)
@@ -1040,10 +1056,12 @@ namespace Xamarin.Forms.Platform.iOS
 				if (!_list.IsPullToRefreshEnabled)
 					RemoveRefresh();
 			}
+#endif
 		}
 
 		public void UpdatePullToRefreshEnabled(bool pullToRefreshEnabled)
 		{
+#if !__TVOS__
 			if (pullToRefreshEnabled)
 			{
 				if (!_refreshAdded)
@@ -1060,6 +1078,7 @@ namespace Xamarin.Forms.Platform.iOS
 				RefreshControl = null;
 				_refreshAdded = false;
 			}
+#endif
 		}
 
 		public void UpdateShowHideRefresh(bool shouldHide)
@@ -1080,7 +1099,7 @@ namespace Xamarin.Forms.Platform.iOS
 		protected override void Dispose(bool disposing)
 		{
 			base.Dispose(disposing);
-
+#if !__TVOS__
 			if (disposing && _refresh != null)
 			{
 				_refresh.ValueChanged -= OnRefreshingChanged;
@@ -1088,6 +1107,7 @@ namespace Xamarin.Forms.Platform.iOS
 				_refresh.Dispose();
 				_refresh = null;
 			}
+#endif
 		}
 
 		void CheckContentSize()
@@ -1100,12 +1120,15 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void OnRefreshingChanged(object sender, EventArgs eventArgs)
 		{
+#if !__TVOS__
 			if (_refresh.Refreshing)
 				(_list as IListViewController).SendRefreshing();
+#endif
 		}
 
 		void RemoveRefresh()
 		{
+#if !__TVOS__
 			if (!_refreshAdded)
 				return;
 
@@ -1114,6 +1137,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 			RefreshControl = null;
 			_refreshAdded = false;
+#endif
 		}
 	}
 }

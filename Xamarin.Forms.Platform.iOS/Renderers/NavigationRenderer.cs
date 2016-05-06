@@ -20,9 +20,9 @@ using SizeF = CoreGraphics.CGSize;
 using PointF = CoreGraphics.CGPoint;
 
 #else
-using nfloat=System.Single;
-using nint=System.Int32;
-using nuint=System.UInt32;
+using nfloat = System.Single;
+using nint = System.Int32;
+using nuint = System.UInt32;
 #endif
 
 namespace Xamarin.Forms.Platform.iOS
@@ -36,7 +36,9 @@ namespace Xamarin.Forms.Platform.iOS
 		MasterDetailPage _parentMasterDetailPage;
 		Size _queuedSize;
 		UIViewController[] _removeControllers;
+#if !__TVOS__
 		UIToolbar _secondaryToolbar;
+#endif
 		VisualElementTracker _tracker;
 
 		public NavigationRenderer()
@@ -90,7 +92,7 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			get { return this; }
 		}
-
+#if !__TVOS__
 		public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
 		{
 			base.DidRotate(fromInterfaceOrientation);
@@ -100,7 +102,7 @@ namespace Xamarin.Forms.Platform.iOS
 			var parentingViewController = (ParentingViewController)ViewControllers.Last();
 			UpdateLeftBarButtonItem(parentingViewController);
 		}
-
+#endif
 		public Task<bool> PopToRootAsync(Page page, bool animated = true)
 		{
 			return OnPopToRoot(page, animated);
@@ -122,15 +124,15 @@ namespace Xamarin.Forms.Platform.iOS
 #if __UNIFIED__
 		public override UIViewController PopViewController(bool animated)
 #else
-		public override UIViewController PopViewControllerAnimated (bool animated)
-		#endif
+		public override UIViewController PopViewControllerAnimated(bool animated)
+#endif
 		{
 			RemoveViewControllers(animated);
 #if __UNIFIED__
 			return base.PopViewController(animated);
 #else
-			return base.PopViewControllerAnimated (animated);
-			#endif
+			return base.PopViewControllerAnimated(animated);
+#endif
 		}
 
 		public Task<bool> PushPageAsync(Page page, bool animated = true)
@@ -168,15 +170,16 @@ namespace Xamarin.Forms.Platform.iOS
 			UpdateToolBarVisible();
 
 			var navBarFrame = NavigationBar.Frame;
-
+#if !__TVOS__
 			var toolbar = _secondaryToolbar;
+
 			// Use 0 if the NavBar is hidden or will be hidden
 			var toolbarY = NavigationBarHidden || !NavigationPage.GetHasNavigationBar(Current) ? 0 : navBarFrame.Bottom;
 			toolbar.Frame = new RectangleF(0, toolbarY, View.Frame.Width, toolbar.Frame.Height);
 
 			double trueBottom = toolbar.Hidden ? toolbarY : toolbar.Frame.Bottom;
 			var modelSize = _queuedSize.IsZero ? Element.Bounds.Size : _queuedSize;
-			((NavigationPage)Element).ContainerArea = 
+			((NavigationPage)Element).ContainerArea =
 				new Rectangle(0, toolbar.Hidden ? 0 : toolbar.Frame.Height, modelSize.Width, modelSize.Height - trueBottom);
 
 			if (!_queuedSize.IsZero)
@@ -193,12 +196,13 @@ namespace Xamarin.Forms.Platform.iOS
 					continue;
 				view.Frame = View.Bounds;
 			}
+#endif
 		}
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-
+#if !__TVOS__
 			if (Forms.IsiOS7OrNewer)
 				NavigationBar.Translucent = false;
 			else
@@ -208,6 +212,7 @@ namespace Xamarin.Forms.Platform.iOS
 			View.Add(_secondaryToolbar);
 			_secondaryToolbar.Hidden = true;
 
+#endif
 			FindParentMasterDetail();
 
 			var navPage = (NavigationPage)Element;
@@ -253,11 +258,11 @@ namespace Xamarin.Forms.Platform.iOS
 
 				if (_tracker != null)
 					_tracker.Dispose();
-
+#if !__TVOS__
 				_secondaryToolbar.RemoveFromSuperview();
 				_secondaryToolbar.Dispose();
 				_secondaryToolbar = null;
-
+#endif
 				_parentMasterDetailPage = null;
 				Current = null; // unhooks events
 
@@ -326,8 +331,8 @@ namespace Xamarin.Forms.Platform.iOS
 #if __UNIFIED__
 			poppedViewController = base.PopViewController(animated);
 #else
-			poppedViewController = base.PopViewControllerAnimated (animated);
-			#endif
+			poppedViewController = base.PopViewControllerAnimated(animated);
+#endif
 
 			if (poppedViewController == null)
 			{
@@ -390,8 +395,10 @@ namespace Xamarin.Forms.Platform.iOS
 			var titleText = NavigationPage.GetBackButtonTitle(page);
 			if (titleText != null)
 			{
-				pack.NavigationItem.BackBarButtonItem = 
+#if !__TVOS__
+				pack.NavigationItem.BackBarButtonItem =
 					new UIBarButtonItem(titleText, UIBarButtonItemStyle.Plain, async (o, e) => await PopViewAsync(page));
+#endif
 			}
 
 			var pageRenderer = Platform.GetRenderer(page);
@@ -582,7 +589,7 @@ namespace Xamarin.Forms.Platform.iOS
 		void UpdateBarTextColor()
 		{
 			var barTextColor = ((NavigationPage)Element).BarTextColor;
-
+#if !__TVOS__
 			var globalAttributes = UINavigationBar.Appearance.GetTitleTextAttributes();
 
 			if (barTextColor == Color.Default)
@@ -614,7 +621,7 @@ namespace Xamarin.Forms.Platform.iOS
 					? UINavigationBar.Appearance.TintColor
 					: barTextColor.ToUIColor();
 			}
-
+			
 			if (barTextColor.Luminosity > 0.5)
 			{
 				// Use light text color for status bar
@@ -625,6 +632,7 @@ namespace Xamarin.Forms.Platform.iOS
 				// Use dark text color for status bar
 				UIApplication.SharedApplication.StatusBarStyle = UIStatusBarStyle.Default;
 			}
+#endif
 		}
 
 		void UpdateLeftBarButtonItem(ParentingViewController containerController)
@@ -685,6 +693,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void UpdateToolBarVisible()
 		{
+#if !__TVOS__
 			if (_secondaryToolbar == null)
 				return;
 			if (TopViewController != null && TopViewController.ToolbarItems != null && TopViewController.ToolbarItems.Any())
@@ -697,8 +706,9 @@ namespace Xamarin.Forms.Platform.iOS
 				_secondaryToolbar.Hidden = true;
 				//secondaryToolbar.Items = null;
 			}
+#endif
 		}
-
+#if !__TVOS__
 		class SecondaryToolbar : UIToolbar
 		{
 			readonly List<UIView> _lines = new List<UIView>();
@@ -756,7 +766,7 @@ namespace Xamarin.Forms.Platform.iOS
 				}
 			}
 		}
-
+#endif
 		class ParentingViewController : UIViewController
 		{
 			readonly WeakReference<NavigationRenderer> _navigation;
@@ -793,14 +803,14 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 
 			public event EventHandler Appearing;
-
+#if !__TVOS__
 			public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
 			{
 				base.DidRotate(fromInterfaceOrientation);
 
 				View.SetNeedsLayout();
 			}
-
+#endif
 			public event EventHandler Disappearing;
 
 			public override void ViewDidAppear(bool animated)
@@ -890,8 +900,9 @@ namespace Xamarin.Forms.Platform.iOS
 			{
 				if (Child == null)
 					return;
-
+#if !__TVOS__
 				NavigationItem.HidesBackButton = !NavigationPage.GetHasBackButton(Child);
+#endif
 			}
 
 			void UpdateNavigationBarVisibility(bool animated)
@@ -940,6 +951,7 @@ namespace Xamarin.Forms.Platform.iOS
 					n.UpdateToolBarVisible();
 			}
 		}
+
 
 		void IEffectControlProvider.RegisterEffect(Effect effect)
 		{

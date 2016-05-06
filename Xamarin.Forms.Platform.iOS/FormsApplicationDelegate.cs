@@ -125,8 +125,9 @@ namespace Xamarin.Forms.Platform.iOS
 
 			Application.Current = application;
 			_application = application;
+#if !__TVOS__
 			(application as IApplicationController)?.SetAppIndexingProvider(new IOSAppIndexingProvider());
-
+#endif
 			application.PropertyChanged += ApplicationOnPropertyChanged;
 		}
 
@@ -139,7 +140,7 @@ namespace Xamarin.Forms.Platform.iOS
 		void CheckForAppLink(NSUserActivity userActivity)
 		{
 			var strLink = string.Empty;
-
+#if !__TVOS__
 			switch (userActivity.ActivityType)
 			{
 				case "NSUserActivityTypeBrowsingWeb":
@@ -154,7 +155,7 @@ namespace Xamarin.Forms.Platform.iOS
 						strLink = userActivity.UserInfo[new NSString("link")].ToString();
 					break;
 			}
-
+#endif
 			if (!string.IsNullOrEmpty(strLink))
 				_application.SendOnAppLinkRequestReceived(new Uri(strLink));
 		}

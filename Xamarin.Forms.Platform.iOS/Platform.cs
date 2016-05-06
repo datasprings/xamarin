@@ -61,7 +61,9 @@ namespace Xamarin.Forms.Platform.iOS
 				if (!PageIsChildOfPlatform(sender))
 					return;
 				busyCount = Math.Max(0, enabled ? busyCount + 1 : busyCount - 1);
+#if !__TVOS__
 				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = busyCount > 0;
+#endif
 			});
 
 			MessagingCenter.Subscribe(this, Page.AlertSignalName, (Page sender, AlertArguments arguments) =>
@@ -83,6 +85,7 @@ namespace Xamarin.Forms.Platform.iOS
 				}
 				else
 				{
+#if !__TVOS__
 					UIAlertView alertView;
 					if (arguments.Accept != null)
 						alertView = new UIAlertView(arguments.Title, arguments.Message, null, arguments.Cancel, arguments.Accept);
@@ -91,6 +94,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 					alertView.Dismissed += (o, args) => arguments.SetResult(args.ButtonIndex != 0);
 					alertView.Show();
+#endif
 				}
 			});
 
@@ -126,9 +130,10 @@ namespace Xamarin.Forms.Platform.iOS
 						var blabel = label;
 						alert.AddAction(UIAlertAction.Create(blabel, UIAlertActionStyle.Default, a => arguments.SetResult(blabel)));
 					}
-
+#if !__TVOS__
 					if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
 					{
+
 						UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
 						var observer = NSNotificationCenter.DefaultCenter.AddObserver(UIDevice.OrientationDidChangeNotification,
 							n => { alert.PopoverPresentationController.SourceRect = pageRenderer.ViewController.View.Bounds; });
@@ -143,11 +148,12 @@ namespace Xamarin.Forms.Platform.iOS
 						alert.PopoverPresentationController.SourceRect = pageRenderer.ViewController.View.Bounds;
 						alert.PopoverPresentationController.PermittedArrowDirections = 0; // No arrow
 					}
-
+#endif
 					pageRenderer.ViewController.PresentViewController(alert, true, null);
 				}
 				else
 				{
+#if !__TVOS__
 					var actionSheet = new UIActionSheet(arguments.Title, null, arguments.Cancel, arguments.Destruction, arguments.Buttons.ToArray());
 
 					actionSheet.ShowInView(pageRenderer.NativeView);
@@ -161,6 +167,7 @@ namespace Xamarin.Forms.Platform.iOS
 						// iOS 8 always calls WillDismiss twice, once with the real result, and again with -1.
 						arguments.Result.TrySetResult(title);
 					};
+#endif
 				}
 			});
 		}

@@ -11,6 +11,7 @@ using MonoTouch.UIKit;
 using MonoTouch.CoreSpotlight;
 #endif
 
+#if !__TVOS__
 namespace Xamarin.Forms.Platform.iOS
 {
 	internal class IOSAppLinks : IAppLinks
@@ -188,3 +189,4 @@ namespace Xamarin.Forms.Platform.iOS
 		}
 	}
 }
+#endif

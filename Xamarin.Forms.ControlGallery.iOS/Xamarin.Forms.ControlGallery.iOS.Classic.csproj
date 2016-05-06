@@ -15,6 +15,7 @@
     <RestorePackages>true</RestorePackages>
     <UseMSBuildEngine>True</UseMSBuildEngine>
     <DefineConstants>_CLASSIC_</DefineConstants>
+    <BaseIntermediateOutputPath>classic_obj</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>

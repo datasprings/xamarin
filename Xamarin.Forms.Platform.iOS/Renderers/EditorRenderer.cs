@@ -21,8 +21,9 @@ namespace Xamarin.Forms.Platform.iOS
 {
 	public class EditorRenderer : ViewRenderer<Editor, UITextView>
 	{
+#if !__TVOS__
 		UIToolbar _accessoryView;
-
+#endif
 		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
 		{
 			if (!Forms.IsiOS7OrNewer)
@@ -52,11 +53,12 @@ namespace Xamarin.Forms.Platform.iOS
 			if (Control == null)
 			{
 				SetNativeControl(new UITextView(RectangleF.Empty));
-
+#if !__TVOS__
 				if (Device.Idiom == TargetIdiom.Phone)
 				{
 					// iPhone does not have a dismiss keyboard button
 					var keyboardWidth = UIScreen.MainScreen.Bounds.Width;
+
 					_accessoryView = new UIToolbar(new RectangleF(0, 0, keyboardWidth, 44)) { BarStyle = UIBarStyle.Default, Translucent = true };
 
 					var spacer = new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace);
@@ -68,7 +70,7 @@ namespace Xamarin.Forms.Platform.iOS
 					_accessoryView.SetItems(new[] { spacer, doneButton }, false);
 					Control.InputAccessoryView = _accessoryView;
 				}
-
+#endif
 				Control.Changed += HandleChanged;
 				Control.Started += OnStarted;
 				Control.Ended += OnEnded;
@@ -122,7 +124,9 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void UpdateEditable()
 		{
+#if !__TVOS__
 			Control.Editable = Element.IsEnabled;
+#endif
 			Control.UserInteractionEnabled = Element.IsEnabled;
 
 			if (Control.InputAccessoryView != null)

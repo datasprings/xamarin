@@ -73,36 +73,36 @@ namespace Xamarin.Forms.Platform.iOS
 
 		protected override void Dispose(bool disposing)
 		{
-		    if (!_disposed && disposing)
-		    {
-		        if (Element != null)
-		        {
-		            ((Page)Element).SendDisappearing();
-		            Element.PropertyChanged -= HandlePropertyChanged;
-		            Element = null;
-		        }
+			if (!_disposed && disposing)
+			{
+				if (Element != null)
+				{
+					((Page)Element).SendDisappearing();
+					Element.PropertyChanged -= HandlePropertyChanged;
+					Element = null;
+				}
 
-		        if (_tracker != null)
-		        {
-		            _tracker.Dispose();
-		            _tracker = null;
-		        }
+				if (_tracker != null)
+				{
+					_tracker.Dispose();
+					_tracker = null;
+				}
 
-		        if (_events != null)
-		        {
-		            _events.Dispose();
-		            _events = null;
-		        }
+				if (_events != null)
+				{
+					_events.Dispose();
+					_events = null;
+				}
 
-		        if (_masterController != null)
-		        {
-		            _masterController.WillAppear -= MasterControllerWillAppear;
-		            _masterController.WillDisappear -= MasterControllerWillDisappear;
-		        }
+				if (_masterController != null)
+				{
+					_masterController.WillAppear -= MasterControllerWillAppear;
+					_masterController.WillDisappear -= MasterControllerWillDisappear;
+				}
 
-		        _disposed = true;
-		    }
-		    base.Dispose(disposing);
+				_disposed = true;
+			}
+			base.Dispose(disposing);
 		}
 
 		public VisualElement Element { get; private set; }
@@ -205,7 +205,7 @@ namespace Xamarin.Forms.Platform.iOS
 			base.ViewWillLayoutSubviews();
 			_masterController.View.BackgroundColor = UIColor.White;
 		}
-
+#if !__TVOS__
 		public override void WillRotate(UIInterfaceOrientation toInterfaceOrientation, double duration)
 		{
 			// On IOS8 the MasterViewController ViewAppear/Disappear weren't being called correctly after rotation 
@@ -224,7 +224,7 @@ namespace Xamarin.Forms.Platform.iOS
 			MessagingCenter.Send<IVisualElementRenderer>(this, NavigationRenderer.UpdateToolbarButtons);
 			base.WillRotate(toInterfaceOrientation, duration);
 		}
-
+#endif
 		protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
 		{
 			if (e.OldElement != null)
@@ -346,7 +346,7 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 
 			public UIBarButtonItem PresentButton { get; set; }
-
+#if !__TVOS__
 			public override bool ShouldHideViewController(UISplitViewController svc, UIViewController viewController, UIInterfaceOrientation inOrientation)
 			{
 				bool willHideViewController;
@@ -372,6 +372,7 @@ namespace Xamarin.Forms.Platform.iOS
 			{
 				PresentButton = barButtonItem;
 			}
+#endif
 		}
 
 		void IEffectControlProvider.RegisterEffect(Effect effect)

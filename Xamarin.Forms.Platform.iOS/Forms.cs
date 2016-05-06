@@ -5,7 +5,9 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Linq.Expressions;
+#if !__TVOS__
 using System.Net.Http;
+#endif
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -138,8 +140,9 @@ namespace Xamarin.Forms
 
 			public IOSDeviceInfo()
 			{
+#if !__TVOS__
 				_notification = UIDevice.Notifications.ObserveOrientationDidChange((sender, args) => CurrentOrientation = UIDevice.CurrentDevice.Orientation.ToDeviceOrientation());
-
+#endif
 				_scalingFactor = UIScreen.MainScreen.Scale;
 				_scaledScreenSize = new Size(UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height);
 				PixelScreenSize = new Size(_scaledScreenSize.Width * _scalingFactor, _scaledScreenSize.Height * _scalingFactor);
@@ -218,9 +221,13 @@ namespace Xamarin.Forms
 
 			public async Task<Stream> GetStreamAsync(Uri uri, CancellationToken cancellationToken)
 			{
+#if !__TVOS__
 				using (var client = GetHttpClient())
 				using (var response = await client.GetAsync(uri, cancellationToken))
 					return await response.Content.ReadAsStreamAsync();
+#else
+				return null;
+#endif
 			}
 
 			public IIsolatedStorageFile GetUserStoreForApplication()
@@ -246,17 +253,17 @@ namespace Xamarin.Forms
 				{
 #else
 				timer = NSTimer.CreateRepeatingScheduledTimer (interval, () => {
-				#endif
+#endif
 					if (!callback())
 #if __UNIFIED__
 						t.Invalidate();
 #else
 						timer.Invalidate ();
-						#endif
+#endif
 				});
 				NSRunLoop.Main.AddTimer(timer, NSRunLoopMode.Common);
 			}
-
+#if !__TVOS__
 			HttpClient GetHttpClient()
 			{
 				var proxy = CFNetwork.GetSystemProxySettings();
@@ -268,7 +275,7 @@ namespace Xamarin.Forms
 				}
 				return new HttpClient(handler);
 			}
-
+#endif
 			static int Hex(int v)
 			{
 				if (v < 10)

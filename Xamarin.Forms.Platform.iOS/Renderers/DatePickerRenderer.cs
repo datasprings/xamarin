@@ -32,7 +32,7 @@ namespace Xamarin.Forms.Platform.iOS
 			return new RectangleF();
 		}
 	}
-
+#if !__TVOS__
 	public class DatePickerRenderer : ViewRenderer<DatePicker, UITextField>
 	{
 		UIDatePicker _picker;
@@ -135,4 +135,5 @@ namespace Xamarin.Forms.Platform.iOS
 				Control.TextColor = textColor.ToUIColor();
 		}
 	}
+#endif
 }

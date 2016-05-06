@@ -33,7 +33,11 @@ namespace Xamarin.Forms.Platform.iOS
 
 		public static CGColor ToCGColor(this Color color)
 		{
+#if !__TVOS__
 			return new CGColor((float)color.R, (float)color.G, (float)color.B, (float)color.A);
+#else
+			return new CGColor(CGColorSpace.CreateDeviceRGB(), new nfloat[] { (float)color.R, (float)color.G, (float)color.B, (float)color.A });
+#endif
 		}
 
 		public static Color ToColor(this UIColor color)

@@ -39,8 +39,10 @@ namespace Xamarin.Forms.Platform.iOS
 
 		public PhoneMasterDetailRenderer()
 		{
+#if !__TVOS__
 			if (!Forms.IsiOS7OrNewer)
 				WantsFullScreenLayout = true;
+#endif
 		}
 
 		IMasterDetailPageController MasterDetailPageController => Element as IMasterDetailPageController;
@@ -152,7 +154,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 			UpdatePanGesture();
 		}
-
+#if !__TVOS__
 		public override void WillRotate(UIInterfaceOrientation toInterfaceOrientation, double duration)
 		{
 			if (!MasterDetailPageController.ShouldShowSplitMode && _presented)
@@ -160,7 +162,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 			base.WillRotate(toInterfaceOrientation, duration);
 		}
-
+#endif
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && !_disposed)
@@ -348,7 +350,14 @@ namespace Xamarin.Forms.Platform.iOS
 				return;
 			}
 
-			UITouchEventArgs shouldRecieve = (g, t) => !(t.View is UISlider);
+			UITouchEventArgs shouldRecieve = (g, t) =>
+			{
+#if !__TVOS__
+				return !(t.View is UISlider);
+#else
+				return true;
+#endif
+			};
 			var center = new PointF();
 			_panGesture = new UIPanGestureRecognizer(g =>
 			{
@@ -389,7 +398,9 @@ namespace Xamarin.Forms.Platform.iOS
 				}
 			});
 			_panGesture.ShouldReceiveTouch = shouldRecieve;
+#if !__TVOS__
 			_panGesture.MaximumNumberOfTouches = 2;
+#endif
 			View.AddGestureRecognizer(_panGesture);
 		}
 

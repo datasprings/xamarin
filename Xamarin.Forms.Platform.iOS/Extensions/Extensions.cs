@@ -55,7 +55,7 @@ namespace Xamarin.Forms.Platform.iOS
 				textInput.SpellCheckingType = spellcheckEnabled ? UITextSpellCheckingType.Yes : UITextSpellCheckingType.No;
 			}
 		}
-
+#if !__TVOS__
 		internal static DeviceOrientation ToDeviceOrientation(this UIDeviceOrientation orientation)
 		{
 			switch (orientation)
@@ -72,5 +72,7 @@ namespace Xamarin.Forms.Platform.iOS
 					return DeviceOrientation.Other;
 			}
 		}
+		
+#endif
 	}
 }

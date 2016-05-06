@@ -48,11 +48,13 @@ namespace Xamarin.Forms.Platform.iOS
 			var id = cell.GetType().FullName;
 
 			var renderer = (CellRenderer)Registrar.Registered.GetHandler(cell.GetType());
-
+#if !__TVOS__
 			ContextActionsCell contextCell = null;
+#endif
 			UITableViewCell reusableCell = null;
 			if (cell.HasContextActions || recycleCells)
 			{
+#if !__TVOS__
 				contextCell = (ContextActionsCell)tableView.DequeueReusableCell(ContextActionsCell.Key + templateId);
 				if (contextCell == null)
 				{
@@ -67,6 +69,7 @@ namespace Xamarin.Forms.Platform.iOS
 					if (reusableCell.ReuseIdentifier.ToString() != id)
 						reusableCell = null;
 				}
+#endif
 			}
 			else
 				reusableCell = tableView.DequeueReusableCell(id);
@@ -79,13 +82,13 @@ namespace Xamarin.Forms.Platform.iOS
 			// This prevents it from showing up, so lets turn it back on!
 			if (cellWithContent.Layer.Hidden)
 				cellWithContent.Layer.Hidden = false;
-
+#if !__TVOS__
 			if (contextCell != null)
 			{
 				contextCell.Update(tableView, cell, nativeCell);
 				nativeCell = contextCell;
 			}
-
+#endif
 			// Because the layer was hidden we need to layout the cell by hand
 			if (cellWithContent != null)
 				cellWithContent.LayoutSubviews();

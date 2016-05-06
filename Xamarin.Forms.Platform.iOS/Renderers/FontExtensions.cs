@@ -98,7 +98,11 @@ namespace Xamarin.Forms.Platform.iOS
 		internal static UIFont ToUIFont(this Label label)
 		{
 			var values = label.GetValues(Label.FontFamilyProperty, Label.FontSizeProperty, Label.FontAttributesProperty);
+#if !__TVOS__
 			return ToUIFont((string)values[0], (float)(double)values[1], (FontAttributes)values[2]) ?? UIFont.SystemFontOfSize(UIFont.LabelFontSize);
+#else
+			return ToUIFont((string)values[0], (float)(double)values[1], (FontAttributes)values[2]) ?? UIFont.SystemFontOfSize(UIFont.PreferredCaption1.PointSize);
+#endif
 		}
 
 		internal static UIFont ToUIFont(this IFontElement element)

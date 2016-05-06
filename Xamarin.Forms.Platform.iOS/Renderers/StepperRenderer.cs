@@ -8,6 +8,7 @@ using UIKit;
 using MonoTouch.UIKit;
 #endif
 
+#if !__TVOS__
 namespace Xamarin.Forms.Platform.iOS
 {
 	public class StepperRenderer : ViewRenderer<Stepper, UIStepper>
@@ -80,3 +81,4 @@ namespace Xamarin.Forms.Platform.iOS
 		}
 	}
 }
+#endif

@@ -105,12 +105,12 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			return View.Model.GetRowCount((int)section);
 		}
-
+#if !__TVOS__
 		public override string[] SectionIndexTitles(UITableView tableView)
 		{
 			return View.Model.GetSectionIndexTitles();
 		}
-
+#endif
 		public override string TitleForHeader(UITableView tableView, nint section)
 		{
 			return View.Model.GetSectionTitle((int)section);

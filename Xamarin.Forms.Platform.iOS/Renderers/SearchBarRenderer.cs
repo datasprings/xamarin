@@ -26,7 +26,9 @@ namespace Xamarin.Forms.Platform.iOS
 			{
 				if (Control != null)
 				{
+#if !__TVOS__
 					Control.CancelButtonClicked -= OnCancelClicked;
+#endif
 					Control.SearchButtonClicked -= OnSearchButtonClicked;
 					Control.TextChanged -= OnTextChanged;
 
@@ -44,7 +46,17 @@ namespace Xamarin.Forms.Platform.iOS
 			{
 				if (Control == null)
 				{
-					var searchBar = new UISearchBar(RectangleF.Empty) { ShowsCancelButton = true, BarStyle = UIBarStyle.Default };
+#if __TVOS__
+					var s = new UISearchController(this.ViewController);
+
+					var searchBar = s.SearchBar;
+
+#else
+					var searchBar = new UISearchBar(RectangleF.Empty)
+					{
+						ShowsCancelButton = true,
+						BarStyle = UIBarStyle.Default
+					};
 
 					var cancelButton = searchBar.FindDescendantView<UIButton>();
 					_cancelButtonTextColorDefaultNormal = cancelButton.TitleColor(UIControlState.Normal);
@@ -54,6 +66,9 @@ namespace Xamarin.Forms.Platform.iOS
 					SetNativeControl(searchBar);
 
 					Control.CancelButtonClicked += OnCancelClicked;
+#endif
+					SetNativeControl(searchBar);
+
 					Control.SearchButtonClicked += OnSearchButtonClicked;
 					Control.TextChanged += OnTextChanged;
 
@@ -169,6 +184,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void UpdateCancelButton()
 		{
+#if !__TVOS__
 			Control.ShowsCancelButton = !string.IsNullOrEmpty(Control.Text);
 
 			// We can't cache the cancel button reference because iOS drops it when it's not displayed
@@ -190,6 +206,7 @@ namespace Xamarin.Forms.Platform.iOS
 				cancelButton.SetTitleColor(Element.CancelButtonColor.ToUIColor(), UIControlState.Highlighted);
 				cancelButton.SetTitleColor(_cancelButtonTextColorDefaultDisabled, UIControlState.Disabled);
 			}
+#endif
 		}
 
 		void UpdateFont()

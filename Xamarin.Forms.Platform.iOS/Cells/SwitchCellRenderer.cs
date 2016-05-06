@@ -7,7 +7,7 @@ using UIKit;
 #else
 using MonoTouch.UIKit;
 #endif
-
+#if !__TVOS__
 namespace Xamarin.Forms.Platform.iOS
 {
 	public class SwitchCellRenderer : CellRenderer
@@ -92,3 +92,4 @@ namespace Xamarin.Forms.Platform.iOS
 		}
 	}
 }
+#endif

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 
+
 #if __UNIFIED__
 using UIKit;
 using MapKit;
@@ -44,7 +45,9 @@ namespace Xamarin.Forms.ControlGallery.iOS
 				{
 					_mapView = new MKMapView(UIScreen.MainScreen.Bounds);
 					_mapView.MapType = MKMapType.Standard;
+#if !__TVOS__
 					_mapView.RotateEnabled = false;
+#endif
 					SetNativeControl(_mapView);
 				}
 
@@ -343,7 +346,7 @@ namespace Xamarin.Forms.ControlGallery.iOS
 			return _tableItems.Count;
 		}
 #else
-		public override int RowsInSection (UITableView tableview, int section)
+		public override int RowsInSection(UITableView tableview, int section)
 		{
 			return _tableItems.Count;
 		}
@@ -423,7 +426,7 @@ namespace Xamarin.Forms.ControlGallery.iOS
 		}
 
 #else
-		public override int RowsInSection (UITableView tableview, int section)
+		public override int RowsInSection(UITableView tableview, int section)
 		{
 			return _tableItems.Count;
 		}
@@ -531,7 +534,7 @@ namespace Xamarin.Forms.ControlGallery.iOS
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-			CollectionView.RegisterClassForCell(typeof (CollectionViewCell), cellId);
+			CollectionView.RegisterClassForCell(typeof(CollectionViewCell), cellId);
 		}
 
 #if __UNIFIED__
@@ -546,12 +549,12 @@ namespace Xamarin.Forms.ControlGallery.iOS
 		}
 
 #else
-		public override int NumberOfSections (UICollectionView collectionView)
+		public override int NumberOfSections(UICollectionView collectionView)
 		{
 			return 1;
 		}
 
-		public override int GetItemsCount (UICollectionView collectionView, int section)
+		public override int GetItemsCount(UICollectionView collectionView, int section)
 		{
 			return items.Count;
 		}

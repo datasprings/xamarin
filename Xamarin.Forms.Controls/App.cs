@@ -30,6 +30,7 @@ namespace Xamarin.Forms.Controls
 				Master = new ContentPage { Title = "Master", BackgroundColor = Color.Red },
 				Detail = CoreGallery.GetMainPage()
 			};
+			//MainPage = new ContentPage { Title = "Master", BackgroundColor = Color.Red };
 		}
 
 		protected override void OnAppLinkRequestReceived(Uri uri)

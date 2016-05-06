@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectGuid>{7547AF7F-E3FF-4DA9-BC81-FAF880855671}</ProjectGuid>
+    <ProjectTypeGuids>{06FA79CB-D6CD-4721-BB4B-1BD202089C55};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Xamarin.Forms.ControlGallery.tvOS</RootNamespace>
+    <AssemblyName>Xamarin.Forms.ControlGallery.tvOS</AssemblyName>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;__UNIFIED__;__TVOS__</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchFastDev>true</MtouchFastDev>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <MtouchUseRefCounting>true</MtouchUseRefCounting>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+    <DeviceSpecificBuild>false</DeviceSpecificBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <MtouchUseRefCounting>true</MtouchUseRefCounting>
+    <MtouchFloat32>true</MtouchFloat32>
+    <MtouchEnableBitcode>true</MtouchEnableBitcode>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchArch>ARM64</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <MtouchUseRefCounting>true</MtouchUseRefCounting>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;__UNIFIED__;__TVOS__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <DeviceSpecificBuild>true</DeviceSpecificBuild>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchFastDev>true</MtouchFastDev>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <MtouchUseRefCounting>true</MtouchUseRefCounting>
+    <MtouchFloat32>true</MtouchFloat32>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchArch>ARM64</MtouchArch>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.TVOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Large.imagestack\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Large.imagestack\Back.imagestacklayer\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Large.imagestack\Back.imagestacklayer\Content.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Large.imagestack\Front.imagestacklayer\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Large.imagestack\Front.imagestacklayer\Content.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Large.imagestack\Middle.imagestacklayer\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Large.imagestack\Middle.imagestacklayer\Content.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Small.imagestack\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Small.imagestack\Back.imagestacklayer\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Small.imagestack\Back.imagestacklayer\Content.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Small.imagestack\Front.imagestacklayer\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Small.imagestack\Front.imagestacklayer\Content.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Small.imagestack\Middle.imagestacklayer\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\App Icon - Small.imagestack\Middle.imagestacklayer\Content.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\App Icon &amp; Top Shelf Image.brandassets\Top Shelf Image.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\LaunchImages.launchimage\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Contents.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
+    <None Include="..\Xamarin.Forms.ControlGallery.iOS\local.html">
+      <Link>local.html</Link>
+    </None>
+    <None Include="..\Xamarin.Forms.ControlGallery.iOS\move_slider_one_right_ios6_iphone.base64">
+      <Link>move_slider_one_right_ios6_iphone.base64</Link>
+    </None>
+    <None Include="..\Xamarin.Forms.ControlGallery.iOS\move_slider_three_right_ios6_iphone.base64">
+      <Link>move_slider_three_right_ios6_iphone.base64</Link>
+    </None>
+    <None Include="..\Xamarin.Forms.ControlGallery.iOS\move_slider_two_right_ios6_iphone.base64">
+      <Link>move_slider_two_right_ios6_iphone.base64</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="ViewController.cs" />
+    <Compile Include="ViewController.designer.cs">
+      <DependentUpon>ViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.ControlGallery.iOS\BrokenNativeControl.cs">
+      <Link>BrokenNativeControl.cs</Link>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.ControlGallery.iOS\CustomRenderers.cs">
+      <Link>CustomRenderers.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Forms.Platform.tvOS\Xamarin.Forms.Platform.tvOS.csproj">
+      <Project>{E88F31E4-16CD-4852-8C6F-A8FE9A0FE0EF}</Project>
+      <Name>Xamarin.Forms.Platform.tvOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Forms.Controls\Xamarin.Forms.Controls.csproj">
+      <Project>{CB9C96CE-125C-4A68-B6A1-C3FF1FBF93E1}</Project>
+      <Name>Xamarin.Forms.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
+      <Project>{57B8B73D-C3B5-4C42-869E-7B2F17D354AC}</Project>
+      <Name>Xamarin.Forms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{7D13BAC2-C6A4-416A-B07E-C169B199E52B}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Images\FlowerBuds.jpg">
+      <Link>Images\FlowerBuds.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Images\FlowerBuds%402x.jpg">
+      <Link>Images\FlowerBuds%402x.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Images\Fruits.jpg">
+      <Link>Images\Fruits.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Images\Fruits%402x.jpg">
+      <Link>Images\Fruits%402x.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Images\Legumes.jpg">
+      <Link>Images\Legumes.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Images\Legumes%402x.jpg">
+      <Link>Images\Legumes%402x.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Images\Vegetables.jpg">
+      <Link>Images\Vegetables.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Images\Vegetables%402x.jpg">
+      <Link>Images\Vegetables%402x.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\bank.png">
+      <Link>bank.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\bank%402x.png">
+      <Link>bank%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\calculator.png">
+      <Link>calculator.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\calculator%402x.png">
+      <Link>calculator%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\coffee%402x.png">
+      <Link>coffee%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\cover1.jpg">
+      <Link>cover1.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\cover1small.jpg">
+      <Link>cover1small.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\crimson.jpg">
+      <Link>crimson.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\crimsonsmall.jpg">
+      <Link>crimsonsmall.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Default-568h%402x.png">
+      <Link>Default-568h%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Default-667h%402x.png">
+      <Link>Default-667h%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Default%402x.png">
+      <Link>Default%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Goobuntu-icon.png">
+      <Link>Goobuntu-icon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\Intranet-icon.png">
+      <Link>Intranet-icon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\menuIcon.png">
+      <Link>menuIcon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\menuIcon%402x.png">
+      <Link>menuIcon%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\oasis.jpg">
+      <Link>oasis.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\oasissmall.jpg">
+      <Link>oasissmall.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\photo.jpg">
+      <Link>photo.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\seth.png">
+      <Link>seth.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\seth%402x.png">
+      <Link>seth%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\settings%402x.png">
+      <Link>settings%402x.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\test.jpg">
+      <Link>test.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\toolbar_close.png">
+      <Link>toolbar_close.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Xamarin.Forms.ControlGallery.iOS\WebImages\XamarinLogo.png">
+      <Link>WebImages\XamarinLogo.png</Link>
+    </BundleResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\TVOS\Xamarin.TVOS.CSharp.targets" />
+</Project>

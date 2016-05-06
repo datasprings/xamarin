@@ -22,12 +22,12 @@ namespace Xamarin.Forms.Platform.iOS
 
 			modal.ViewController.DidMoveToParentViewController(this);
 		}
-
+#if !__TVOS__
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()
 		{
 			return UIInterfaceOrientationMask.All;
 		}
-
+#endif
 		public override void ViewDidLayoutSubviews()
 		{
 			base.ViewDidLayoutSubviews();
@@ -57,12 +57,12 @@ namespace Xamarin.Forms.Platform.iOS
 		}
 
 		public Platform Platform { get; set; }
-
+#if !__TVOS__
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()
 		{
 			return UIInterfaceOrientationMask.All;
 		}
-
+#endif
 		public override void ViewDidAppear(bool animated)
 		{
 			Platform.DidAppear();

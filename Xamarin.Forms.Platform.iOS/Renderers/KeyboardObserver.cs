@@ -10,6 +10,7 @@ namespace Xamarin.Forms.Platform.iOS
 {
 	internal static class KeyboardObserver
 	{
+#if !__TVOS__
 		static KeyboardObserver()
 		{
 			UIKeyboard.Notifications.ObserveWillShow(OnKeyboardShown);
@@ -33,5 +34,6 @@ namespace Xamarin.Forms.Platform.iOS
 			if (handler != null)
 				handler(sender, args);
 		}
+#endif
 	}
 }

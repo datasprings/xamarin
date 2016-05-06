@@ -3,7 +3,9 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Drawing;
+#if !__TVOS__
 using Xamarin.Forms.Platform.iOS.Resources;
+#endif
 #if __UNIFIED__
 using UIKit;
 using Foundation;
@@ -20,7 +22,7 @@ using PointF = CoreGraphics.CGPoint;
 using nfloat=System.Single;
 using nint=System.Int32;
 #endif
-
+#if !__TVOS__
 namespace Xamarin.Forms.Platform.iOS
 {
 	internal class ContextActionsCell : UITableViewCell, INativeElementView
@@ -713,3 +715,4 @@ namespace Xamarin.Forms.Platform.iOS
 		}
 	}
 }
+#endif
