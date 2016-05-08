@@ -68,6 +68,7 @@
     <Compile Include="EffectUtilities.cs" />
     <Compile Include="RendererPool.cs" />
     <Compile Include="ViewRenderer.cs" />
+    <Compile Include="ResourcesProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
