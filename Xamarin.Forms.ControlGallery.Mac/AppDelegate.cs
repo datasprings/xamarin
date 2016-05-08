@@ -27,7 +27,8 @@ namespace Xamarin.Forms.ControlGallery.Mac
 			Forms.Init ();
 			var app = new App ();
 
-			NSApplication.SharedApplication.MainWindow.ContentViewController = app.
+			var x = NSApplication.SharedApplication.MainWindow.ContentViewController;
+
 		}
 
 		public override void WillTerminate (NSNotification notification)
