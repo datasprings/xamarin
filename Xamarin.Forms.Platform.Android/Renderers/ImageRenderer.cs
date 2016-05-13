@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using AImageView = Android.Widget.ImageView;
 
 namespace Xamarin.Forms.Platform.Android
@@ -21,7 +22,11 @@ namespace Xamarin.Forms.Platform.Android
 			if (_isDisposed)
 				return;
 
-			_isDisposed = true;
+			if (disposing)
+			{
+				ClearBitmap();
+				_isDisposed = true;
+			}
 
 			base.Dispose(disposing);
 		}
@@ -75,7 +80,7 @@ namespace Xamarin.Forms.Platform.Android
 			if (formsImageView != null)
 				formsImageView.SkipInvalidate();
 
-			Control.SetImageResource(global::Android.Resource.Color.Transparent);
+			ClearBitmap();
 
 			if (source != null && (handler = Registrar.Registered.GetHandler<IImageSourceHandler>(source.GetType())) != null)
 			{
@@ -98,12 +103,23 @@ namespace Xamarin.Forms.Platform.Android
 			if (!_isDisposed)
 			{
 				Control.SetImageBitmap(bitmap);
+
 				if (bitmap != null)
+				{
 					bitmap.Dispose();
+					bitmap = null;
+				}
 
 				((IImageController)Element).SetIsLoading(false);
 				((IVisualElementController)Element).NativeSizeChanged();
 			}
+		}
+
+		void ClearBitmap()
+		{
+			Control.SetImageBitmap(null);
+			(Control?.Drawable as BitmapDrawable)?.Bitmap?.Recycle();
+			Control.SetImageResource(global::Android.Resource.Color.Transparent);
 		}
 	}
 }

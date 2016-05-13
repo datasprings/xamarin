@@ -17,7 +17,7 @@ namespace Xamarin.Forms.Controls
 	[Issue(IssueTracker.Bugzilla, 39936, "Out of memory error when navigating through list views")]
 	public class Bugzilla39936 : TestContentPage
 	{
-		const string Main_Image = "crimson.jpg";
+		const string Main_Image = "cover1small.jpg";
 		const string ListView_Id = "photos";
 		const string ListView1_Button = "ListView 1";
 		const string ListView2_Button = "ListView 2";
@@ -77,6 +77,7 @@ namespace Xamarin.Forms.Controls
 		public class PhotoView : ContentPage
 		{
 			PhotoViewModel viewModel { get; set; }
+
 			public PhotoView()
 			{
 				var newListView = new ListView(ListViewCachingStrategy.RecycleElement)

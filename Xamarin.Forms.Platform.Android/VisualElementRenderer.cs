@@ -19,6 +19,7 @@ namespace Xamarin.Forms.Platform.Android
 
 		readonly TapGestureHandler _tapGestureHandler;
 
+		Queue<AView> _disposalQueue = new Queue<AView>();
 		NotifyCollectionChangedEventHandler _collectionChangeHandler;
 
 		VisualElementRendererFlags _flags = VisualElementRendererFlags.AutoPackage | VisualElementRendererFlags.AutoTrack;
@@ -252,12 +253,19 @@ namespace Xamarin.Forms.Platform.Android
 
 				if (ManageNativeControlLifetime)
 				{
-					int count = ChildCount;
-					for (var i = 0; i < count; i++)
+					_disposalQueue = new Queue<AView>();
+					QueueChildrenForDisposal(this);
+
+					while (_disposalQueue.Count > 0)
 					{
-						AView child = GetChildAt(i);
-						child.Dispose();
+						AView child = _disposalQueue.Dequeue();
+						if (child != null)
+						{
+							child.Dispose();
+							child = null;
+						}
 					}
+					_disposalQueue = null;
 				}
 
 				RemoveAllViews();
@@ -347,6 +355,21 @@ namespace Xamarin.Forms.Platform.Android
 		internal virtual void SendVisualElementInitialized(VisualElement element, AView nativeView)
 		{
 			element.SendViewInitialized(nativeView);
+		}
+
+		void QueueChildrenForDisposal(ViewGroup viewGroup)
+		{
+			int count = viewGroup.ChildCount;
+			for (var i = 0; i < count; i++)
+			{
+				AView child = viewGroup.GetChildAt(i);
+
+				_disposalQueue.Enqueue(child);
+
+				var childViewGroup = child as ViewGroup;
+				if (childViewGroup != null)
+					QueueChildrenForDisposal(childViewGroup);
+			}
 		}
 
 		void HandleGestureRecognizerCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
