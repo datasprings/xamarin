@@ -69,6 +69,7 @@
     <Compile Include="RendererPool.cs" />
     <Compile Include="ViewRenderer.cs" />
     <Compile Include="ResourcesProvider.cs" />
+    <Compile Include="FormsApplicationDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
