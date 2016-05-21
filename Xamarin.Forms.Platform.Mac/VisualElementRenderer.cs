@@ -217,7 +217,7 @@ namespace Xamarin.Forms.Platform.Mac
 
 		protected virtual void SetAutomationId(string id)
 		{
-			AccessibilityIdentifier = id;
+			//AccessibilityIdentifier = id;
 		}
 
 		protected virtual void SetBackgroundColor(Color color)

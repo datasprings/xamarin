@@ -1,5 +1,6 @@
 ﻿using AppKit;
 using Foundation;
+using CoreGraphics;
 
 namespace Xamarin.Forms.ControlGallery.Mac
 {
@@ -27,8 +28,13 @@ namespace Xamarin.Forms.ControlGallery.Mac
 			Forms.Init ();
 			var app = new App ();
 
-			var x = NSApplication.SharedApplication.MainWindow.ContentViewController;
+			//var x = NSApplication.SharedApplication.MainWindow.ContentViewController;
 
+			var style = NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled;
+			var rect = NSWindow.FrameRectFor (new CGRect (100, 100, 640, 800), style);
+			var window = new NSWindow (rect, style, NSBackingStore.Buffered, false);
+			window.Display ();
+			window.MakeKeyAndOrderFront (NSApplication.SharedApplication);
 		}
 
 		public override void WillTerminate (NSNotification notification)
