@@ -61,7 +61,7 @@ namespace Xamarin.Forms.Platform.Mac
 				return;
 
 			var platformRenderer = window.ContentViewController as PlatformRenderer;
-			window.ContentViewController.AddChildViewController (application.MainPage.CreateViewController ());
+			window.ContentViewController = application.MainPage.CreateViewController ();
 			if (platformRenderer != null)
 				((IDisposable)platformRenderer.Platform).Dispose ();
 		}

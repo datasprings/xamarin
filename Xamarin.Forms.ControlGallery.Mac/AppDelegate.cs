@@ -28,8 +28,7 @@ namespace Xamarin.Forms.ControlGallery.Mac
 			Forms.Init ();
 			var app = new App ();
 			LoadApplication (app);
-
-
+			base.DidFinishLaunching (notification);
 		}
 
 		public override void WillTerminate (NSNotification notification)

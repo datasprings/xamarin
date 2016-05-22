@@ -240,11 +240,13 @@ namespace Xamarin.Forms.Platform.Mac
 
 			if (_layer == null)
 			{
+				Renderer.NativeView.WantsLayer = true;
 				_layer = Renderer.NativeView.Layer;
 #if false
 				_isInteractive = Renderer.NativeView.UserInteractionEnabled;
 #else
-				throw new NotImplementedException ();
+				Console.WriteLine ("VisualElementTracker.UpdateNativeControl - not implemented");
+
 				#endif
 			}
 

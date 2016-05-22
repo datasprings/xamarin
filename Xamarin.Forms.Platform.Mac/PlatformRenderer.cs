@@ -1,5 +1,6 @@
 using System;
 using AppKit;
+using CoreGraphics;
 
 namespace Xamarin.Forms.Platform.Mac
 {
@@ -48,9 +49,13 @@ namespace Xamarin.Forms.Platform.Mac
 
 	internal class PlatformRenderer : NSViewController
 	{
-		internal PlatformRenderer(Platform platform)
+		internal PlatformRenderer(Platform platform) : base (nibNameOrNull: null, nibBundleOrNull: null)
 		{
 			Platform = platform;
+
+			// When chaining to a base view controller with null nibname and bundles, we are 
+			// resposible for either setting the View here, or implementing LoadView.
+			View = new NSView (new CGRect (0, 0, 800, 800));
 		}
 
 		public Platform Platform { get; set; }

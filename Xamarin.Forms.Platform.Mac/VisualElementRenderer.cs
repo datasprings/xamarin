@@ -246,7 +246,7 @@ namespace Xamarin.Forms.Platform.Mac
 			if (clippableLayout != null)
 				ClipsToBounds = clippableLayout.IsClippedToBounds;
 #else
-			throw new NotImplementedException ();
+			Console.WriteLine ("{0}.UpdateClipToBounds NotImplemented", GetType ());
 			#endif
 		}
 	}
