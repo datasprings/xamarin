@@ -70,6 +70,16 @@
     <Compile Include="ViewRenderer.cs" />
     <Compile Include="ResourcesProvider.cs" />
     <Compile Include="FormsApplicationDelegate.cs" />
+    <Compile Include="Renderers\ExportCellAttribute.cs" />
+    <Compile Include="Renderers\ExportImageSourceHandlerAttribute.cs" />
+    <Compile Include="Renderers\ExportRendererAttribute.cs" />
+    <Compile Include="Renderers\MacMasterDetailRenderer.cs" />
+    <Compile Include="Renderers\LabelRenderer.cs" />
+    <Compile Include="Extensions\FormsExtensions.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Renderers\AlignmentExtensions.cs" />
+    <Compile Include="Renderers\FormattedStringExtensions.cs" />
+    <Compile Include="Renderers\FontExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
@@ -79,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

@@ -46,7 +46,7 @@ namespace Xamarin.Forms
 			Device.PlatformServices = new MacPlatformServices();
 			Device.Info = new MacDeviceInfo();
 
-			//Registrar.RegisterAll(new[] { typeof(ExportRendererAttribute), typeof(ExportCellAttribute), typeof(ExportImageSourceHandlerAttribute) });
+			Registrar.RegisterAll(new[] { typeof(ExportRendererAttribute), typeof(ExportCellAttribute), typeof(ExportImageSourceHandlerAttribute) });
 		}
 
 		public static event EventHandler<ViewInitializedEventArgs> ViewInitialized;

@@ -284,7 +284,7 @@ namespace Xamarin.Forms.Platform.Mac
 			var renderer = Registrar.Registered.GetHandler<IVisualElementRenderer> (t);
 			if (renderer == null)
 				renderer = new DefaultRenderer();
-			Console.WriteLine ("Getting renderer for {0} -> {1}", t, renderer.GetType ());
+			Console.WriteLine ("RENDERER for {0} -> {1}", t, renderer.GetType ());
 			renderer.SetElement(element);
 			return renderer;
 		}

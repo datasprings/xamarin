@@ -8,10 +8,25 @@ namespace Xamarin.Forms.ControlGallery.Mac
 	{
 		public App ()
 		{
-			MainPage = new MasterDetailPage {
-				Master = new ContentPage { Title = "Master", BackgroundColor = Color.Red },
-				Detail = new ContentPage { Title = "Hello", BackgroundColor = Color.Yellow }
+			//MainPage = 
+			MainPage = new ContentPage { 
+				Title = "Master", 
+				BackgroundColor = Color.Red,
+				Content = new StackLayout {
+					Padding = new Thickness (10, 40, 10, 10),
+					Children = {
+						new Label { Text = "Login", FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)) },
+						new Label { Text = "Username" },
+						new Entry { Text = "" },
+						new Label { Text = "Password" },
+						new Entry { Text = ""},
+						new Button { Text = "Login" },
+
+						new Button { Text = "Create Account" }
+					}
+				}
 			};
+
 		}
 
 	}
