@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System;
 using AppKit;
+using CoreGraphics;
 
 namespace Xamarin.Forms.Platform.Mac
 {
@@ -17,18 +18,16 @@ namespace Xamarin.Forms.Platform.Mac
 
 		public static SizeRequest GetSizeRequest(this NSView self, double widthConstraint, double heightConstraint, double minimumWidth = -1, double minimumHeight = -1)
 		{
-			Console.WriteLine ("NSViewExtensions.GetSizeRequest not imeplemented");
-			var s = new SizeF ((float)widthConstraint, (float)heightConstraint);
+			var fit = self.FittingSize;
+			if (fit.Width >= widthConstraint)
+				fit.Width = (nfloat) widthConstraint;
+			if (fit.Height > heightConstraint)
+				fit.Height = (nfloat) heightConstraint;
+			var s = new CGSize (100, 100);
 			var request = new Size (s.Width == float.PositiveInfinity ? double.PositiveInfinity : s.Width, s.Height == float.PositiveInfinity ? double.PositiveInfinity : s.Height);
 			var minimum = new Size (minimumWidth < 0 ? request.Width : minimumWidth, minimumHeight < 0 ? request.Height : minimumHeight);
+			Console.WriteLine ("GetSizeRequest -> {0} {1}", request, minimum);
 			return new SizeRequest (request, minimum);
-
-			#if false
-			var s = self.SizeThatFits(new SizeF((float)widthConstraint, (float)heightConstraint));
-			var request = new Size(s.Width == float.PositiveInfinity ? double.PositiveInfinity : s.Width, s.Height == float.PositiveInfinity ? double.PositiveInfinity : s.Height);
-			var minimum = new Size(minimumWidth < 0 ? request.Width : minimumWidth, minimumHeight < 0 ? request.Height : minimumHeight);
-			return new SizeRequest(request, minimum);
-			#endif
 		}
 
 		internal static T FindDescendantView<T>(this NSView view) where T : NSView
