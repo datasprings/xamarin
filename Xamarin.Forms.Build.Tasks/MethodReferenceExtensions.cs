@@ -6,26 +6,6 @@ namespace Xamarin.Forms.Build.Tasks
 {
 	static class MethodReferenceExtensions
 	{
-		[Obsolete]
-		public static MethodReference MakeGeneric(this MethodReference self, params TypeReference[] arguments)
-		{
-			var reference = new MethodReference(self.Name, self.ReturnType)
-			{
-				DeclaringType = self.DeclaringType.MakeGenericInstanceType(arguments),
-				HasThis = self.HasThis,
-				ExplicitThis = self.ExplicitThis,
-				CallingConvention = self.CallingConvention
-			};
-
-			foreach (var parameter in self.Parameters)
-				reference.Parameters.Add(new ParameterDefinition(parameter.ParameterType));
-
-			foreach (var generic_parameter in self.GenericParameters)
-				reference.GenericParameters.Add(new GenericParameter(generic_parameter.Name, reference));
-
-			return reference;
-		}
-
 		public static MethodReference ResolveGenericParameters(this MethodReference self, TypeReference declaringTypeRef,
 			ModuleDefinition module)
 		{
