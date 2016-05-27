@@ -283,7 +283,9 @@ namespace Xamarin.Forms.Platform.Mac
 			var t = element.GetType();
 			var renderer = Registrar.Registered.GetHandler<IVisualElementRenderer> (t);
 			if (renderer == null)
-				renderer = new DefaultRenderer();
+				renderer = new DefaultRenderer(element.GetType ().ToString ());
+			else
+				renderer = new DefaultRenderer ("REAL");
 			Console.WriteLine ("RENDERER for {0} -> {1}", t, renderer.GetType ());
 			renderer.SetElement(element);
 			return renderer;
@@ -480,16 +482,23 @@ namespace Xamarin.Forms.Platform.Mac
 
 		internal class DefaultRenderer : VisualElementRenderer<VisualElement>
 		{
+			string text;
+			public DefaultRenderer (string text)
+			{
+				this.text = text;
+			}
+
 			public override void DrawRect (RectangleF dirtyRect)
 			{
 				
 				NSColor.Red.Set ();
-				var s = new NSString (dirtyRect.ToString ());
+				var s = new NSString (text); //dirtyRect.ToString ());
 
 				s.DrawInRect (dirtyRect, new NSDictionary ());
 
 
 				NSBezierPath.StrokeRect (dirtyRect);
+				base.DrawRect (dirtyRect);
 			}
 		}
 	}

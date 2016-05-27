@@ -28,4 +28,6 @@ using Xamarin.Forms;
 //[assembly: AssemblyKeyFile("")]
 [assembly: Xamarin.Forms.Dependency (typeof (ResourcesProvider))]
 [assembly: ExportRenderer (typeof (NativeViewWrapper), typeof (NativeViewWrapperRenderer))]
+[assembly: ExportRenderer (typeof (Label), typeof (LabelRenderer))]
+
 //[assembly: ExportRenderer (typeof (MasterDetailPage), typeof (MacMasterDetailRenderer))]

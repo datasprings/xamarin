@@ -106,19 +106,21 @@ namespace Xamarin.Forms.Platform.Mac
 			#endif
 		}
 
-		protected void SetNativeControl(TNativeView uiview)
+		protected void SetNativeControl(TNativeView nsview)
 		{
 #if TODO
 			_defaultColor = uiview.BackgroundColor;
+#endif
 
-			Control = uiview;
+			Control = nsview;
 
+#if TODO
 			if (Element.BackgroundColor != Color.Default)
 				SetBackgroundColor(Element.BackgroundColor);
 #endif
 			UpdateIsEnabled();
 
-			AddSubview(uiview);
+			AddSubview(nsview);
 		}
 
 		internal override void SendVisualElementInitialized(VisualElement element, NSView nativeView)
