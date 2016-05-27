@@ -80,6 +80,9 @@
     <Compile Include="Renderers\AlignmentExtensions.cs" />
     <Compile Include="Renderers\FormattedStringExtensions.cs" />
     <Compile Include="Renderers\FontExtensions.cs" />
+    <Compile Include="NativeViewWrapperRenderer.cs" />
+    <Compile Include="NativeViewWrapper.cs" />
+    <Compile Include="LayoutExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">

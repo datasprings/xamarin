@@ -480,6 +480,17 @@ namespace Xamarin.Forms.Platform.Mac
 
 		internal class DefaultRenderer : VisualElementRenderer<VisualElement>
 		{
+			public override void DrawRect (RectangleF dirtyRect)
+			{
+				
+				NSColor.Red.Set ();
+				var s = new NSString (dirtyRect.ToString ());
+
+				s.DrawInRect (dirtyRect, new NSDictionary ());
+
+
+				NSBezierPath.StrokeRect (dirtyRect);
+			}
 		}
 	}
 }

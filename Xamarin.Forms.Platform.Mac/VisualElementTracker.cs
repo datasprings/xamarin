@@ -246,8 +246,7 @@ namespace Xamarin.Forms.Platform.Mac
 				_isInteractive = Renderer.NativeView.UserInteractionEnabled;
 #else
 				Console.WriteLine ("VisualElementTracker.UpdateNativeControl - not implemented");
-
-				#endif
+#endif
 			}
 
 			OnUpdateNativeControl(_layer);

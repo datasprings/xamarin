@@ -27,5 +27,5 @@ using Xamarin.Forms;
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
 [assembly: Xamarin.Forms.Dependency (typeof (ResourcesProvider))]
-
+[assembly: ExportRenderer (typeof (NativeViewWrapper), typeof (NativeViewWrapperRenderer))]
 //[assembly: ExportRenderer (typeof (MasterDetailPage), typeof (MacMasterDetailRenderer))]
