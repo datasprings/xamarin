@@ -16,8 +16,12 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 		PageContainer _pageContainer;
 		IVisualElementRenderer _visualElementRenderer;
 
+		//static int _counter = 0;
+
 		public FragmentContainer()
 		{
+			//_counter++;
+			//System.Diagnostics.Debug.WriteLine($"FragmentContainer constructor, {_counter} allocated now");
 		}
 
 		public FragmentContainer(Page page) : this()
@@ -75,25 +79,57 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 			return null;
 		}
-
+		
 		public override void OnDestroyView()
 		{
 			if (Page != null)
 			{
+				//System.Diagnostics.Debug.WriteLine($"FragmentContainer OnDestroyView for {Page.GetType()} ({Page.Title})");
+
 				IVisualElementRenderer renderer = _visualElementRenderer;
-				PageContainer container = _pageContainer;
+				PageContainer container = _pageContainer;	
 
-				if (container.Handle != IntPtr.Zero && renderer.ViewGroup.Handle != IntPtr.Zero)
+				//if (container.Handle != IntPtr.Zero && renderer.ViewGroup.Handle != IntPtr.Zero)
+				//{
+				//	System.Diagnostics.Debug.WriteLine($"FragmentContainer OnDestroyView for {Page.GetType()} ({Page.Title}) inside intptr zero checks");
+
+				//	container.RemoveFromParent();
+				//	renderer.ViewGroup.RemoveFromParent();
+				//	Page?.ClearValue(Android.Platform.RendererProperty);
+
+				//	container.Dispose();
+				//	renderer.Dispose();
+				//}
+
+				if (renderer.ViewGroup.Handle != IntPtr.Zero)
 				{
-					container.RemoveFromParent();
+					//System.Diagnostics.Debug.WriteLine($"FragmentContainer OnDestroyView for {Page.GetType()} ({Page.Title}) renderer.ViewGroup.Handle is non-zero");
+					//System.Diagnostics.Debug.WriteLine($"preparing to remove renderer.ViewGroup from parent");
 					renderer.ViewGroup.RemoveFromParent();
-					Page.ClearValue(Android.Platform.RendererProperty);
-
-					container.Dispose();
-					renderer.Dispose();
+					//System.Diagnostics.Debug.WriteLine($"Done; preparing to dispose renderer");
+					//renderer.Dispose();
+					//System.Diagnostics.Debug.WriteLine($"renderer disposed");
 				}
+
+				//System.Diagnostics.Debug.WriteLine($"Preparing to dispose renderer");
+				renderer.Dispose();
+				//System.Diagnostics.Debug.WriteLine($"renderer disposed");
+
+				if (container.Handle != IntPtr.Zero)
+				{
+					//System.Diagnostics.Debug.WriteLine($"FragmentContainer OnDestroyView for {Page.GetType()} ({Page.Title}) container.Handle is non-zero");
+
+					//System.Diagnostics.Debug.WriteLine($"Preparing to remove container from parent");
+					container.RemoveFromParent();
+					//System.Diagnostics.Debug.WriteLine($"Done; preparing to dispose of container");
+					container.Dispose();
+					//System.Diagnostics.Debug.WriteLine($"container disposed");
+				}
+
+				Page?.ClearValue(Android.Platform.RendererProperty);
 			}
 
+			_onCreateCallback = null;
 			_visualElementRenderer = null;
 			_pageContainer = null;
 
@@ -108,9 +144,9 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				return;
 
 			if (hidden)
-				PageController.SendDisappearing();
+				PageController?.SendDisappearing();
 			else
-				PageController.SendAppearing();
+				PageController?.SendAppearing();
 		}
 
 		public override void OnPause()
@@ -124,5 +160,11 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			PageController?.SendAppearing();
 			base.OnResume();
 		}
+
+		//~FragmentContainer()
+		//{
+		//	_counter--;
+		//	System.Diagnostics.Debug.WriteLine($"FragmentContainer destructor, {_counter} allocated now");
+		//}
 	}
 }

@@ -167,6 +167,14 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 					_toolbar = null;
 				}
 
+				if (_drawerLayout != null && _drawerListener != null)
+				{
+					_drawerLayout.RemoveDrawerListener(_drawerListener);
+					_drawerLayout.RemoveDrawerListener(_drawerListener);
+				}
+
+				_drawerToggle = null;
+
 				Current = null;
 
 				Device.Info.PropertyChanged -= DeviceInfoPropertyChanged;
@@ -449,6 +457,9 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			RemovePage(e.Page);
 		}
 
+		private DrawerMultiplexedListener _drawerListener;
+		private DrawerLayout _drawerLayout;
+
 		void RegisterToolbar()
 		{
 			Context context = Context;
@@ -480,13 +491,20 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 			if (renderer == null)
 				return;
 
-			var drawerLayout = (DrawerLayout)renderer;
-			_drawerToggle = new ActionBarDrawerToggle((Activity)context, drawerLayout, bar, global::Android.Resource.String.Ok, global::Android.Resource.String.Ok)
+			_drawerLayout = (DrawerLayout)renderer;
+			_drawerToggle = new ActionBarDrawerToggle((Activity)context, _drawerLayout, bar, global::Android.Resource.String.Ok, global::Android.Resource.String.Ok)
 			{
 				ToolbarNavigationClickListener = new ClickListener(Element)
 			};
 
-			drawerLayout.AddDrawerListener(new DrawerMultiplexedListener { Listeners = { _drawerToggle, renderer } });
+			if (_drawerListener != null) 
+			{
+				_drawerLayout.RemoveDrawerListener(_drawerListener);
+			}
+
+			_drawerListener = new DrawerMultiplexedListener { Listeners = { _drawerToggle, renderer } };
+			_drawerLayout.AddDrawerListener(_drawerListener);
+
 			_drawerToggle.DrawerIndicatorEnabled = true;
 		}
 
@@ -544,7 +562,6 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 		Task<bool> SwitchContentAsync(Page view, bool animated, bool removed = false, bool popToRoot = false)
 		{
-			var activity = (FormsAppCompatActivity)Context;
 			var tcs = new TaskCompletionSource<bool>();
 			Fragment fragment = FragmentContainer.CreateInstance(view);
 			FragmentManager fm = FragmentManager;

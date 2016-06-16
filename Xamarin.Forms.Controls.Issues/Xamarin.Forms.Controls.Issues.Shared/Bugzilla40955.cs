@@ -6,15 +6,91 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Controls.Issues
 {
+	#region Nav test
+	//[Preserve(AllMembers = true)]
+	//[Issue(IssueTracker.Bugzilla, 40955, "Issue Description")]
+	//public class Bugzilla40955 : TestNavigationPage
+	//{
+	//	protected override void Init()
+	//	{
+	//		PushAsync(new _409555_ContactsPage());
+	//	}
+
+	//	[Preserve(AllMembers = true)]
+	//	public class ContentPageEx : ContentPage
+	//	{
+	//		static int _counter = 0;
+
+	//		public ContentPageEx()
+	//		{
+	//			_counter++;
+	//			Debug.WriteLine($"Constructor called for {GetType()}; {_counter} ContentPageEX allocated");
+	//		}
+
+	//		~ContentPageEx()
+	//		{
+	//			_counter--;
+	//			Debug.WriteLine($"Destructor called for {GetType()}; {_counter} ContentPageEx allocated");
+	//		}
+	//	}
+
+	//	[Preserve(AllMembers = true)]
+	//	public class _409555_ContactsPage : ContentPageEx
+	//	{
+	//		public _409555_ContactsPage()
+	//		{
+	//			Title = "Contacts";
+	//			var button = new Button { Text = "Collect" };
+	//			var next = new Button() { Text = "Next" };
+	//			button.Clicked += (sender, args) => { GC.Collect(); };
+	//			next.Clicked += (sender, args) => { Navigation.PushAsync(new _409555_TodoListPage()); };
+	//			Content = new StackLayout { Children = { button, next } };
+	//		}
+	//	}
+
+	//	[Preserve(AllMembers = true)]
+	//	public class _409555_TodoListPage : ContentPageEx
+	//	{
+	//		public _409555_TodoListPage()
+	//		{
+	//			Title = "To Do";
+	//			var button = new Button { Text = "Collect" };
+	//			var next = new Button() { Text = "Next" };
+	//			button.Clicked += (sender, args) => { GC.Collect(); };
+	//			next.Clicked += (sender, args) => { Navigation.PushAsync(new _409555_ReminderPage()); };
+	//			Content = new StackLayout { Children = { button, next } };
+	//		}
+	//	}
+
+	//	[Preserve(AllMembers = true)]
+	//	public class _409555_ReminderPage : ContentPageEx
+	//	{
+	//		public _409555_ReminderPage()
+	//		{
+	//			Title = "Reminders";
+	//			var button = new Button { Text = "Collect" };
+	//			var next = new Button() { Text = "Next" };
+	//			button.Clicked += (sender, args) => { GC.Collect(); };
+	//			next.Clicked += (sender, args) => { Navigation.PushAsync(new _409555_ContactsPage()); };
+	//			Content = new StackLayout { Children = { button, next } };
+	//		}
+	//	}
+	//}
+
+	#endregion
+
+	#region full test
+
 	[Preserve(AllMembers = true)]
 	[Issue(IssueTracker.Bugzilla, 40955, "Issue Description")]
-	public class Bugzilla40955 : TestMasterDetailPage 
+	public class Bugzilla40955 : TestMasterDetailPage
 	{
 		protected override void Init()
 		{
 			var masterPage = new MasterPage();
 			Master = masterPage;
-			masterPage.ListView.ItemSelected += (sender, e) => {
+			masterPage.ListView.ItemSelected += (sender, e) =>
+			{
 				var item = e.SelectedItem as MasterPageItem;
 				if (item != null)
 				{
@@ -24,7 +100,7 @@ namespace Xamarin.Forms.Controls.Issues
 				}
 			};
 
-			Detail = new NavigationPage(new ContactsPage());
+			Detail = new NavigationPage(new _409555_ContactsPage());
 		}
 
 		[Preserve(AllMembers = true)]
@@ -43,7 +119,7 @@ namespace Xamarin.Forms.Controls.Issues
 			public MasterPage()
 			{
 				Title = "Menu";
-				ListView = new ListView() {VerticalOptions = LayoutOptions.FillAndExpand, SeparatorVisibility = SeparatorVisibility.None };
+				ListView = new ListView() { VerticalOptions = LayoutOptions.FillAndExpand, SeparatorVisibility = SeparatorVisibility.None };
 
 				ListView.ItemTemplate = new DataTemplate(() =>
 				{
@@ -97,19 +173,58 @@ namespace Xamarin.Forms.Controls.Issues
 		}
 
 		[Preserve(AllMembers = true)]
-		public class _409555_ContactsPage : ContentPage { }
-
-		[Preserve(AllMembers = true)]
-		public class _409555_TodoListPage : ContentPage { }
-
-		[Preserve(AllMembers = true)]
-		public class _409555_ReminderPage : ContentPage
+		public class ContentPageEX : ContentPage
 		{
+			static int _counter = 0;
+
+			public ContentPageEX() 
+			{
+				_counter++;
+				Debug.WriteLine($"{_counter} ContentPageEX allocated");
+			}
+
+			~ContentPageEX()
+			{
+				_counter--;
+				Debug.WriteLine($"Destructor called; {_counter} ContentPageEx allocated");
+			}
+		}
+
+		[Preserve(AllMembers = true)]
+		public class _409555_ContactsPage : ContentPageEX
+		{
+			public _409555_ContactsPage()
+			{
+				Title = "Contacts";
+			}
+		}
+
+		[Preserve(AllMembers = true)]
+		public class _409555_TodoListPage : ContentPageEX
+		{
+			public _409555_TodoListPage()
+			{
+				Title = "To Do";
+			}
+		}
+
+		[Preserve(AllMembers = true)]
+		public class _409555_ReminderPage : ContentPageEX
+		{
+			public _409555_ReminderPage()
+			{
+				Title = "Reminders";
+			}
+
 			protected override void OnAppearing()
 			{
 				base.OnAppearing();
 				GC.Collect();
+				GC.Collect();
+				GC.Collect();
 			}
 		}
 	}
+
+	#endregion
 }

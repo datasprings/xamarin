@@ -25,11 +25,13 @@ namespace Xamarin.Forms.Controls
 			_testCloudService = DependencyService.Get<ITestCloudService>();
 			InitInsights();
 
-			MainPage = new MasterDetailPage
-			{
-				Master = new ContentPage { Title = "Master", BackgroundColor = Color.Red },
-				Detail = CoreGallery.GetMainPage()
-			};
+			//MainPage = new MasterDetailPage
+			//{
+			//	Master = new ContentPage { Title = "Master", BackgroundColor = Color.Red },
+			//	Detail = CoreGallery.GetMainPage()
+			//};
+
+			MainPage = new Bugzilla40955();
 		}
 
 		protected override void OnAppLinkRequestReceived(Uri uri)

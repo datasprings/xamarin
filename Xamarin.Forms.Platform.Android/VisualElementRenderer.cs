@@ -270,6 +270,9 @@ namespace Xamarin.Forms.Platform.Android
 					if (Platform.GetRenderer(Element) == this)
 						Platform.SetRenderer(Element, null);
 
+					//System.Diagnostics.Debug.WriteLine($"In {this.GetType()} Dispose, setting Element to null");
+					//System.Diagnostics.Debug.WriteLine($"Element is a {Element.GetType()}");
+
 					Element = null;
 				}
 			}
