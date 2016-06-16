@@ -132,11 +132,14 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 				if (Element != null)
 				{
-					for (var i = 0; i < PageController.InternalChildren.Count; i++)
+					foreach(Element element in PageController.InternalChildren)
 					{
-						var child = PageController.InternalChildren[i] as VisualElement;
-						if (child == null)
+						var child = element as VisualElement;
+						if(child == null)
+						{
 							continue;
+						}
+							
 						IVisualElementRenderer renderer = Android.Platform.GetRenderer(child);
 						renderer?.Dispose();
 					}
@@ -148,7 +151,6 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 					navController.PopToRootRequested -= OnPoppedToRoot;
 					navController.InsertPageBeforeRequested -= OnInsertPageBeforeRequested;
 					navController.RemovePageRequested -= OnRemovePageRequested;
-					PageController.SendDisappearing();
 				}
 
 				if (_toolbarTracker != null)
