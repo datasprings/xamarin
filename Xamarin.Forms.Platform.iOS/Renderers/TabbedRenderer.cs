@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
 using Xamarin.Forms.Internals;
+using RectangleFSys = System.Drawing.RectangleF;
+
 #if __UNIFIED__
 using UIKit;
 #else
@@ -19,6 +21,7 @@ using nfloat=System.Single;
 using nint=System.Int32;
 using nuint=System.UInt32;
 #endif
+
 
 namespace Xamarin.Forms.Platform.iOS
 {
@@ -125,7 +128,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 			if (!Element.Bounds.IsEmpty)
 			{
-				View.Frame = new System.Drawing.RectangleF((float)Element.X, (float)Element.Y, (float)Element.Width, (float)Element.Height);
+				View.Frame = new RectangleFSys((float)Element.X, (float)Element.Y, (float)Element.Width, (float)Element.Height);
 			}
 
 			var frame = View.Frame;

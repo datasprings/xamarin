@@ -73,7 +73,8 @@ namespace Xamarin.Forms.Platform.iOS
 				{
 					var alert = UIAlertController.Create(arguments.Title, arguments.Message, UIAlertControllerStyle.Alert);
 					var oldFrame = alert.View.Frame;
-					alert.View.Frame = new RectangleF(oldFrame.X, oldFrame.Y, oldFrame.Width, oldFrame.Height - _alertPadding * 2);
+					nfloat height = oldFrame.Height - _alertPadding * 2;
+					alert.View.Frame = new RectangleF(oldFrame.X, oldFrame.Y, oldFrame.Width, height);
 					alert.AddAction(UIAlertAction.Create(arguments.Cancel, UIAlertActionStyle.Cancel, a => arguments.SetResult(false)));
 					if (arguments.Accept != null)
 						alert.AddAction(UIAlertAction.Create(arguments.Accept, UIAlertActionStyle.Default, a => arguments.SetResult(true)));
@@ -443,7 +444,7 @@ namespace Xamarin.Forms.Platform.iOS
 				_renderer.View.AddSubview(viewRenderer.NativeView);
 				if (viewRenderer.ViewController != null)
 					_renderer.AddChildViewController(viewRenderer.ViewController);
-				viewRenderer.NativeView.Frame = new RectangleF(0, 0, _renderer.View.Bounds.Width, _renderer.View.Bounds.Height);
+				viewRenderer.NativeView.Frame = new RectangleF((nfloat)0, (nfloat)0, (nfloat)_renderer.View.Bounds.Width, (nfloat)_renderer.View.Bounds.Height);
 				viewRenderer.SetElementSize(new Size(_renderer.View.Bounds.Width, _renderer.View.Bounds.Height));
 			}
 			else

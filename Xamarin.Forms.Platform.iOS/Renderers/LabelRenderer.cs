@@ -63,17 +63,17 @@ namespace Xamarin.Forms.Platform.iOS
 				case TextAlignment.Start:
 					fitSize = Control.SizeThatFits(Element.Bounds.Size.ToSizeF());
 					labelHeight = (nfloat)Math.Min(Bounds.Height, fitSize.Height);
-					Control.Frame = new RectangleF(0, 0, (nfloat)Element.Width, labelHeight);
+					Control.Frame = new RectangleF((nfloat)0, (nfloat)0, (nfloat)Element.Width, (nfloat)labelHeight);
 					break;
 				case TextAlignment.Center:
-					Control.Frame = new RectangleF(0, 0, (nfloat)Element.Width, (nfloat)Element.Height);
+					Control.Frame = new RectangleF((nfloat)0, (nfloat)0, (nfloat)Element.Width, (nfloat)Element.Height);
 					break;
 				case TextAlignment.End:
 					nfloat yOffset = 0;
 					fitSize = Control.SizeThatFits(Element.Bounds.Size.ToSizeF());
 					labelHeight = (nfloat)Math.Min(Bounds.Height, fitSize.Height);
 					yOffset = (nfloat)(Element.Height - labelHeight);
-					Control.Frame = new RectangleF(0, yOffset, (nfloat)Element.Width, labelHeight);
+					Control.Frame = new RectangleF((nfloat)0, (nfloat)yOffset, (nfloat)Element.Width, (nfloat)labelHeight);
 					break;
 			}
 		}

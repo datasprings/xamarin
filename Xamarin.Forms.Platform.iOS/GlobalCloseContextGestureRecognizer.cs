@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 #if __UNIFIED__
@@ -62,7 +63,7 @@ namespace Xamarin.Forms.Platform.iOS
 		bool OnShouldReceiveTouch(UIGestureRecognizer r, UITouch t)
 		{
 			var scrollPos = t.LocationInView(_scrollView);
-			var rect = new RectangleF(0, 0, _scrollView.ContentSize.Width, _scrollView.ContentSize.Height);
+			var rect = new RectangleF((nfloat)0, (nfloat)0, (nfloat)_scrollView.ContentSize.Width, (nfloat)_scrollView.ContentSize.Height);
 			return !rect.Contains(scrollPos);
 		}
 	}

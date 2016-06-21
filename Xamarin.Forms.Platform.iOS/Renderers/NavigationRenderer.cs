@@ -174,8 +174,8 @@ namespace Xamarin.Forms.Platform.iOS
 
 			var toolbar = _secondaryToolbar;
 			// Use 0 if the NavBar is hidden or will be hidden
-			var toolbarY = NavigationBarHidden || !NavigationPage.GetHasNavigationBar(Current) ? 0 : navBarFrame.Bottom;
-			toolbar.Frame = new RectangleF(0, toolbarY, View.Frame.Width, toolbar.Frame.Height);
+			nfloat toolbarY = NavigationBarHidden || !NavigationPage.GetHasNavigationBar(Current) ? 0 : navBarFrame.Bottom;
+			toolbar.Frame = new RectangleF((nfloat)0, (nfloat)toolbarY, (nfloat)View.Frame.Width, (nfloat)toolbar.Frame.Height);
 
 			double trueBottom = toolbar.Hidden ? toolbarY : toolbar.Frame.Bottom;
 			var modelSize = _queuedSize.IsZero ? Element.Bounds.Size : _queuedSize;
@@ -207,7 +207,7 @@ namespace Xamarin.Forms.Platform.iOS
 			else
 				WantsFullScreenLayout = false;
 
-			_secondaryToolbar = new SecondaryToolbar { Frame = new RectangleF(0, 0, 320, 44) };
+			_secondaryToolbar = new SecondaryToolbar { Frame = new RectangleF((nfloat)0, (nfloat)0, (nfloat)320, (nfloat)44) };
 			View.Add(_secondaryToolbar);
 			_secondaryToolbar.Hidden = true;
 
@@ -757,7 +757,7 @@ namespace Xamarin.Forms.Platform.iOS
 					return;
 				for (var i = 1; i < Items.Length; i++)
 				{
-					var l = new UIView(new RectangleF(0, 0, 1, 24)) { BackgroundColor = new UIColor(0, 0, 0, 0.2f) };
+					var l = new UIView(new RectangleF((nfloat)0, (nfloat)0, (nfloat)1, (nfloat)24)) { BackgroundColor = new UIColor(0, 0, 0, 0.2f) };
 					AddSubview(l);
 					_lines.Add(l);
 				}

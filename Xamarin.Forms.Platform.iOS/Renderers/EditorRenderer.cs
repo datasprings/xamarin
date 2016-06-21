@@ -58,8 +58,8 @@ namespace Xamarin.Forms.Platform.iOS
 				if (Device.Idiom == TargetIdiom.Phone)
 				{
 					// iPhone does not have a dismiss keyboard button
-					var keyboardWidth = UIScreen.MainScreen.Bounds.Width;
-					_accessoryView = new UIToolbar(new RectangleF(0, 0, keyboardWidth, 44)) { BarStyle = UIBarStyle.Default, Translucent = true };
+					nfloat keyboardWidth = UIScreen.MainScreen.Bounds.Width;
+					_accessoryView = new UIToolbar(new RectangleF((nfloat)0, (nfloat)0, keyboardWidth, (nfloat)44)) { BarStyle = UIBarStyle.Default, Translucent = true };
 
 					var spacer = new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace);
 					var doneButton = new UIBarButtonItem(UIBarButtonSystemItem.Done, (o, a) =>

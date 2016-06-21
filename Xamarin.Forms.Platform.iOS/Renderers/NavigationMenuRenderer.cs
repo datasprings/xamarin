@@ -34,7 +34,7 @@ namespace Xamarin.Forms.Platform.iOS
 			var margin = pad ? 27 : 12;
 			var bottomMargin = (int)(margin * 0.8);
 
-			_collectionView = new UICollectionView(new RectangleF(0, 0, 100, 100),
+			_collectionView = new UICollectionView(new RectangleF((nfloat)0, (nfloat)0, (nfloat)100, (nfloat)100),
 				new UICollectionViewFlowLayout
 				{
 					ItemSize = new SizeF(size, itemHeight),
@@ -96,9 +96,11 @@ namespace Xamarin.Forms.Platform.iOS
 			public override void LayoutSubviews()
 			{
 				base.LayoutSubviews();
-				_image.Frame = new RectangleF(0, 0, ContentView.Frame.Width, ContentView.Frame.Height - 30);
+				nfloat height = ContentView.Frame.Height - 30;
+				_image.Frame = new RectangleF((nfloat)0, (nfloat)0, (nfloat)ContentView.Frame.Width, (nfloat)height);
 				var sizeThatFits = _nameLabel.SizeThatFits(ContentView.Frame.Size);
-				_nameLabel.Frame = new RectangleF(0, ContentView.Frame.Height - 15 - sizeThatFits.Height / 2, ContentView.Frame.Width, sizeThatFits.Height);
+				nfloat y = ContentView.Frame.Height - 15 - sizeThatFits.Height / 2;
+				_nameLabel.Frame = new RectangleF((nfloat)0, y, (nfloat)ContentView.Frame.Width, (nfloat)sizeThatFits.Height);
 			}
 
 			void SetupLayer()

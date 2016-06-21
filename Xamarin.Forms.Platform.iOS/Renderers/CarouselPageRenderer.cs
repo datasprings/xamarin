@@ -394,7 +394,7 @@ namespace Xamarin.Forms.Platform.iOS
 				base.LayoutSubviews();
 
 				if (Subviews.Length > 0)
-					Subviews[0].Frame = new RectangleF(0, 0, (float)Element.Width, (float)Element.Height);
+					Subviews[0].Frame = new RectangleF((nfloat)0, (nfloat)0, (nfloat)Element.Width, (nfloat)Element.Height);
 			}
 		}
 	}

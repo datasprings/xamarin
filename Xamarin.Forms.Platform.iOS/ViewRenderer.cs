@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			base.LayoutSubviews();
 			if (Control != null)
-				Control.Frame = new RectangleF(0, 0, (nfloat)Element.Width, (nfloat)Element.Height);
+				Control.Frame = new RectangleF((nfloat)0, (nfloat)0, (nfloat)Element.Width, (nfloat)Element.Height);
 		}
 
 		public override SizeF SizeThatFits(SizeF size)

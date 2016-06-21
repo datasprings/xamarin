@@ -55,8 +55,8 @@ namespace Xamarin.Forms.Platform.iOS
 
 				_picker.ValueChanged += HandleValueChanged;
 
-				var width = UIScreen.MainScreen.Bounds.Width;
-				var toolbar = new UIToolbar(new RectangleF(0, 0, width, 44)) { BarStyle = UIBarStyle.Default, Translucent = true };
+				nfloat width = UIScreen.MainScreen.Bounds.Width;
+				var toolbar = new UIToolbar(new RectangleF((nfloat)0, (nfloat)0, width, (nfloat)44)) { BarStyle = UIBarStyle.Default, Translucent = true };
 				var spacer = new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace);
 				var doneButton = new UIBarButtonItem(UIBarButtonSystemItem.Done, (o, a) => entry.ResignFirstResponder());
 

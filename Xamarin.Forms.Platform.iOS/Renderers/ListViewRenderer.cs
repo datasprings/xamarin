@@ -1044,7 +1044,7 @@ namespace Xamarin.Forms.Platform.iOS
 					//hack: when we don't have cells in our UITableView the spinner fails to appear
 					CheckContentSize();
 
-					TableView.ScrollRectToVisible(new RectangleF(0, 0, _refresh.Bounds.Width, _refresh.Bounds.Height), true);
+					TableView.ScrollRectToVisible(new RectangleF((nfloat)0, (nfloat)0, (nfloat)_refresh.Bounds.Width, (nfloat)_refresh.Bounds.Height), true);
 				}
 			}
 			else

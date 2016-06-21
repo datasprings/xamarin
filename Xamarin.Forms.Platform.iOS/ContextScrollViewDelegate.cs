@@ -25,7 +25,7 @@ namespace Xamarin.Forms.Platform.iOS
 	{
 		readonly nfloat _buttonWidth;
 
-		public iOS7ButtonContainer(nfloat buttonWidth) : base(new RectangleF(0, 0, 0, 0))
+		public iOS7ButtonContainer(nfloat buttonWidth) : base(new RectangleF((nfloat)0, (nfloat)0, (nfloat)0, (nfloat)0))
 		{
 			_buttonWidth = buttonWidth;
 			ClipsToBounds = true;
@@ -41,8 +41,8 @@ namespace Xamarin.Forms.Platform.iOS
 				var view = Subviews[i];
 
 				var pos = Subviews.Length - i;
-				var x = width - _buttonWidth * pos;
-				view.Frame = new RectangleF(x, 0, view.Frame.Width, view.Frame.Height);
+				nfloat x = width - _buttonWidth * pos;
+				view.Frame = new RectangleF(x, (nfloat)0, (nfloat)view.Frame.Width, (nfloat)view.Frame.Height);
 
 				takenSpace += view.Frame.Width;
 			}
@@ -108,7 +108,7 @@ namespace Xamarin.Forms.Platform.iOS
 			var count = _buttons.Count;
 
 			if (!UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
-				_container.Frame = new RectangleF(scrollView.Frame.Width, 0, scrollView.ContentOffset.X, scrollView.Frame.Height);
+				_container.Frame = new RectangleF((nfloat)scrollView.Frame.Width, (nfloat)0, (nfloat)scrollView.ContentOffset.X, (nfloat)scrollView.Frame.Height);
 			else
 			{
 				var ioffset = scrollView.ContentOffset.X / (float)count;
@@ -120,7 +120,8 @@ namespace Xamarin.Forms.Platform.iOS
 				{
 					var b = _buttons[i];
 					var rect = b.Frame;
-					b.Frame = new RectangleF(scrollView.Frame.Width + (count - (i + 1)) * ioffset, 0, width, rect.Height);
+					nfloat x = scrollView.Frame.Width + (count - (i + 1)) * ioffset;
+					b.Frame = new RectangleF(x, (nfloat)0, width, rect.Height);
 				}
 			}
 

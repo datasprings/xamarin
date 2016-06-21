@@ -39,7 +39,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		static ContextActionsCell()
 		{
-			var rect = new RectangleF(0, 0, 1, 1);
+			var rect = new RectangleF((nfloat)0, (nfloat)0, (nfloat)1, (nfloat)1);
 			var size = rect.Size;
 
 			UIGraphics.BeginImageContext(size);
@@ -142,9 +142,9 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 
 			nfloat height = Frame.Height;
-			var width = tableView.Frame.Width;
+			nfloat width = tableView.Frame.Width;
 
-			nativeCell.Frame = new RectangleF(0, 0, width, height);
+			nativeCell.Frame = new RectangleF((nfloat)0, (nfloat)0, width, height);
 			nativeCell.SetNeedsLayout();
 
 			var handler = new PropertyChangedEventHandler(OnMenuItemPropertyChanged);
@@ -181,7 +181,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 			if (_scroller == null)
 			{
-				_scroller = new UIScrollView(new RectangleF(0, 0, width, height));
+				_scroller = new UIScrollView(new RectangleF((nfloat)0, (nfloat)0, width, height));
 				_scroller.ScrollsToTop = false;
 				_scroller.ShowsHorizontalScrollIndicator = false;
 
@@ -192,7 +192,7 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 			else
 			{
-				_scroller.Frame = new RectangleF(0, 0, width, height);
+				_scroller.Frame = new RectangleF((nfloat)0, (nfloat)0, width, height);
 				isOpen = ScrollDelegate.IsOpen;
 
 				for (var i = 0; i < _buttons.Count; i++)
@@ -317,10 +317,10 @@ namespace Xamarin.Forms.Platform.iOS
 			if (!Forms.IsiOS8OrNewer)
 			{
 				var container = _moreButton.Superview;
-				frame = new RectangleF(container.Frame.X, 0, frame.Width, frame.Height);
+				frame = new RectangleF(container.Frame.X, (nfloat)0, frame.Width, frame.Height);
 			}
 
-			var x = frame.X - _scroller.ContentOffset.X;
+			nfloat x = frame.X - _scroller.ContentOffset.X;
 
 			var path = _tableView.IndexPathForCell(this);
 			var rowPosition = _tableView.RectForRowAtIndexPath(path);
@@ -409,7 +409,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		UIButton GetButton(MenuItem item)
 		{
-			var button = new UIButton(new RectangleF(0, 0, 1, 1));
+			var button = new UIButton(new RectangleF((nfloat)0, (nfloat)0, (nfloat)1, (nfloat)1));
 
 			if (!item.IsDestructive)
 				button.SetBackgroundImage(NormalBackground, UIControlState.Normal);
@@ -578,7 +578,7 @@ namespace Xamarin.Forms.Platform.iOS
 					resize = true;
 				}
 
-				var button = new UIButton(new RectangleF(0, 0, largestWidth, height));
+				var button = new UIButton(new RectangleF((nfloat)0, (nfloat)0, largestWidth, height));
 				button.SetBackgroundImage(NormalBackground, UIControlState.Normal);
 				button.TitleEdgeInsets = new UIEdgeInsets(0, 15, 0, 15);
 				button.SetTitle(StringResources.More, UIControlState.Normal);
@@ -619,11 +619,11 @@ namespace Xamarin.Forms.Platform.iOS
 
 				var offset = (n + 1) * largestWidth;
 
-				var x = width - offset;
+				nfloat x = width - offset;
 				if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
 					x += totalWidth;
 
-				b.Frame = new RectangleF(x, 0, largestWidth, height);
+				b.Frame = new RectangleF(x, (nfloat)0, largestWidth, height);
 				if (resize)
 					b.TitleLabel.AdjustsFontSizeToFitWidth = true;
 

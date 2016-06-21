@@ -12,9 +12,9 @@ using SizeF = CoreGraphics.CGSize;
 using PointF = CoreGraphics.CGPoint;
 
 #else
-using nfloat=System.Single;
-using nint=System.Int32;
-using nuint=System.UInt32;
+using nfloat = System.Single;
+using nint = System.Int32;
+using nuint = System.UInt32;
 #endif
 
 namespace Xamarin.Forms.Platform.iOS
@@ -140,7 +140,7 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			public EntryCellTableViewCell(string cellName) : base(UITableViewCellStyle.Value1, cellName)
 			{
-				TextField = new UITextField(new RectangleF(0, 0, 100, 30)) { BorderStyle = UITextBorderStyle.None };
+				TextField = new UITextField(new RectangleF((nfloat)0, (nfloat)0, (nfloat)100, (nfloat)30)) { BorderStyle = UITextBorderStyle.None };
 
 				TextField.EditingChanged += TextFieldOnEditingChanged;
 				TextField.ShouldReturn = OnShouldReturn;
@@ -157,8 +157,11 @@ namespace Xamarin.Forms.Platform.iOS
 				base.LayoutSubviews();
 
 				// simple algorithm to generally line up entries
-				var start = (nfloat)Math.Round(Math.Max(Frame.Width * 0.3, TextLabel.Frame.Right + 10));
-				TextField.Frame = new RectangleF(start, (Frame.Height - 30) / 2, Frame.Width - TextLabel.Frame.Left - start, 30);
+				nfloat start = (nfloat)Math.Round(Math.Max(Frame.Width * 0.3, TextLabel.Frame.Right + 10));
+				nfloat height = 30;
+				nfloat y = (Frame.Height - height) / 2;
+				nfloat width = Frame.Width - TextLabel.Frame.Left - start;
+				TextField.Frame = new RectangleF(start, y, width, height);
 				// Centers TextField Content  (iOS6)
 				TextField.VerticalAlignment = UIControlContentVerticalAlignment.Center;
 			}
