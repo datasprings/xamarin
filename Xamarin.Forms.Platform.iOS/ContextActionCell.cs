@@ -92,7 +92,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		public void Close()
 		{
-			_scroller.ContentOffset = new PointF(0, 0);
+			_scroller.ContentOffset = new PointF((nfloat)0, (nfloat)0);
 		}
 
 		public override void LayoutSubviews()
@@ -263,9 +263,9 @@ namespace Xamarin.Forms.Platform.iOS
 			_scroller.ContentSize = new SizeF(totalWidth, height);
 
 			if (isOpen)
-				_scroller.SetContentOffset(new PointF(ScrollDelegate.ButtonsWidth, 0), false);
+				_scroller.SetContentOffset(new PointF(ScrollDelegate.ButtonsWidth, (nfloat)0), false);
 			else
-				_scroller.SetContentOffset(new PointF(0, 0), false);
+				_scroller.SetContentOffset(new PointF((nfloat)0, (nfloat)0), false);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -339,7 +339,7 @@ namespace Xamarin.Forms.Platform.iOS
 					var weakItem = new WeakReference<MenuItem>(item);
 					var action = UIAlertAction.Create(item.Text, UIAlertActionStyle.Default, a =>
 					{
-						_scroller.SetContentOffset(new PointF(0, 0), true);
+						_scroller.SetContentOffset(new PointF((nfloat)0, (nfloat)0), true);
 						MenuItem mi;
 						if (weakItem.TryGetTarget(out mi))
 							((IMenuItemController)mi).Activate();
@@ -459,7 +459,7 @@ namespace Xamarin.Forms.Platform.iOS
 				ActivateMore();
 			else
 			{
-				_scroller.SetContentOffset(new PointF(0, 0), true);
+				_scroller.SetContentOffset(new PointF((nfloat)0, (nfloat)0), true);
 				((IMenuItemController)_cell.ContextActions[(int)button.Tag]).Activate();
 			}
 		}
@@ -506,7 +506,7 @@ namespace Xamarin.Forms.Platform.iOS
 					((ContextScrollViewDelegate)_scroller.Delegate).ClosedCallback = null;
 				};
 
-				_scroller.SetContentOffset(new PointF(0, 0), true);
+				_scroller.SetContentOffset(new PointF((nfloat)0, (nfloat)0), true);
 			}
 			else
 				ReloadRowCore();
@@ -704,7 +704,7 @@ namespace Xamarin.Forms.Platform.iOS
 				if (buttonIndex == Items.Count)
 					return; // Cancel button
 
-				Scroller.SetContentOffset(new PointF(0, 0), true);
+				Scroller.SetContentOffset(new PointF((nfloat)0, (nfloat)0), true);
 
 				// do not activate a -1 index when dismissing by clicking outside the popover
 				if (buttonIndex >= 0)

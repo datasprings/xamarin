@@ -215,9 +215,9 @@ namespace Xamarin.Forms.Platform.iOS
 					availableWidth -= stringSize.Width;
 					availableWidth -= imageSize.Width;
 
-					var x = availableWidth / 2;
-
-					var frame = new RectangleF(new PointF(x, Bounds.GetMidY() - imageSize.Height / 2), imageSize);
+					nfloat x = availableWidth / 2;
+					nfloat y = Bounds.GetMidY() - imageSize.Height / 2;
+					var frame = new RectangleF(new PointF(x, y), imageSize);
 					_imageView.Frame = frame;
 
 					frame.X = frame.Right + (imageSize.Width > 0 ? padding : 0);

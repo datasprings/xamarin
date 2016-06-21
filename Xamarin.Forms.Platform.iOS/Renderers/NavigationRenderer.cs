@@ -732,7 +732,7 @@ namespace Xamarin.Forms.Platform.iOS
 					return;
 				nfloat padding = 11f;
 				var itemWidth = (Bounds.Width - padding) / Items.Length - padding;
-				var x = padding;
+				nfloat x = padding;
 				var itemH = Bounds.Height - 10;
 				foreach (var item in Items)
 				{
@@ -741,7 +741,7 @@ namespace Xamarin.Forms.Platform.iOS
 					x += itemWidth + padding;
 				}
 				x = itemWidth + padding * 1.5f;
-				var y = Bounds.GetMidY();
+				nfloat y = Bounds.GetMidY();
 				foreach (var l in _lines)
 				{
 					l.Center = new PointF(x, y);

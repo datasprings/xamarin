@@ -146,7 +146,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		public override void WillEndDragging(UIScrollView scrollView, PointF velocity, ref PointF targetContentOffset)
 		{
-			var width = ButtonsWidth;
+			nfloat width = ButtonsWidth;
 			var x = targetContentOffset.X;
 			var parentThreshold = scrollView.Frame.Width * .4f;
 			var contentThreshold = width * .8f;
@@ -154,7 +154,7 @@ namespace Xamarin.Forms.Platform.iOS
 			if (x >= parentThreshold || x >= contentThreshold)
 			{
 				IsOpen = true;
-				targetContentOffset = new PointF(width, 0);
+				targetContentOffset = new PointF((nfloat)width, (nfloat)0);
 				RemoveHighlight(scrollView);
 
 				if (_globalCloser == null)
@@ -170,7 +170,7 @@ namespace Xamarin.Forms.Platform.iOS
 								RestoreHighlight(scrollView);
 
 							IsOpen = false;
-							scrollView.SetContentOffset(new PointF(0, 0), true);
+							scrollView.SetContentOffset(new PointF((nfloat)0, (nfloat)0), true);
 
 							ClearCloserRecognizer(scrollView);
 						};
@@ -195,7 +195,7 @@ namespace Xamarin.Forms.Platform.iOS
 				ClearCloserRecognizer(scrollView);
 
 				IsOpen = false;
-				targetContentOffset = new PointF(0, 0);
+				targetContentOffset = new PointF((nfloat)0, (nfloat)0);
 
 				if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
 					RestoreHighlight(scrollView);

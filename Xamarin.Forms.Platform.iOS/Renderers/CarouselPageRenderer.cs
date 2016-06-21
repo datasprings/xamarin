@@ -352,10 +352,11 @@ namespace Xamarin.Forms.Platform.iOS
 
 		void ScrollToPage(int index, bool animated = true)
 		{
-			if (_scrollView.ContentOffset.X == index * _scrollView.Frame.Width)
+			nfloat x = index * _scrollView.Frame.Width;
+			if (_scrollView.ContentOffset.X == x)
 				return;
 
-			_scrollView.SetContentOffset(new PointF(index * _scrollView.Frame.Width, 0), animated);
+			_scrollView.SetContentOffset(new PointF(x, (nfloat)0), animated);
 		}
 
 		void UpdateBackground()

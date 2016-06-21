@@ -88,9 +88,9 @@ namespace Xamarin.Forms.Platform.iOS
 				var keyboardTop = boundsSize.Height - overlay.Height;
 				var fieldPosition = field.ConvertPointToView(field.Frame.Location, _targetView.Superview);
 				var fieldBottom = fieldPosition.Y + field.Frame.Height;
-				var offset = fieldBottom - keyboardTop;
+				nfloat offset = fieldBottom - keyboardTop;
 				if (offset > 0)
-					_setContentOffset(new PointF(0, offset));
+					_setContentOffset(new PointF((nfloat)0, offset));
 			}
 		}
 
