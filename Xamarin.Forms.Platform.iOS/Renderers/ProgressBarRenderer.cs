@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.ComponentModel;
 #if __UNIFIED__
@@ -22,10 +23,10 @@ namespace Xamarin.Forms.Platform.iOS
 	{
 		public override SizeF SizeThatFits(SizeF size)
 		{
-			// progress bar will size itself to be as wide as the request, even if its inifinite
-			// we want the minimum need size
+			// progress bar will size itself to be as wide as the request, even if it's infinite
+			// we want the minimum needed size
 			var result = base.SizeThatFits(size);
-			return new SizeF(10, result.Height);
+			return new SizeF((nfloat)10, result.Height);
 		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<ProgressBar> e)

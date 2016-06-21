@@ -80,7 +80,7 @@ namespace Xamarin.Forms.Platform.iOS
 	{
 		public static SizeF ToSizeF(this Size size)
 		{
-			return new SizeF((float)size.Width, (float)size.Height);
+			return new SizeF((nfloat)size.Width, (nfloat)size.Height);
 		}
 	}
 

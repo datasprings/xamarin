@@ -29,19 +29,21 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 			base.OnElementChanged(e);
 			var pad = UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad;
-			var size = pad ? 220 : 142;
+			nfloat size = pad ? 220 : 142;
+			nfloat itemHeight = size + 30;
 			var margin = pad ? 27 : 12;
 			var bottomMargin = (int)(margin * 0.8);
 
 			_collectionView = new UICollectionView(new RectangleF(0, 0, 100, 100),
 				new UICollectionViewFlowLayout
 				{
-					ItemSize = new SizeF(size, size + 30),
+					ItemSize = new SizeF(size, itemHeight),
 					ScrollDirection = UICollectionViewScrollDirection.Vertical,
 					SectionInset = new UIEdgeInsets(margin, margin, bottomMargin, margin),
 					MinimumInteritemSpacing = margin,
 					MinimumLineSpacing = margin
-				}) { DataSource = new DataSource((NavigationMenu)Element), BackgroundColor = UIColor.White };
+				})
+			{ DataSource = new DataSource((NavigationMenu)Element), BackgroundColor = UIColor.White };
 
 			using (var navigationCellId = new NSString("NavigationCell"))
 				_collectionView.RegisterClassForCell(typeof(NavigationCell), navigationCellId);

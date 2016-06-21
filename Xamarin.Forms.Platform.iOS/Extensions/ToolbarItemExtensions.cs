@@ -207,8 +207,9 @@ namespace Xamarin.Forms.Platform.iOS
 					}
 
 					_label.Hidden = false;
-					var availableWidth = Bounds.Width - padding * 3 - imageSize.Width;
-					var stringSize = _label.SizeThatFits(new SizeF(availableWidth, Bounds.Height - padding * 2));
+					nfloat availableWidth = Bounds.Width - padding * 3 - imageSize.Width;
+					nfloat newHeight = Bounds.Height - padding * 2;
+					var stringSize = _label.SizeThatFits(new SizeF(availableWidth, newHeight));
 
 					availableWidth = Bounds.Width;
 					availableWidth -= stringSize.Width;

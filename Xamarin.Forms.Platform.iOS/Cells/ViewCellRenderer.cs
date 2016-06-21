@@ -96,7 +96,8 @@ namespace Xamarin.Forms.Platform.iOS
 				if (SupressSeparator)
 				{
 					var oldFrame = Frame;
-					ContentView.Bounds = Frame = new RectangleF(oldFrame.Location, new SizeF(oldFrame.Width, oldFrame.Height + 0.5f));
+					nfloat oldFrameHeight = oldFrame.Height + 0.5f;
+					ContentView.Bounds = Frame = new RectangleF(oldFrame.Location, new SizeF(oldFrame.Width, oldFrameHeight));
 				}
 
 				var contentFrame = ContentView.Frame;
@@ -123,7 +124,7 @@ namespace Xamarin.Forms.Platform.iOS
 				var result = renderer.Element.Measure(width, height);
 
 				// make sure to add in the separator if needed
-				var finalheight = ((float)result.Request.Height + (SupressSeparator ? 0f : 1f)) / UIScreen.MainScreen.Scale;
+				nfloat finalheight = ((float)result.Request.Height + (SupressSeparator ? 0f : 1f)) / UIScreen.MainScreen.Scale;
 				return new SizeF(size.Width, finalheight);
 			}
 

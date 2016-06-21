@@ -1109,7 +1109,7 @@ namespace Xamarin.Forms.Platform.iOS
 			//adding a default height of at least 1 pixel tricks iOS to show the spinner
 			var contentSize = TableView.ContentSize;
 			if (contentSize.Height == 0)
-				TableView.ContentSize = new SizeF(contentSize.Width, 1);
+				TableView.ContentSize = new SizeF(contentSize.Width, (nfloat)1);
 		}
 
 		void OnRefreshingChanged(object sender, EventArgs eventArgs)

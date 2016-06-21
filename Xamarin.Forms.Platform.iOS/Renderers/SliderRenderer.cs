@@ -52,7 +52,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 					// except if your not running iOS 7... then it fails...
 					if (_fitSize.Width <= 0 || _fitSize.Height <= 0)
-						_fitSize = new SizeF(22, 22); // Per the glorious documentation known as the SDK docs
+						_fitSize = new SizeF((nfloat)22, (nfloat)22); // Per the glorious documentation known as the SDK docs
 				}
 
 				UpdateMaximum();

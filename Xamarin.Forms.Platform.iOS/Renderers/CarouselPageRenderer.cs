@@ -319,7 +319,8 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 
 			_scrollView.PagingEnabled = true;
-			_scrollView.ContentSize = new SizeF(bounds.Width * ((CarouselPage)Element).Children.Count, bounds.Height);
+			nfloat newWidth = bounds.Width * ((CarouselPage)Element).Children.Count;
+			_scrollView.ContentSize = new SizeF(newWidth, bounds.Height);
 		}
 
 		void RemovePage(ContentPage page, int index)

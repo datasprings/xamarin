@@ -141,7 +141,7 @@ namespace Xamarin.Forms.Platform.iOS
 				((INotifyCollectionChanged)cell.ContextActions).CollectionChanged += OnContextItemsChanged;
 			}
 
-			var height = Frame.Height;
+			nfloat height = Frame.Height;
 			var width = tableView.Frame.Width;
 
 			nativeCell.Frame = new RectangleF(0, 0, width, height);
@@ -239,7 +239,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 			UIView container = null;
 
-			var totalWidth = width;
+			nfloat totalWidth = width;
 			for (var i = _buttons.Count - 1; i >= 0; i--)
 			{
 				var b = _buttons[i];

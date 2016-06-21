@@ -177,7 +177,7 @@ namespace Xamarin.Forms.Platform.iOS
 
 		public override SizeF SizeThatFits(SizeF size)
 		{
-			return new SizeF(0, 0);
+			return new SizeF((nfloat)0, (nfloat)0);
 		}
 
 		protected override void Dispose(bool disposing)
