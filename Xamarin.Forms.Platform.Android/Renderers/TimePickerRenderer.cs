@@ -27,6 +27,7 @@ namespace Xamarin.Forms.Platform.Android
 
 			ElementController.SetValueFromRenderer(TimePicker.TimeProperty, new TimeSpan(hourOfDay, minute, 0));
 			Control.ClearFocus();
+			_dialog.CancelEvent -= OnCancelButtonClicked;
 			_dialog = null;
 		}
 
@@ -70,6 +71,7 @@ namespace Xamarin.Forms.Platform.Android
 				_dialog.Hide();
 				ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
 				Control.ClearFocus();
+				_dialog.CancelEvent -= OnCancelButtonClicked;
 				_dialog = null;
 			}
 		}
@@ -80,7 +82,13 @@ namespace Xamarin.Forms.Platform.Android
 			ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
 
 			_dialog = new TimePickerDialog(Context, this, view.Time.Hours, view.Time.Minutes, false);
+			_dialog.CancelEvent += OnCancelButtonClicked;
 			_dialog.Show();
+		}
+
+		void OnCancelButtonClicked(object sender, EventArgs e)
+		{
+			Element.Unfocus();
 		}
 
 		void SetTime(TimeSpan time)
