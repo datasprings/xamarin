@@ -22,7 +22,7 @@ namespace Xamarin.Forms.Controls.Issues
 			masterPage.ListView.ItemSelected += (sender, e) =>
 			{
 				var item = e.SelectedItem as MasterPageItem;
-				if(item != null)
+				if (item != null)
 				{
 					Detail = new NavigationPageEx((Page)Activator.CreateInstance(item.TargetType));
 					masterPage.ListView.SelectedItem = null;

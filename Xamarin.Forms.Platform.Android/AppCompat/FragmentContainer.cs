@@ -80,7 +80,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 		{
 			if (Page != null)
 			{
-				if(_visualElementRenderer != null)
+				if (_visualElementRenderer != null)
 				{
 					if (_visualElementRenderer.ViewGroup.Handle != IntPtr.Zero)
 					{

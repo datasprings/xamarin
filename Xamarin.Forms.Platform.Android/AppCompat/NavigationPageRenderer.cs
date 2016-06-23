@@ -135,7 +135,7 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 					foreach(Element element in PageController.InternalChildren)
 					{
 						var child = element as VisualElement;
-						if(child == null)
+						if (child == null)
 						{
 							continue;
 						}
