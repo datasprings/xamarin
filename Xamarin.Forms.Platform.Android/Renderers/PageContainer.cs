@@ -5,8 +5,6 @@ namespace Xamarin.Forms.Platform.Android
 {
 	internal class PageContainer : ViewGroup
 	{
-		bool _disposed;
-
 		public PageContainer(Context context, IVisualElementRenderer child, bool inFragment = false) : base(context)
 		{
 			AddView(child.ViewGroup);
@@ -27,17 +25,6 @@ namespace Xamarin.Forms.Platform.Android
 		{
 			Child.ViewGroup.Measure(widthMeasureSpec, heightMeasureSpec);
 			SetMeasuredDimension(Child.ViewGroup.MeasuredWidth, Child.ViewGroup.MeasuredHeight);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && _disposed)
-			{
-				_disposed = true;
-				Child = null;
-			}
-
-			base.Dispose(disposing);
 		}
 	}
 }

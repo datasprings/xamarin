@@ -84,7 +84,6 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 				
 				var fc = fragment as FragmentContainer;
 
-				System.Diagnostics.Debug.WriteLine("Setting up callback");
 				fc?.SetOnCreateCallback(pc =>
 				{
 					_pageContainer = pc;
@@ -93,11 +92,12 @@ namespace Xamarin.Forms.Platform.Android.AppCompat
 
 				FragmentTransaction transaction = FragmentManager.BeginTransaction();
 				transaction.DisallowAddToBackStack();
-				if(_currentFragment != null)
+
+				if (_currentFragment != null)
 				{
-					System.Diagnostics.Debug.WriteLine("Removing _currentFragment in transaction");
 					transaction.Remove(_currentFragment);
 				}
+
 				transaction.Add(Id, fragment);
 				transaction.SetTransition((int)FragmentTransit.FragmentOpen);
 				transaction.Commit();
