@@ -109,7 +109,10 @@ namespace Xamarin.Forms.Platform.Android
 			newNavController.RemovePageRequested += OnRemovePageRequested;
 
 			// If there is already stuff on the stack we need to push it
-			newNavController.StackCopy.Reverse().ForEach(p => PushViewAsync(p, false));
+			foreach(Page page in newNavController.StackCopy.Reverse())
+			{
+				PushViewAsync(page, false);
+			}
 		}
 
 		protected override void OnLayout(bool changed, int l, int t, int r, int b)
