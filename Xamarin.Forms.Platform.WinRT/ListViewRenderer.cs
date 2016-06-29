@@ -13,6 +13,7 @@ using WListView = Windows.UI.Xaml.Controls.ListView;
 using WBinding = Windows.UI.Xaml.Data.Binding;
 using WApp = Windows.UI.Xaml.Application;
 using Xamarin.Forms.Internals;
+using Windows.System;
 
 #if WINDOWS_UWP
 
@@ -75,6 +76,9 @@ namespace Xamarin.Forms.Platform.WinRT
 					// ListView.Tapped (which can be handled by child elements in the list items
 					// and prevented from bubbling up) rather than ListView.ItemClick
 					List.Tapped += ListOnTapped;
+
+					// We also want to watch for the Enter key being pressed for selection
+					List.KeyUp += OnEnterKeyPressed;
 
 					if (ShouldCustomHighlight)
 					{
@@ -140,6 +144,7 @@ namespace Xamarin.Forms.Platform.WinRT
 			if (List != null)
 			{
 				List.Tapped -= ListOnTapped;
+				List.KeyUp -= OnEnterKeyPressed;
 
 				if (ShouldCustomHighlight)
 				{
@@ -519,6 +524,12 @@ namespace Xamarin.Forms.Platform.WinRT
 				List.SelectedItem = selectedItem;
 			}
 #endif
+		}
+
+		void OnEnterKeyPressed(object sender, KeyRoutedEventArgs e)
+		{
+			if (e.Key == VirtualKey.Enter)
+				OnListItemClicked(List.SelectedIndex);
 		}
 
 		void OnControlSelectionChanged(object sender, SelectionChangedEventArgs e)
