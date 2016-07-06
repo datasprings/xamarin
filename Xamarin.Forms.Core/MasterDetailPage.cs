@@ -40,9 +40,7 @@ namespace Xamarin.Forms
 			Element = element;
 		}
 
-		public CollapseStyle CollapseStyle { get; set; }
-
-		public CollapseStyle SomeAndroidThing 
+		public CollapseStyle CollapseStyle 
 		{
 			get { return (CollapseStyle)Element.GetValue(MasterDetailPageWindowsSpecifics.CollapseStyleProperty); }
 			set { Element.SetValue(MasterDetailPageWindowsSpecifics.CollapseStyleProperty, value); }
